@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>管理员账户 | 自由角度</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css" th:href="@{/vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css" th:href="@{/vendors/css/vendor.bundle.base.css}">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.addons.css" th:href="@{/vendors/css/vendor.bundle.addons.css}">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="../../vendors/iconfonts/font-awesome/css/font-awesome.min.css" th:href="@{/vendors/iconfonts/font-awesome/css/font-awesome.min.css}" />
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/style.css" th:href="@{/css/style.css}">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="images/favicon.png" th:href="@{/images/favicon.png}" />
+</head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html
+        引入顶部栏
+    -->
+    <div th:replace="~{partials/_navbar :: _navbar}"></div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html
+          引入左边栏
+          -->
+        <div th:replace="~{partials/_sidebar :: _sidebar}"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+                    <div class="col-12 grid-margin">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">添加后台用户</h4>
+                               <!-- <p class="card-description">
+                                    基本信息
+                                </p>-->
+                                <hr>
+                                <form class="form-sample" th:action="@{/queen/addQueenUser}" method="post">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">用户名：</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="userName" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div><div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">密码：</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="password" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">电 话：</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" name="phone" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">邮 箱：</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" name="email" placeholder="dd/mm/yyyy">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">性 别：</label>
+                                                <div class="col-sm-4">
+                                                    <div class="form-radio">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="form-check-input" name="sex" id="membershipRadios1" value="男" checked> 男
+                                                            <i class="input-helper"></i></label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-5">
+                                                    <div class="form-radio">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="form-check-input" name="sex" id="membershipRadios2" value="女"> 女
+                                                            <i class="input-helper"></i></label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                    </div>
+
+                                    <div class="row">
+                                        <label class="col-sm-1 control-label">描述：</label>
+                                        <div class="col-sm-11">
+                                            <textarea type="text" name="describe" class="form-control" placeholder="请输入文本...    " style="margin: 0px; height: 144px; width: 900px;"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <button type="submit" class="btn btn-success mr-2">添加</button>
+                                        <button type="reset" class="btn btn-light"><i class="fa fa-refresh"></i>重置</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- partial:partials/_footer.html
+                引入底部栏
+            -->
+            <div th:replace="~{partials/_footer :: _footer}"></div>
+            <!-- partial -->
+        </div>
+    </div>
+</div>
+
+
+<!-- container-scroller -->
+<!-- plugins:js -->
+<script src="../../vendors/js/vendor.bundle.base.js" th:src="@{/vendors/js/vendor.bundle.base.js}"></script>
+<script src="../../vendors/js/vendor.bundle.addons.js" th:src="@{/vendors/js/vendor.bundle.addons.js}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="../../js/off-canvas.js" th:src="@{/js/off-canvas.js}"></script>
+<script src="../../js/misc.js" th:src="@{/js/misc.js}"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<!-- End custom js for this page-->
+
+<script>
+    function page_nav(num) {
+        document.forms[0].currentPage.value = num;
+        document.forms[0].submit();
+    }
+</script>
+</body>
+</html>

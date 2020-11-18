@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration  
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<!-- 通过这个配置文件完成mybatis与数据库的连接 -->
+<configuration>
+	<settings>
+		<!-- 配置mybatis的log实现为LOG4J -->
+		<setting name="logImpl" value="LOG4J"/>
+		<setting name="autoMappingBehavior" value="FULL"/>
+		<!-- 设置全局懒加载-->
+		<setting name="lazyLoadingEnabled" value="false"/>
+		<!-- 群发消息配置 -->
+		<setting name="callSettersOnNulls" value="true"/>
+
+	</settings>
+	<!-- 配置类型别名typeAliases
+	两种方式 1、可以一一进行配置
+	2、当一个项目中有多个POJO的时候也可以直接通过package的name属性直接指定包名（推荐使用）-->
+	<typeAliases>
+		<!-- <typeAlias type="com.bdqn.pojo.Provider" alias="Provider"/>
+		<typeAlias type="com.bdqn.pojo.User" alias="User"/> -->
+		<package name="com.soyoung.photo.freeanglequeen.entity"/>
+	</typeAliases>
+</configuration>

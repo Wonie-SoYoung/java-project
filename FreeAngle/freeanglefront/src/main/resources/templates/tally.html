@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>全球航拍爱好者和专业摄影师的社交平台 | 自由角度</title>
+		<link rel="shortcut icon" th:href="@{/common/img/title.png}" href="/common/img/title.png" type="image/x-icon"/>
+		<link rel="stylesheet" th:href="@{/common/css/common.css}" href="/common/css/common.css" />
+		<link rel="stylesheet" th:href="@{/tally/css/tally.css}" href="/tally/css/tally.css" />
+	</head>
+	<body>
+		<div id="root">
+			<div class="_2gbz">
+				<div th:replace="html/head :: navCopy"></div>
+				<div class="_19U0">
+					<div class="_10dN">
+						<div class="_2W_h">
+							<div class="_2-m1">
+								<div>
+									<div class="_33f1">
+										<div class="HNHF">
+											<div class="_9Que">
+												<ul class="_3YaF">
+													<li th:each="title,titleStat:${dadLabels}" th:class="${title.hId==hid ? 'react_tabs _1vFD':'react_tabs'}" th:text="${title.hName}" th:value="${title.hId}"></li>
+												</ul>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="_1h-S _3vqP _2WQp" id="react-tabs-19">
+								<div class="_3JqO _2e38">
+									<div class="_1XL8">
+										<a class="_2OJB _2htC" th:each="label,labelStat:${labels.list}" th:href="@{/hotlabels/getLabelByPro(label=${label['hName']})}">
+											<div class="_2-hW">
+												<div class="_2FzV">
+													<div class="_1f3c">
+														<div class="_3nqP _1Gim _1LNE _2G4A hUPH _2xhE" th:style="'background-image: url('+${application.httpURL}+${label['proUrl01']}+');'">
+															<img th:src="${application.httpURL}+${label['proUrl01']}" alt="">
+														</div>
+													</div>
+													<div class="_3Ohy">
+														<div class="_1f3c">
+															<div class="_30zl _1Gim _1LNE _2G4A hUPH _2xhE" th:style="'background-image: url('+${application.httpURL}+${label['proUrl02']}+');'">
+																<img th:src="${application.httpURL}+${label['proUrl02']}" alt="">
+															</div>
+														</div>
+														<div class="_1f3c">
+															<div class="_3hmO _1Gim _1LNE _2G4A hUPH _2xhE" th:style="'background-image: url('+${application.httpURL}+${label['proUrl03']}+');'">
+																<img th:src="${application.httpURL}+${label['proUrl03']}" alt="">
+															</div>
+														</div>
+													</div>
+												</div>
+												<h3 class="_11jc" th:text="${label['hName']}"></h3>
+											</div>
+										</a>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div th:value="${labels.currPageNo}" class="load" style="opacity: 0;;text-align: center;position: relative;top: -20px;background-color: #F7F8F9;margin-bottom: 30px;">
+						<img th:src="@{/explore/img/load.gif}" width="60px" height="50px"/>
+						<span style="font-size: 14px;position: absolute;bottom: 22px;left: 51.2%;color: #595959;">正在加载</span>
+					</div>
+				</div>
+			<div th:replace="html/end :: footerCopy"></div>
+			</div>
+		</div>
+		<script th:src="@{/tally/js/tally.js}"></script>
+	<script>
+        //滚动监听
+        $(window).scroll(function(){
+            if (($(window).scrollTop() + $(window).height()) > $(document).height()-1) {
+				//父节点数据
+                var $hid= $("._1vFD").attr("value");
+                //当前页数据
+                var $currPage=$(".load").attr("value");
+                setTimeout($(".load").css("opacity","1"),10000);
+                $.post("/hotlabels/getLabel",{hid:$hid,currPage:parseInt($currPage)+1},function (data) {
+                    if(data!=null && data.length!=0){
+						for (var i=0;i<data.length;i++){
+                            var content="";
+						    content+="<a class=\"_2OJB _2htC\" href=\"/hotlabels/getLabelByPro?label="+data[i]['hName']+"\"><div class=\"_2-hW\"><div class=\"_2FzV\"><div class=\"_1f3c\">"+
+									"<div class=\"_3nqP _1Gim _1LNE _2G4A hUPH _2xhE\" style=\"background-image: url("+data[i]['proUrl01']+");\">" +
+									"<img src=\"https://free-angle.oss-cn-beijing.aliyuncs.com/"+data[i]['proUrl01']+"\" alt=\"\"></div></div><div class=\"_3Ohy\"><div class=\"_1f3c\">" +
+									"<div class=\"_30zl _1Gim _1LNE _2G4A hUPH _2xhE\" style=\"background-image: url("+data[i]['proUrl02']+");\">" +
+									"<img src=\"https://free-angle.oss-cn-beijing.aliyuncs.com/"+data[i]['proUrl02']+"\" alt=\"\"></div></div><div class=\"_1f3c\">" +
+									"<div class=\"_3hmO _1Gim _1LNE _2G4A hUPH _2xhE\" style=\"background-image: url("+data[i]['proUrl03']+");\">" +
+									"<img src=\"https://free-angle.oss-cn-beijing.aliyuncs.com/"+data[i]['proUrl03']+"\" alt=\"\"></div></div></div></div><h3 class=\"_11jc\">"+data[i]['hName']+"</h3>" +
+									"</div></a>";
+						    $("._1XL8").append($(content));
+						}
+                        $(".load").attr("value",parseInt($currPage)+1);
+                    }else{
+                        $ (window).unbind ('scroll');
+                    }
+                    $(".load").css("opacity","0");
+                },"json");
+            }
+        });
+	</script>
+	</body>
+</html>

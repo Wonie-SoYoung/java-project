@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<link rel="stylesheet" th:href="@{/demonstrate/css/show.css}" href="/demonstrate/css/show.css" />
+		<script type="text/javascript" th:src="@{/common/js/jquery.min.js}" src="/common/js/jquery.min.js" ></script>
+		<script type="text/javascript" th:src="@{/demonstrate/js/show.js}" src="/demonstrate/js/show.js" ></script>
+	</head>
+	<body>
+		<div id="mod_player">
+			<div id="player_b86d095e_d12-wrap" class="tvp-wrap">
+				<div id="player_b86d095e_d12-container" class="tvp-container default pc backgroundSizeSupported tvp-controls-hide">
+					<div id="player_b86d095e_d12-video" class="tvp-video">
+						<div class="tvp-shadow"></div>
+						<video id="player_b86d095e_d12" width="100%" height="100%">
+						</video>
+					</div>
+					<div id="player_b86d095e_d12-title" class="tvp-title"></div>
+					<div class="tvp-error tvp-layer">
+						<div class="tvp-error-inner">
+							<div class="tvp-error-title">{{- title }}</div>
+							<div class="tvp-error-desc">{{- body }}</div> <button class="tvp-error-retry">{{- retry }}</button> </div>
+					</div>
+					<div id="player_b86d095e_d12-overlays" class="tvp-overlays">
+						<div class="tvp-overlay-loading">
+							<span class="tvp-icon-loading"> 
+								<svg xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 24 24" preserveAspectRatio="xMidYMid meet">
+									<path d="M12 6v3l4-4-4-4v3c-4.42 0-8 3.58-8 8 0 1.57.46 3.03 1.24 4.26L6.7 14.8c-.45-.83-.7-1.79-.7-2.8 0-3.31 2.69-6 6-6zm6.76 1.74L17.3 9.2c.44.84.7 1.79.7 2.8 0 3.31-2.69 6-6 6v-3l-4 4 4 4v-3c4.42 0 8-3.58 8-8 0-1.57-.46-3.03-1.24-4.26z"></path>
+								</svg> 
+							</span> 
+						</div>
+						<div class="tvp-overlay-poster"><img src="" width="100%" height="100%"></div>
+						<div class="tvp-overlay-play" data-state="play"> <button class="tvp-button tvp-button-play"><span><svg xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 36 36"><path d="M11,10 L18,13.74 18,22.28 11,26 Z M18,13.74 L26,18 26,18 18,22.28 Z"></path></svg></span></button> </div>
+						<div class="tvp-overlay-tips tvp-tips-definition">
+							<div class="tvp-overlay-content"> <span class="tvp-text"></span> </div>
+						</div>
+						<div class="tvp-overlay-tips tvp-tips-history">
+							<div class="tvp-overlay-content"> <span class="tvp-text">上次观看至{$min}{$sec}，正在为您续播</span> </div>
+						</div>
+						<div class="tvp-overlay-replay"> 
+							<button class="tvp-button-replay">
+								<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+									<path d="M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z"></path>
+									<path d="M0 0h24v24H0z" fill="none"></path>
+								</svg>
+							</button> 
+						</div>
+						<div class="tvp-overlay-bigben next tvp-next">
+							<div class="tvp-overlay-content"> <i class="tvp-ico-ff-rw tvp-ico"></i> <span class="tvp-text tvp-overlay-bigben-text"></span> <span class="tvp-time-total-small"> <span class="tvp-time-current-small" style="width: 0%;"></span> </span>
+							</div>
+						</div>
+					</div>
+					<div id="player_b86d095e_d12-plugins" class="tvp-plugins"></div>
+					<div id="player_b86d095e_d12-track" class="tvp-track tvp-hide"> </div>
+					<div id="player_b86d095e_d12-controls" class="tvp-controls">
+						<div class="tvp-progress">
+							<div class="tvp-tooltip tvp-tinytip tvp-tooltip-time" style="left: 74.881%;"> <button class="tvp-tooltip-toggle"><span class="tvp-tooltip-value"></span></button>
+								<div class="tvp-tooltip-content">
+									<div class="tvp-tinytip-content"><span class="tvp-text">01:38</span></div>
+								</div>
+							</div>
+							<div class="tvp-progress-padding"></div>
+							<div class="tvp-progress-list">
+								<div class="tvp-progress-buffer" style="width: 0%;"></div>
+								<div class="tvp-progress-hover" style="width: 74.9524%; opacity: 0;"></div>
+								<div class="tvp-progress-play" style="width: 0%;"> <span class="tvp-progress-handle"></span> </div>
+								<div class="tvp-progress-marker"></div>
+							</div>
+						</div>
+						<div class="tvp-controls-buttons"> 
+							<button data-state="play" class="tvp-button tvp-playpause-button tvp-play" type="button">
+								<svg xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 36 36">
+									<defs>
+										<path d="M11,10 L18,13.74 18,22.28 11,26 Z M18,13.74 L26,18 26,18 18,22.28 Z" id="tvp-svg-play"></path>
+									</defs>
+								<use class="tvp-svg-shadow" xlink:href="#tvp-svg-play"></use>
+								<use class="tvp-svg-fill" xlink:href="#tvp-svg-play"></use>
+								</svg> 
+							</button> 
+							<span class="tvp-time-panel"> 
+								<span class="tvp-time-panel-current">00:00</span> 
+								<span class="tvp-time-panel-split">/</span> 
+								<span class="tvp-time-panel-total">00:00</span>
+							</span>
+							<div class="tvp-fullscreen tvp-tooltip tvp-tinytip"> 
+								<button class="tvp-button tvp-tooltip-toggle tvp-fullscreen-default" type="button"> 
+									<svg xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 36 36">
+										<use class="tvp-svg-shadow tvp-fullscreen-button-corner-0" stroke="#000" stroke-opacity=".15" stroke-width="2px" xlink:href="#tvp-svg-11"></use>
+										<use class="tvp-svg-shadow tvp-fullscreen-button-corner-1" stroke="#000" stroke-opacity=".15" stroke-width="2px" xlink:href="#tvp-svg-12"></use>
+										<use class="tvp-svg-shadow tvp-fullscreen-button-corner-2" stroke="#000" stroke-opacity=".15" stroke-width="2px" xlink:href="#tvp-svg-13"></use>
+										<use class="tvp-svg-shadow tvp-fullscreen-button-corner-3" stroke="#000" stroke-opacity=".15" stroke-width="2px" xlink:href="#tvp-svg-14"></use>
+										<path class="tvp-fullscreen-button-corner-0" d="m 10,15.71 2.28,0 0,-3.42 3.42,0 0,-2.28 L 10,10 l 0,5.71 0,0 z" fill="#fff" id="tvp-svg-11"></path>
+										<path class="tvp-fullscreen-button-corner-1" d="m 20.28,10 0,2.28 3.42,0 0,3.42 2.28,0 L 26,10 l -5.71,0 0,0 z" fill="#fff" id="tvp-svg-12"></path>
+										<path class="tvp-fullscreen-button-corner-2" d="m 23.71,23.71 -3.42,0 0,2.28 L 26,26 l 0,-5.71 -2.28,0 0,3.42 0,0 z" fill="#fff" id="tvp-svg-13"></path>
+										<path class="tvp-fullscreen-button-corner-3" d="M 12.28,20.28 10,20.28 10,26 l 5.71,0 0,-2.28 -3.42,0 0,-3.42 0,0 z" fill="#fff" id="tvp-svg-14"></path>
+									</svg> 
+								</button> 
+								<button class="tvp-button tvp-tooltip-toggle tvp-fullscreen-full" type="button"> 
+									<svg xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 36 36">
+										<use class="tvp-svg-shadow tvp-fullscreen-close-button-corner-0" stroke="#000" stroke-opacity=".15" stroke-width="2px" xlink:href="#tvp-svg-15"></use>
+										<use class="tvp-svg-shadow tvp-fullscreen-close-button-corner-1" stroke="#000" stroke-opacity=".15" stroke-width="2px" xlink:href="#tvp-svg-16"></use>
+										<use class="tvp-svg-shadow tvp-fullscreen-close-button-corner-2" stroke="#000" stroke-opacity=".15" stroke-width="2px" xlink:href="#tvp-svg-17"></use>
+										<use class="tvp-svg-shadow tvp-fullscreen-close-button-corner-3" stroke="#000" stroke-opacity=".15" stroke-width="2px" xlink:href="#tvp-svg-18"></use>
+										<path class="tvp-fullscreen-close-button-corner-0" d="m 13.42,13.42 -3.42,0 0,2.28 5.71,0 0,-5.71 -2.28,0 0,3.42 0,0 z" fill="#fff" id="tvp-svg-15"></path>
+										<path class="tvp-fullscreen-close-button-corner-1" d="m 22.57,13.42 0,-3.42 -2.28,0 0,5.71 5.71,0 0,-2.28 -3.42,0 0,0 z" fill="#fff" id="tvp-svg-16"></path>
+										<path class="tvp-fullscreen-close-button-corner-2" d="m 20.28,26 2.28,0 0,-3.42 3.42,0 0,-2.28 -5.71,0 0,5.71 0,0 z" fill="#fff" id="tvp-svg-17"></path>
+										<path class="tvp-fullscreen-close-button-corner-3" d="m 10,22.57 3.42,0 0,3.42 2.28,0 0,-5.71 -5.71,0 0,2.28 0,0 z" fill="#fff" id="tvp-svg-18"></path>
+									</svg> 
+								</button>
+								<div class="tvp-tooltip-content"></div>
+							</div>
+							<div class="tvp-definition tvp-tooltip tvp-button"> 
+								<button class="tvp-button tvp-tooltip-toggle tvp-definition-button">
+									<span>1080p</span>
+								</button>
+								<div class="tvp-tooltip-content">
+									<ul class="tvp-menu">
+										<li class="tvp-menu-item tvp-menu-item-0">480p</li>
+										<li class="tvp-menu-item tvp-menu-item-1">720p</li>
+										<li class="tvp-menu-item tvp-menu-item-2">1080p</li>
+									</ul>
+								</div>
+							</div>
+							<div class="tvp-cc tvp-tooltip tvp-hide"> 
+								<button class="tvp-button tvp-tooltip-toggle tvp-cc-button"> 
+									<svg xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 36 36">
+										<use class="tvp-svg-shadow" xlink:href="#tvp-svg-7"></use>
+										<path d="M 10.77,11 C 9.79,11 9,11.78 9,12.75 l 0,10.5 C 9,24.21 9.79,25 10.77,25 l 14.42,0 c .97,0 1.77,-0.78 1.77,-1.75 l 0,-10.5 c 0,-0.96 -0.8,-1.75 -1.77,-1.75 l -14.42,0 z m 6.33,6.12 -1.33,0 0,-0.43 -1.77,0 0,2.62 1.77,0 0,-0.43 1.33,0 0,.87 c 0,.48 -0.4,.87 -0.88,.87 l -2.66,0 c -0.48,0 -0.88,-0.39 -0.88,-0.87 l 0,-3.5 c 0,-0.48 .4,-0.87 .88,-0.87 l 2.66,0 c .48,0 .88,.39 .88,.87 l 0,.87 0,0 z m 6.22,0 -1.33,0 0,-0.43 -1.77,0 0,2.62 1.77,0 0,-0.43 1.33,0 0,.87 c 0,.48 -0.4,.87 -0.88,.87 l -2.66,0 c -0.48,0 -0.88,-0.39 -0.88,-0.87 l 0,-3.5 c 0,-0.48 .4,-0.87 .88,-0.87 l 2.66,0 c .48,0 .88,.39 .88,.87 l 0,.87 0,0 z" id="tvp-svg-7"></path>
+									</svg> 
+								</button>
+								<div class="tvp-tooltip-content"> </div>
+							</div>
+							<div class="tvp-button tvp-volume tvp-popup"> 
+								<button class="tvp-btn-volume" data-state="volume"> 
+									<svg xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" viewBox="0 0 36 36">
+										<defs>
+											<path d="M12.39,15.54 L10,15.54 L10,20.44 L12.4,20.44 L17,25.50 L17,10.48 L12.39,15.54 Z M22,17.99 C22,16.4 20.74,15.05 19,14.54 L19,21.44 C20.74,20.93 22,19.59 22,17.99 Z M19,24.31 L19,26 C22.99,25.24 26,21.94 26,18 C26,14.05 22.99,10.75 19,10 L19,11.68 C22.01,12.41 24.24,14.84 24.24,18 C24.24,21.15 22.01,23.58 19,24.31 Z" id="tvp-svg-47"></path>
+											<path d="M19.63,15.92 L20.68,14.93 L22.81,16.94 L24.94,14.93 L26,15.92 L23.86,17.93 L26,19.93 L24.94,20.92 L22.81,18.92 L20.68,20.92 L19.63,19.93 L21.76,17.93 L19.63,15.92 Z" id="tvp-svg-48"></path>
+										</defs>
+										<use class="tvp-svg-shadow" xlink:href="#tvp-svg-47"></use>
+										<use class="tvp-svg-fill" xlink:href="#tvp-svg-47"></use>
+										<svg class="tvp-svg-sound-mute-group" style="opacity: 0; will-change: opacity;">
+											<use class="tvp-svg-shadow" xlink:href="#tvp-svg-48"></use>
+											<use class="tvp-svg-fill" xlink:href="#tvp-svg-48"></use>
+										</svg>
+									</svg> 
+								</button>
+								<div class="tvp-volume-slider tvp-popup-content">
+									<div class="tvp-volume-range">
+										<div class="tvp-volume-range-current" style="height: 50%;">
+											<div class="tvp-volume-handle"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script>
+            $(function () {
+                $(".tvp-overlay-poster img").attr("src",$("#iframne",window.parent.document).data("id"));
+            })
+            //js部分
+            window.onload=function(){
+                document.getElementById("player_b86d095e_d12").src=$("#iframne",window.parent.document).data("rel");
+                document.getElementById("player_b86d095e_d12").pause();
+            }
+		</script>
+	</body>
+</html>

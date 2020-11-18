@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyoung.photo.freeanglequeen.dao.ChatMapper">
+
+    <!--//查询所有
+    public List<Map<String,Object>> getChat(Map<String,Object> parmmap);-->
+    <select id="getChat" resultType="map">
+        select
+        (select userName from queenuser where id=chat.cozeid) as cozeid,
+        (select userName from user where id=chat.talkid) as talkid,
+        (select headURL from user where id=chat.talkid) as headURL,
+        content,createTime from chat where cozeid=0
+        <!--<where>
+            <if test="aid!=7null and  aid !=''">
+                and aid IN ( SELECT id FROM queenuser WHERE userName LIKE concat('%',#{aid},'%'))
+            </if>
+            <if test="uid!=null and uid != '' and uid!=0">
+                and uid=#{uid}
+            </if>
+            <if test="uid!=null and uid != '' and uid=='0'">
+                and uid=#{uid}
+            </if>
+        </where>-->
+    </select>
+</mapper>

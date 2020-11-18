@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyoung.photo.freeanglequeen.dao.NoticeMapper">
+
+    <!-- 陈海嘉 -->
+    <!--//查询所有
+    public List<Map<String,Object>> getNotice();-->
+    <select id="getNotice" resultType="map">
+        select
+            nid,
+            (select userName from queenuser where id = notice.aid) as aid,uid as utype,
+            (select userName from user where id = notice.uid) as uid,createTime
+            from notice
+            <where>
+                <if test="aid!=null and  aid !=''">
+                    and aid IN ( SELECT id FROM queenuser WHERE userName LIKE concat('%',#{aid},'%'))
+                </if>
+                <if test="uid!=null and uid != '' and uid!=0">
+                    and uid=#{uid}
+                </if>
+                <if test="uid!=null and uid != '' and uid=='0'">
+                    and uid=#{uid}
+                </if>
+            </where>
+    </select>
+
+    <!--消息添加
+     //添加信，并且返回主键
+    public int addNotice(Map<String , Object> map);-->
+    <insert id="addNotice" parameterType="map" useGeneratedKeys="true" keyProperty="nid" >
+        insert into notice values (default ,#{aid},#{uid},#{content},#{createTime})
+        <selectKey resultType="int" keyProperty="nid">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+    </insert>
+
+    <!-- //修改信息
+   public int UpdMessage(Map<String , Object> map);-->
+    <update id="UpdMessage">
+        update notice
+         <set>
+             <if test="content!=null">
+                 content =#{content}
+             </if>
+         </set>
+        where nid = #{nid}
+    </update>
+
+    <!--//返回对象的查询
+    public Notice getNoticeEntity(Integer nid);-->
+    <select id="getNoticeEntity" resultType="Notice">
+        select * from notice where nid = #{nid}
+    </select>
+
+    <!-- //删除通知
+    public int delNotice(Integer id);-->
+    <delete id="delNotice">
+        delete
+        from notice where nid = #{id}
+    </delete>
+</mapper>

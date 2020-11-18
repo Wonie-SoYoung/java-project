@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyoung.photo.freeanglequeen.dao.SlideShowMapper">
+
+    <!-- 查询所有轮播信息 -->
+    <select id="selSlideShowListAll" resultType="SlideShow">
+        select * from slideshow
+    </select>
+    <!-- 根据 ID 查询轮播图信息 -->
+    <select id="selSlideShowListId" resultType="SlideShow">
+        select * from slideshow
+          where
+        sid = #{sid}
+    </select>
+    <!-- 根据 ID 修改轮播图信息 -->
+    <update id="updSlideShowIntId" parameterType="SlideShow">
+        update slideshow
+          set
+        picName=#{picName},description=#{description}
+          where
+        sid=#{sid}
+    </update>
+    <!-- 添加轮播图信息 -->
+    <insert id="insSlideShowInt" parameterType="SlideShow">
+        insert into slideshow
+        (sid,picName,picUrl,description)
+          values
+        (default,#{picName},#{picUrl},#{description})
+    </insert>
+    <!-- 根据 ID 删除轮播图信息 -->
+    <delete id="delSlideShowInt" parameterType="Integer">
+        delete from slideShow
+          where
+        sid=#{sid}
+    </delete>
+    <!-- 查询轮播图的数据条数 （前台轮播图的显示条数不得超过7条）-->
+    <select id="selSlideShowCount" resultType="Integer">
+        select count(1) from slideshow
+    </select>
+
+</mapper>

@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: https://free-angle.oss-cn-beijing.aliyuncs.com/
+  profiles:
+    include: db,redis
+  server:
+    MaxFileSize: 300MB
+    MaxRequestSize: 500MB
+  jackson:
+    date-format: yyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+server:
+  port: 8080

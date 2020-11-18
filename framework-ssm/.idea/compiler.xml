@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="cache" />
+        <module name="common" />
+        <module name="core" />
+        <module name="security" />
+        <module name="web" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="cache" target="1.8" />
+      <module name="common" target="1.8" />
+      <module name="core" target="1.8" />
+      <module name="framework-ssm" target="1.8" />
+      <module name="security" target="1.8" />
+      <module name="web" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="cache" options="-parameters" />
+      <module name="common" options="-parameters" />
+      <module name="core" options="-parameters" />
+      <module name="framework-ssm" options="-parameters" />
+      <module name="security" options="-parameters" />
+      <module name="web" options="-parameters" />
+    </option>
+  </component>
+</project>

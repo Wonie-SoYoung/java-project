@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>全球航拍爱好者和专业摄影师的社交平台 | 自由角度</title>
+		<link rel="shortcut icon" th:href="@{/common/img/title.png}" href="/common/img/title.png" type="image/x-icon"/>
+		<link rel="stylesheet" th:href="@{/common/css/common.css}" href="/common/css/common.css" />
+		<link rel="stylesheet" th:href="@{/notifications/css/notifications.css}" href="/notifications/css/notifications.css" />
+	</head>
+	<body>
+		<div id="root">
+			<div class="_2gbz">
+				<div th:replace="html/head :: navCopy"></div>
+				<div class="_19U0">
+					<div class="_2iJp _2iJp">
+						<div class="_2fS4">
+							<div class="_39__ _2jqB">
+								<div th:each="news:${application.dict}" th:if="${news.typeCode=='NEWS_TYPE'}" th:value="${news.id}" th:class="${news.id==type ? '_2Dvs _5285 _17oZ':'_2Dvs _5285'}">
+									<a class="_1lac" target="" th:href="@{/messages/notifications}+'?type='+${news.id}">
+										<div class="_1Ig0">
+											<!-- 点赞 -->
+											<div th:if="${news.valueName=='点赞'}" th:class="${news.id==type ? '_1jHP sQis _3Dfx _2Yp9':'_1jHP sQis _3Dfx'}">
+												<svg viewBox="0 0 40 40">
+													<path fill="#87b9ff" d="M28.387 13.375h1.446c2.781.115 5 2.403 5 5.208a5.194 5.194 0 0 1-1.701 3.85l-.515 10.398a2.5 2.5 0 0 1-2.497 2.376H6.666a2.5 2.5 0 0 1-2.5-2.5V15.874a2.5 2.5 0 0 1 2.5-2.5h5.344c2.752-.787 4.168-2.653 4.247-5.599a4.958 4.958 0 1 1 9.908-.276l-.001.11c.006.513-.014 1.034-.054 1.562a24.287 24.287 0 0 1-.714 4.203h2.989z"></path>
+													<path fill="none" stroke="#3d85ec" stroke-width="2.5" d="M29.833 14.625h-6.047l.401-1.561c.355-1.381.58-2.71.678-3.987a17 17 0 0 0 .051-1.494l.001-.083a3.708 3.708 0 1 0-7.41.207l.001.102c-.094 3.486-1.871 5.829-5.153 6.767l-.168.048H6.668c-.69 0-1.25.56-1.25 1.25v16.833c0 .69.56 1.25 1.25 1.25h23.454a1.25 1.25 0 0 0 1.248-1.188l.54-10.913.381-.347a3.944 3.944 0 0 0 1.293-2.927c0-2.126-1.681-3.872-3.75-3.958z"></path>
+													<path fill="#5d99ec" d="M6.671 15.89h7.079v16.825H6.671z"></path>
+													<path fill="#3d85ec" d="M11.25 14.375h2.5v20.833h-2.5V14.375z"></path>
+												</svg>
+											</div>
+											<!-- 评论 -->
+											<div th:if="${news.valueName=='评论'}" th:class="${news.id==type ? '_1jHP sQis _2tlM _1OVb':'_1jHP sQis _2tlM'}"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="#4b4b4b" d="M12.087 23.333h15.246V6H4.666v17.333h3.359v2.934l4.062-2.934zm-6.084 5.08L6 28.412v-3.078H4a1.333 1.333 0 0 1-1.333-1.333V5.334c0-.736.597-1.333 1.333-1.333h24c.736 0 1.333.597 1.333 1.333v18.667c0 .736-.597 1.333-1.333 1.333H12.677l-4.991 3.727a1 1 0 0 1-1.683-.647z"></path></svg>
+											</svg>
+											</div>
+											<!-- 关注 -->
+											<div th:if="${news.valueName=='关注'}" th:class="${news.id==type ? '_1jHP sQis _17n6 _1OVb':'_1jHP sQis _17n6'}">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+													<path fill="#4b4b4b" d="M25.167 24.372h4v2h-4v4h-2v-4h-4v-2h4v-4h2v4zm-6.874 3.735v2H3.4l.089-1.082c.171-2.072.777-3.762 1.836-5.043.677-.819 1.605-1.434 3.228-2.288l.908-.473c.339-.177.591-.313.818-.443.542-.309.903-.563 1.108-.78.404-.426.578-.832.575-1.163a6.516 6.516 0 0 1-2.502-4.571l-.279-3.102a17.274 17.274 0 0 0-.051-.393c-.03-.215-.059-.412-.114-.768-.555-3.601-.358-5.217 1.777-6.162C12.088.895 18.288.366 21.148 2.819c.449.385.812.768 1.1 1.165 1.059 1.461 1.076 2.11.635 5.846a36.766 36.766 0 0 0-.186 1.945l-.063.933-.183 1.556a6.512 6.512 0 0 1-2.502 4.571c-.003.331.171.737.575 1.163l-1.452 1.376c-1.001-1.056-1.353-2.328-.974-3.441l.108-.318.278-.188a4.514 4.514 0 0 0 1.974-3.342l.304-3.377c.047-.351.087-.713.134-1.113.374-3.165.364-3.567-.267-4.437a4.868 4.868 0 0 0-.782-.821c-2.024-1.735-6.922-1.195-7.274.466l-.116.547-.526.188c-1.261.45-1.39 1.222-.937 4.158.056.366.087.571.119.799.021.151.039.293.058.459l.282 3.13a4.513 4.513 0 0 0 1.974 3.342l.278.188.108.318c.379 1.113.026 2.385-.974 3.441-.37.391-.87.743-1.568 1.141-.253.144-.524.291-.882.478l-.904.471c-1.393.733-2.166 1.245-2.618 1.792-.603.729-1.019 1.676-1.241 2.851h12.667z"></path>
+												</svg>
+											</div>
+											<!-- 收藏 -->
+											<div th:if="${news.valueName=='收藏'}" th:class="${news.id==type ? '_1jHP sQis _2xrk _1OVb':'_1jHP sQis _2xrk'}">
+												<svg viewBox="0 0 40 40">
+													<path fill="none" stroke="#4b4b4b" stroke-width="3" d="M8.5 5.5v28.156L20 28.348l11.5 5.308V5.5h-23z"></path>
+												</svg>
+											</div>
+											<!-- 通知 -->
+											<div th:if="${news.valueName=='通知'}" th:class="${news.id==type ? '_1jHP sQis _1uto _1OVb':'_1jHP sQis _1uto'}">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+													<path fill="transparent" d="M3.733 28.879c1.533-3.013 2.3-5.686 2.3-8.02v-8.847c0-4.983 3.657-9.112 8.433-9.85v-.117a1.533 1.533 0 1 1 3.066 0v.117c4.776.738 8.433 4.866 8.433 9.85v8.847c0 2.332.767 5.006 2.3 8.02h-8.752a3.833 3.833 0 0 1-7.028 0H3.733z"></path>
+													<path fill="#4b4b4b" d="M13.991 26.579l.603 1.379a1.534 1.534 0 0 0 2.814 0l.603-1.379h6.751c-.725-2.029-1.093-3.934-1.093-5.72v-8.847a7.668 7.668 0 0 0-6.484-7.576l-1.182-.183-1.182.183a7.669 7.669 0 0 0-6.484 7.576v8.847c0 1.786-.368 3.691-1.093 5.72h6.75zm-10.258 2.3c1.533-3.013 2.3-5.686 2.3-8.02v-8.847c0-4.983 3.657-9.112 8.433-9.85v-.117a1.533 1.533 0 1 1 3.066 0v.117c4.776.738 8.433 4.866 8.433 9.85v8.847c0 2.332.767 5.006 2.3 8.02h-8.752a3.833 3.833 0 0 1-7.028 0H3.733z"></path>
+												</svg>
+											</div>
+											<!-- 私信 -->
+											<div th:if="${news.valueName=='私信'}" th:class="${news.id==type ? '_1jHP sQis _23lW _1OVb':'_1jHP sQis _23lW'}">
+												<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+													<path fill="#4b4b4b" d="M12.721 19.333H22v-14H5.333v14h3.333v3.079l4.054-3.078zm-6.051 5.08l-.003-.001v-3.078h-2a1.333 1.333 0 0 1-1.333-1.333V4.668c0-.736.597-1.333 1.333-1.333h18c.736 0 1.333.597 1.333 1.333v15.333c0 .736-.597 1.333-1.333 1.333h-9.323l-4.991 3.727a1 1 0 0 1-1.683-.647zm16.663-1.08h3.333v-14h-1.333v-2h2c.736 0 1.333.597 1.333 1.333v15.333c0 .736-.597 1.333-1.333 1.333h-2v3.079l-.003.001a1 1 0 0 1-1.683.647l-4.991-3.727h-7.847l2.619-2h5.851l4.054 3.079v-3.078z">
+													</path>
+												</svg>
+											</div>
+											<span>[[${news.valueName}]]</span>
+										</div>
+									</a>
+								</div>
+							</div>
+							<div th:each="dict:${application.dict}" th:if="${dict.id==type and dict.valueName=='点赞'}"><div class="_1fvP" th:replace="message/likes_aspx :: messageCopy"></div></div>
+							<div th:each="dict:${application.dict}" th:if="${dict.id==type and dict.valueName=='评论'}"><div class="_1fvP" th:replace="message/comment_aspx :: messageCopy"></div></div>
+							<div th:each="dict:${application.dict}" th:if="${dict.id==type and dict.valueName=='关注'}"><div class="_1fvP" th:replace="message/attention_aspx :: messageCopy"></div></div>
+							<div th:each="dict:${application.dict}" th:if="${dict.id==type and dict.valueName=='收藏'}"><div class="_1fvP" th:replace="message/collect_aspx :: messageCopy"></div></div>
+							<div th:each="dict:${application.dict}" th:if="${dict.id==type and dict.valueName=='通知'}"><div class="_1fvP" th:replace="message/inform_aspx :: messageCopy"></div></div>
+							<div th:each="dict:${application.dict}" th:if="${dict.id==type and dict.valueName=='私信'}"><div class="_1fvP" th:replace="message/private_aspx :: messageCopy"></div></div>
+						</div>
+					</div>
+				</div>
+				<div th:replace="html/end :: footerCopy"></div>
+			</div>
+		</div>
+		<div id="wicket" style="display: none;">
+			<div>
+				<div class="rc-dialog-mask"></div>
+				<div tabindex="-1" class="rc-dialog-wrap " role="dialog" aria-labelledby="rcDialogTitle1" style="">
+					<div role="document" class="rc-dialog _1-HR">
+						<div tabindex="0" style="width: 0px; height: 0px; overflow: hidden;">sentinelStart</div>
+						<div class="rc-dialog-content"><button aria-label="Close" class="rc-dialog-close"><span class="rc-dialog-close-x"></span></button>
+							<div class="rc-dialog-header">
+								<div class="rc-dialog-title" id="rcDialogTitle1"><span>与  对话</span></div>
+							</div>
+							<div class="rc-dialog-body">
+								<div class="GIVn">
+									<div class="amOk">
+										<div class="_3Qiz" id="myby">
+										</div>
+										<div class="oQIz">
+											<div class="_3hJC _2sB4"><label><textarea rows="6" placeholder="输入消息" type="text" style="height: auto;" id="newmessage"></textarea></label></div>
+											<div class="_3Vex">
+												<div class="_24zN"><span>剩余可输入500个字</span></div><button type="button" class="Xwom _123Z _1Jv9 _1TkV" disabled=""><div class="_3HO0"><span id="messagetijiao">发送</span></div></button></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div tabindex="0" style="width: 0px; height: 0px; overflow: hidden;">sentinelEnd</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+	<script th:src="@{/notifications/js/notifications.js}"></script>
+</html>

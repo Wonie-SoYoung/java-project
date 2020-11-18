@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>全球航拍爱好者和专业摄影师的社交平台 | 自由角度</title>
+		<link rel="shortcut icon" th:href="@{/common/img/title.png}" href="/common/img/title.png" type="image/x-icon"/>
+		<link rel="stylesheet" th:href="@{/common/css/common.css}" href="/common/css/common.css" />
+		<link rel="stylesheet" th:href="@{/alertuser/css/alertpersonal.css}" href="/alertuser/css/alertpersonal.css" />
+		<style>
+			._21jY ._15VW {
+    width: 17.2rem;
+    margin: 4rem auto 0;
+}
+._21jY ._15VW ._3DaE, ._21jY ._15VW ._16B8, ._21jY ._15VW ._38sj {
+    margin-top: 2rem;
+}
+._3g_I ._3hMV {
+    color: #e64839;
+    font-size: .6rem;
+    margin-top: .4rem;
+}
+._3g_I.Wp22 ._3hMV {
+    position: absolute;
+}
+		</style>
+	</head>
+	<body>
+		<div id="root">
+			<div class="_2gbz">
+				<div th:replace="html/head :: navCopy"></div>
+				<div class="_19U0">
+					<div class="_21jY">
+						<form class="_15VW" action="/oauth/updatepwd" method="post">
+							<div class="_3g_I Wp22">
+								<div class="iXLB ePKS">
+									<label for="reset-password">
+										<div class="_2UVJ"><span>请输入当前密码*</span></div>
+										<input id="reset-password" autocomplete="current-password" type="password" th:value="${oldpwd==null ? '':oldpwd}" name="oldpwd">
+									</label>
+								</div>
+								<div class="_3hMV" th:if="${error!=null}"><span th:text="${error['1']}">不能为空</span></div>
+							</div>
+							<div class="_3g_I _38sj Wp22">
+								<div class="iXLB ePKS">
+									<label for="reset-new-password">
+										<div class="_2UVJ"><span>请输入新密码*</span></div>
+										<input id="reset-new-password" autocomplete="new-password" type="password" th:value="${newonepwd==null ? '':newonepwd}" name="newonepwd">
+									</label>
+								</div>
+								<div class="_3hMV" th:if="${error!=null}"><span th:text="${error['2']}">不能为空</span></div>
+							</div>
+							<div class="_3g_I _16B8 Wp22">
+								<div class="iXLB ePKS">
+									<label for="reset-new-password2">
+										<div class="_2UVJ"><span>请再次填写密码*</span></div>
+										<input id="reset-new-password2" autocomplete="new-password" type="password" th:value="${newtwopwd==null ? '':newtwopwd}" name="newtwopwd">
+									</label>
+								</div>
+								<div class="_3hMV" th:if="${error!=null}"><span th:text="${error['3']}">不能为空</span></div>
+							</div>
+							<div class="_3g_I _3DaE Wp22 _112F">
+								<button type="button" class="Xwom kdjc _1TkV tijiao">
+									<div class="_3HO0"><span>确认</span></div>
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div th:replace="html/end :: footerCopy"></div>
+			</div>
+		</div>
+	</body>
+	<script>
+		//点击文本框出现焦点
+    $("label input,.I24N,._3xVR,textarea").click(function () {
+        $("label input,.I24N,._3xVR,textarea").css("border",".5px solid #dfdfdf");
+        $(this).css("border","1px solid #7C7C7C");
+    })
+    $(document).click(function(e){
+        var target = $(e.target);
+        if(target.closest("input").length != 0||target.closest(".I24N").length != 0||target.closest("._3xVR").length != 0||target.closest("textarea").length != 0||target.closest("._2B3Z").length != 0) return;
+        $("label input,.I24N,._3xVR,textarea").css("border",".5px solid #dfdfdf");
+        $("._3caY,._2Xm-").hide();
+        if($("#mapSearch").val()!=$("#ismapSearch").val()){
+            $("#mapSearch").val("");
+        }
+    })
+		$(".tijiao").click(function () {
+			var a=$("input[name='oldpwd']").val();
+            var b=$("input[name='newonepwd']").val();
+            var c=$("input[name='newtwopwd']").val();
+            var isNot=true;
+            if(a==undefined || a==null || a=='' || a.length<6){
+                alert("既然");
+                var s=$("input[name='oldpwd']").parent().parent().parent().children("._3hMV");
+                if(s.length>0){
+                    s.children().html("请输入正确的格式");
+				}else{
+                    $("input[name='oldpwd']").parent().parent().parent().append($("<div class=\"_3hMV\"><span>请输入正确的格式</span></div>"))
+				}
+                isNot=false
+			}else{
+                $("input[name='oldpwd']").parent().parent().parent().children("._3hMV").remove();
+			}
+            if(b==undefined|| b==null || b=='' || b.length<6){
+                isNot=false
+                var b=$("input[name='newonepwd']").parent().parent().parent().children("._3hMV");
+                if(b.length>0){
+                    b.children().html("请输入正确的格式");
+                }else{
+                    $("input[name='newonepwd']").parent().parent().parent().append($("<div class=\"_3hMV\"><span>请输入正确的格式</span></div>"))
+                }
+			}else{
+                $("input[name='newonepwd']").parent().parent().parent().children("._3hMV").remove();
+			}
+            if(c==undefined|| c==null || c=='' || b.length<6){
+                isNot=false
+                var c=$("input[name='newtwopwd']").parent().parent().parent().children("._3hMV");
+                if(c.length>0){
+                    c.children().html("请输入正确的格式");
+                }else{
+                    $("input[name='newtwopwd']").parent().parent().parent().append($("<div class=\"_3hMV\"><span>请输入正确的格式</span></div>"))
+                }
+			}else{
+                $("input[name='newtwopwd']").parent().parent().parent().children("._3hMV").remove();
+            }
+			if(isNot){
+			    $("form").submit();
+			}
+        })
+	</script>
+</html>

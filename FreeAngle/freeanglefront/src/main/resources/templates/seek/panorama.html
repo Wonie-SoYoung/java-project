@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>全球航拍爱好者和专业摄影师的社交平台 | 天空之城</title>
+		<link rel="stylesheet" th:href="@{/common/css/common.css}" href="/common/css/common.css" />
+		<link rel="stylesheet" th:href="@{/seek/css/seekTwo.css}" href="/seek/css/seekTwo.css" />
+	</head>
+	<body>
+		<div id="root">
+			<div class="_2gbz">
+				<div th:replace="html/head :: navCopy"></div>
+				<div class="_19U0">
+					<div class="QC_C">
+						<div class="_2XyQ">
+							<div class="_1wq2s _1hJo"><input id="import" type="text" maxlength="63" placeholder="" th:value="${value}"><button id="twice"><div class="U8Bt sQis _2UNa"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024"><path fill="#9fa3a6" d="M830.722 743.258l179.435 179.435c10.261 10.261 10.261 26.9 0 37.167l-37.167 37.167c-10.261 10.261-26.9 10.261-37.167 0L754.841 816.045c-74.853 56.575-168.07 90.136-269.124 90.136-246.727 0-446.731-200.008-446.731-446.731S238.994 12.719 485.717 12.719c246.727 0 446.731 200.008 446.731 446.731 0 107.783-38.164 206.645-101.722 283.813zm-345.001 44.666c181.413 0 328.476-147.063 328.476-328.476S667.134 130.972 485.721 130.972 157.245 278.035 157.245 459.448s147.063 328.476 328.476 328.476z"></path></svg></div></button></div>
+						</div>
+						<div class="_2W_h" data-tabs="true" th:value="${type}">
+							<div class="_2-m1">
+								<div class="HNHF">
+									<div class="_9Que">
+										<ul class="_3YaF" role="tablist">
+											<li th:class="${type=='video' ? 'react-tabs _1vFD':'react-tabs'}" role="tab" id="react-tabs-0" aria-selected="true" aria-disabled="false" aria-controls="react-tabs-1" tabindex="0">
+												<a class="" target="" th:href="@{/hunt/info?type=video&value=}+${value}"><span>视频</span></a>
+											</li>
+											<li th:class="${type=='picture' ? 'react-tabs _1vFD':'react-tabs'}" role="tab" id="react-tabs-2" aria-selected="false" aria-disabled="false" aria-controls="react-tabs-3">
+												<a class="" target="" th:href="@{/hunt/info?type=picture&value=}+${value}"><span>图片</span></a>
+											</li>
+											<li th:class="${type=='panorama' ? 'react-tabs _1vFD':'react-tabs'}" role="tab" id="react-tabs-4" aria-selected="false" aria-disabled="false" aria-controls="react-tabs-5">
+												<a class="" target="" th:href="@{/hunt/info?type=panorama&value=}+${value}"><span>360°全景图</span></a>
+											</li>
+											<li th:class="${type=='user' ? 'react-tabs _1vFD':'react-tabs'}" role="tab" id="react-tabs-6" aria-selected="false" aria-disabled="false" aria-controls="react-tabs-7">
+												<a class="" target="" th:href="@{/hunt/info?type=user&value=}+${value}"><span>用户</span></a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="_1jV3 _3vqP" role="tabpanel" id="react-tabs-3" aria-labelledby="react-tabs-2"></div>
+							<div class="_1jV3 _3vqP" role="tabpanel" id="react-tabs-5" aria-labelledby="react-tabs-4"></div>
+							<div class="_1jV3 _3vqP _2WQp" role="tabpanel" id="react-tabs-7" aria-labelledby="react-tabs-6">
+								<div class="_3JqO osdS">
+									<div class="">
+										<div class="_1ANr" style="width: 100%;">
+											<div class="_2Vh5" th:each="proList,proListStat:${proPage.list}" th:style="${proListStat.index==0 ? 'width: 389px; margin-right: 8px; margin-left: 0px;':'width: 389px; margin-right: 8px; margin-left: 8px;'}">
+												<div style="margin-bottom: 16px;" th:each="pro,proStat:${proList}">
+													<a class="_2pco" th:href="@{/production/getPro/}+${pro['p_id']}">
+														<div class="_2cPJ">
+															<span class="_1oYc _31aj" th:if="${pro['p_duration']!=null}" th:text="${pro['p_duration']}"></span>
+															<div class="_1LGe _1Gim _1LNE _2G4A hUPH" th:style="'background-image:url('+${application.httpURL}+${pro['p_hiapkURL']}+')'">
+																<img th:src="${application.httpURL}+${pro['p_hiapkURL']}" alt="Winter One Love!" style="height: 100%;width: 100%">
+															</div>
+															<div class="_1Zls"></div>
+														</div>
+														<button class="_1r-m _3Wrm" th:if="${pro['p_duration']!=null}"><div class="v_ps _3bYN"></div></button>
+														<div class="_1BMp">
+															<div class="_6BjN" th:text="${pro['p_pName']}"></div>
+															<div class="_2_Td">
+																<div class="_27wB">
+																	<div class="JTA4 _2bPt undefined">
+																		<div class="_3llO _1Gim _1LNE _2G4A hUPH" th:style="'background-image:url('+${application.httpURL}+${pro['u_headURL']}+')'">
+																			<img th:src="${application.httpURL}+${pro['u_headURL']}" alt="">
+																		</div>
+																	</div>
+																	<div class="_26az" th:text="${pro['u_userName']}"></div>
+																</div>
+																<div class="_2DgY">
+																	<button class="_2J1J">
+																		<div class="_2Iqc sQis _3Dfx _1OVb">
+																			<svg viewBox="0 0 40 40">
+																				<path fill="#87b9ff" d="M28.387 13.375h1.446c2.781.115 5 2.403 5 5.208a5.194 5.194 0 0 1-1.701 3.85l-.515 10.398a2.5 2.5 0 0 1-2.497 2.376H6.666a2.5 2.5 0 0 1-2.5-2.5V15.874a2.5 2.5 0 0 1 2.5-2.5h5.344c2.752-.787 4.168-2.653 4.247-5.599a4.958 4.958 0 1 1 9.908-.276l-.001.11c.006.513-.014 1.034-.054 1.562a24.287 24.287 0 0 1-.714 4.203h2.989z"></path>
+																				<path fill="none" stroke="#3d85ec" stroke-width="2.5" d="M29.833 14.625h-6.047l.401-1.561c.355-1.381.58-2.71.678-3.987a17 17 0 0 0 .051-1.494l.001-.083a3.708 3.708 0 1 0-7.41.207l.001.102c-.094 3.486-1.871 5.829-5.153 6.767l-.168.048H6.668c-.69 0-1.25.56-1.25 1.25v16.833c0 .69.56 1.25 1.25 1.25h23.454a1.25 1.25 0 0 0 1.248-1.188l.54-10.913.381-.347a3.944 3.944 0 0 0 1.293-2.927c0-2.126-1.681-3.872-3.75-3.958z"></path>
+																				<path fill="#5d99ec" d="M6.671 15.89h7.079v16.825H6.671z"></path>
+																				<path fill="#3d85ec" d="M11.25 14.375h2.5v20.833h-2.5V14.375z"></path>
+																			</svg>
+																		</div>[[${pro['like_num']}]]
+																	</button>
+																	<div class="_2J1J">
+																		<div class="_2Iqc sQis _2tlM _1OVb">
+																			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32"><path fill="#FFFFFF" d="M12.087 23.333h15.246V6H4.666v17.333h3.359v2.934l4.062-2.934zm-6.084 5.08L6 28.412v-3.078H4a1.333 1.333 0 0 1-1.333-1.333V5.334c0-.736.597-1.333 1.333-1.333h24c.736 0 1.333.597 1.333 1.333v18.667c0 .736-.597 1.333-1.333 1.333H12.677l-4.991 3.727a1 1 0 0 1-1.683-.647z"></path></svg>
+																		</div>[[${pro['commonNum']}]]</div>
+																</div>
+															</div>
+														</div>
+													</a>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="_1jV3 _3vqP" role="tabpanel" id="react-tabs-9" aria-labelledby="react-tabs-8"></div>
+						</div>
+					</div>
+					<div th:value="${proPage.pageSize}" class="load" style="opacity: 0;text-align: center;position: relative;top: -20px;background-color: #F7F8F9;margin-bottom: 30px;">
+						<img th:src="@{/explore/img/load.gif}" width="60px" height="50px"/>
+						<span style="font-size: 14px;position: absolute;bottom: 22px;left: 51.2%;color: #595959;">正在加载</span>
+					</div>
+				</div>
+				<div th:replace="html/end :: footerCopy"></div>
+			</div>
+		</div>
+		<script th:src="@{/seek/js/seek.js}"></script>
+		<script>
+            //滚动监听
+            $(window).scroll(function(){
+                if (($(window).scrollTop() + $(window).height()) > $(document).height()-1) {
+                    setTimeout($(".load").css("opacity","1"),30000);
+                    var value=$("#import").val();
+                    var pageIndex=$(".load").attr("value");
+                    $.post("/hunt/infoAjax",{value:value,type:'panorama',currPage:pageIndex,pageSize:39},function (data) {
+                        if(data!=null && data[0].length!=0){
+                            var content="";
+                            var divArray=$("._2Vh5");
+                            for(var i=0;i<3;i++){
+                                for (var j=0;j<data[i].length;j++){
+                                    content="<div style=\"margin-bottom: 16px;\"><a class=\"_2pco\" href=\"/production/getPro/"+data[i][j]['p_id']+"\"><div class=\"_2cPJ\">";
+                                    if(data[i][j]['p_duration']!=undefined&&data[i][j]['p_duration']!=null){
+                                        content+="<span class=\"_1oYc _31aj\">"+data[i][j]['p_duration']+"</span>";
+                                    }
+                                    content+="<div class=\"_1LGe _1Gim _1LNE _2G4A hUPH\" style=\"background-image:url(https://free-angle.oss-cn-beijing.aliyuncs.com/"+data[i][j]['p_hiapkURL']+")\">"+
+                                        "<img src=\"https://free-angle.oss-cn-beijing.aliyuncs.com/"+data[i][j]['p_hiapkURL']+"\" alt=\"Winter One Love!\" style=\"height: 100%;width: 100%\"></div>" +
+                                        "<div class=\"_1Zls\"></div></div>";
+                                    if(data[i][j]['p_duration']!=undefined&&data[i][j]['p_duration']!=null){
+                                        content+="<button class=\"_1r-m _3Wrm\"><div class=\"v_ps _3bYN\"></div></button>";
+                                    }
+                                    content+="<div class=\"_1BMp\"><div class=\"_6BjN\">"+data[i][j]['p_pName']+"</div><div class=\"_2_Td\"><div class=\"_27wB\">";
+                                    content+="<div class=\"JTA4 _2bPt undefined\"><div class=\"_3llO _1Gim _1LNE _2G4A hUPH\" style=\"background-image:url(https://free-angle.oss-cn-beijing.aliyuncs.com/"+data[i][j]['u_headURL']+")\">";
+                                    content+="<img src=\"https://free-angle.oss-cn-beijing.aliyuncs.com/"+data[i][j]['u_headURL']+"\" alt=\"\"></div></div><div class=\"_26az\">"+data[i][j]['u_userName']+"</div>";
+                                    content+="</div><div class=\"_2DgY\"><button class=\"_2J1J\"><div class=\"_2Iqc sQis _3Dfx _1OVb\"><svg viewBox=\"0 0 40 40\"><path fill=\"#87b9ff\" d=\"M28.387 13.375h1.446c2.781.115 5 2.403 5 5.208a5.194 5.194 0 0 1-1.701 3.85l-.515 10.398a2.5 2.5 0 0 1-2.497 2.376H6.666a2.5 2.5 0 0 1-2.5-2.5V15.874a2.5 2.5 0 0 1 2.5-2.5h5.344c2.752-.787 4.168-2.653 4.247-5.599a4.958 4.958 0 1 1 9.908-.276l-.001.11c.006.513-.014 1.034-.054 1.562a24.287 24.287 0 0 1-.714 4.203h2.989z\"></path>"+
+                                        "<path fill=\"none\" stroke=\"#3d85ec\" stroke-width=\"2.5\" d=\"M29.833 14.625h-6.047l.401-1.561c.355-1.381.58-2.71.678-3.987a17 17 0 0 0 .051-1.494l.001-.083a3.708 3.708 0 1 0-7.41.207l.001.102c-.094 3.486-1.871 5.829-5.153 6.767l-.168.048H6.668c-.69 0-1.25.56-1.25 1.25v16.833c0 .69.56 1.25 1.25 1.25h23.454a1.25 1.25 0 0 0 1.248-1.188l.54-10.913.381-.347a3.944 3.944 0 0 0 1.293-2.927c0-2.126-1.681-3.872-3.75-3.958z\"></path>" +
+                                        "<path fill=\"#5d99ec\" d=\"M6.671 15.89h7.079v16.825H6.671z\"></path><path fill=\"#3d85ec\" d=\"M11.25 14.375h2.5v20.833h-2.5V14.375z\"></path></svg>" +
+                                        "</div>"+data[i][j]['like_num']+"</button><div class=\"_2J1J\"><div class=\"_2Iqc sQis _2tlM _1OVb\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 32 32\"><path fill=\"#FFFFFF\" d=\"M12.087 23.333h15.246V6H4.666v17.333h3.359v2.934l4.062-2.934zm-6.084 5.08L6 28.412v-3.078H4a1.333 1.333 0 0 1-1.333-1.333V5.334c0-.736.597-1.333 1.333-1.333h24c.736 0 1.333.597 1.333 1.333v18.667c0 .736-.597 1.333-1.333 1.333H12.677l-4.991 3.727a1 1 0 0 1-1.683-.647z\"></path></svg>"+
+                                        "</div>"+data[i][j]['commonNum']+"</div></div></div></div></a></div>";
+                                    divArray.eq(i).append($(content));
+                                    $("._2pco").on("mouseover",function () {
+                                        $(this).children("._2cPJ").children("._1Zls").css("opacity","0.3");
+                                        $(this).children("._1BMp").css("opacity","1");
+                                        $(this).children("._3Wrm").css("opacity","1");
+                                    })
+                                    $("._2pco").on("mouseout",function () {
+                                        $(this).children("._2cPJ").children("._1Zls").css("opacity","0");
+                                        $(this).children("._1BMp").css("opacity","0");
+                                        $(this).children("._3Wrm").css("opacity","0");
+                                    })
+                                }
+                            }
+                            $(".load").attr("value",parseInt(pageIndex)+39);
+                        }else{
+                            $ (window).unbind ('scroll');
+                        }
+                        $(".load").css("opacity","0");
+                    },"json");
+                }
+            });
+		</script>
+	</body>
+</html>

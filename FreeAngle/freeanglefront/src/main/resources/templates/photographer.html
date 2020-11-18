@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>全球航拍爱好者和专业摄影师的社交平台 | 自由角度</title>
+		<link rel="shortcut icon" th:href="@{/common/img/title.png}" href="/common/img/title.png" type="image/x-icon"/>
+		<link rel="stylesheet" th:href="@{/common/css/common.css}" href="/common/css/common.css" />
+		<link rel="stylesheet" th:href="@{/photographer/css/photographer.css}" href="/photographer/css/photographer.css" />
+	</head>
+	<body>
+		<div id="root">
+			<div class="_2gbz">
+				<div th:replace="html/head :: navCopy"></div>
+				<div class="_19U0">
+					<div class="nymI">
+						<div class="_3EK7">
+							<div>
+								<div class="_5nhm">
+									<div class="_2ej4">
+										<ul class="_35dm">
+											<li th:class="${type==1 ? 'react-tabs _2CNM':'react-tabs'}" role="tab" id="react-tabs-8" aria-selected="true" aria-disabled="false" aria-controls="react-tabs-9" tabindex="0">
+												<a class="" target="" href="/user/getUserList?type=1">
+													<span>推荐摄影师</span>
+												</a>
+											</li>
+											<li th:class="${type==2 ? 'react-tabs _2CNM':'react-tabs'}" role="tab" id="react-tabs-10" aria-selected="false" aria-disabled="false" aria-controls="react-tabs-11">
+												<a class="" target="" href="/user/getUserList?type=2">
+													<span>热门摄影师</span>
+												</a>
+											</li>
+											<li th:class="${type==3 ? 'react-tabs _2CNM':'react-tabs'}" role="tab" id="react-tabs-12" aria-selected="false" aria-disabled="false" aria-controls="react-tabs-13">
+												<a class="" target="" href="/user/getUserList?type=3">
+													<span>新晋摄影师</span>
+												</a>
+											</li>
+										</ul>
+									</div>
+								</div>
+							</div>
+							<div class="_3y8Z">
+								<div class="_2hri">
+									<div class="BN5c _2eAS" role="menuitem" tabindex="-1">
+										<div role="button" tabindex="0" class="Vnj8" aria-expanded="false">
+											<div class="tjJI">
+												<span>个人&amp;公司</span>
+												<div class="_3XiC _1a-Q" style="margin-top: 50px">
+													<div class="lLO5 jZEM sQis _39d0">
+														<svg viewBox="0 0 48 48">
+															<path fill="#333" fill-rule="nonzero" d="M18.344 24.728l11.313 11.313.707-.707-11.313-11.313 11.313-11.314-.707-.707-12.021 12.021z"></path>
+														</svg>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div tabindex="-1" role="menu" aria-hidden="true" class="_27sX _192N">
+											<div class="_1B4y">
+												<div type="button" tabindex="0" class="_15Ob YgaV -Z6V">
+													<div class="_3qw6">
+														<span>个人&amp;公司</span>
+													</div>
+												</div>
+												<div type="button" tabindex="0" class="_15Ob -Z6V">
+													<div class="_3qw6">
+														<span>个人</span>
+													</div>
+												</div>
+												<div type="button" tabindex="0" class="_15Ob -Z6V">
+													<div class="_3qw6">
+														<span>公司</span>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div>
+							<div class="react-tabs__tab-panel react-tabs__tab-panel--selected">
+								<div class="_1Yx4">
+									<div class="oJjm _3Qca" th:each="user,userStat:${userPage.list}">
+										<div class="_1tZU">
+											<a th:href="@{/user/getUser/}+${user.id}">
+												<div class="JTA4 q76s undefined">
+													<div class="_3llO _1Gim _1LNE _2G4A hUPH">
+														<img th:src="${application.httpURL}+${user.headURL}" width="100%" height="100%"/>
+													</div>
+												</div>
+											</a>
+											<div class="_3oAA">
+												<div class="_1fWk">
+													<div class="_3pqY">
+														<a class="rQ1O" target="" href="/user/linttao333"><span th:text="${user.userName}"></span></a>
+														<div class="_3BJK">
+															<div class="wqaX _2OLD sQis" th:if="${user.ifexpert!=0}">
+																<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+																	<g fill="none" fill-rule="evenodd">
+																		<path d="M8 0C3.583 0 0 3.583 0 8s3.583 8 8 8 8-3.583 8-8-3.583-8-8-8z" fill="#FFCA44" fill-rule="nonzero"></path>
+																		<path d="M10.861 8.361c-.167.445-.361.861-.528 1.278-.166.417-.333.805-.5 1.139-.139.333-.25.61-.333.833-.111.278-.167.361-.167.389-.027.083-.11.167-.166.25-.084.111-.167.167-.278.25-.111.083-.222.167-.389.194a1.503 1.503 0 0 1-.528.084c-.166 0-.36-.028-.5-.111-.166-.056-.25-.14-.36-.223-.112-.11-.168-.166-.25-.277-.056-.111-.112-.167-.14-.223 0-.027-.055-.11-.11-.25-.056-.166-.14-.333-.195-.527-.056-.195-.167-.473-.25-.75-.084-.278-.195-.528-.306-.834-.222-.666-.528-1.416-.833-2.25-.111-.25-.167-.472-.278-.61-.083-.167-.167-.223-.278-.306a.455.455 0 0 0-.333-.056 3.455 3.455 0 0 0-.445.111 1.141 1.141 0 0 1 0-.61c.056-.168.14-.362.223-.529a1.22 1.22 0 0 1 .444-.389c.167-.11.389-.166.611-.222.445-.11.834-.11 1.14.056.305.166.527.416.638.75.028.11.111.305.222.61.111.306.25.668.417 1.084.167.417.305.861.5 1.334.167.5.361.944.528 1.416l1.916-4.5c.111-.194.25-.36.473-.444a2.93 2.93 0 0 1 .666-.167c.25-.028.528-.028.834.028-.528 1.278-1.028 2.444-1.445 3.472z" fill="#FFF"></path>
+																	</g>
+																</svg>
+															</div>
+															<div class="wqaX _2OLD sQis" th:if="${user.ifrecommend!=0}">
+																<svg viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
+																	<g fill="none" fill-rule="evenodd"><circle fill="#3CA6F5" cx="8" cy="8" r="8"></circle>
+																	<path d="M10.251 4c.709 0 1.288.142 1.74.427.45.285.676.691.676 1.219v5.896h-.532c-.386-.584-1.014-.875-1.884-.875-.483 0-.91.128-1.28.385s-.604.573-.7.948h-.049V4.646c.403-.43 1.08-.646 2.03-.646zM5.749 4c-.709 0-1.288.142-1.74.427-.45.285-.676.691-.676 1.219v5.896h.532c.386-.584 1.014-.875 1.884-.875.483 0 .91.128 1.28.385s.604.573.7.948h.049V4.646C7.375 4.216 6.698 4 5.748 4z" fill="#FFF">
+																		</path>
+																	</g>
+																</svg>
+															</div>
+														</div>
+													</div>
+													<div class="_1Pcv">中国</div>
+													<div class="_1Mh4">
+														<div class="_22r_">
+															<span class="_38hy" th:text="${user.prestige}"></span>
+															<span>声望</span>
+														</div>
+														<div class="_22r_">
+															<span class="_38hy" th:text="${user.fansList.size()}"></span>
+															<span>粉丝</span>
+														</div>
+														<div class="_22r_">
+															<span class="_38hy" th:text="${user.productionList.size()}"></span>
+															<span>作品</span>
+														</div>
+													</div>
+												</div>
+												<button th:if="${session.user==null}" type="button" class="Xwom _123Z _1Don _3VBA _1LJQ _1TkV" onclick="javascript:location.href='/login'">
+													<div class="_3HO0">
+														<span>关注</span>
+													</div>
+												</button>
+												<button th:if="${session.user!=null and session.user.id!=user.id}" type="button" th:class="${#frmUtils.getListIsId(user.fansList,session.user?.id) ? 'Xwom _123Z _1Don _3VBA _1LJQ _1TkV _3-aF':'Xwom _123Z _1Don _3VBA _1LJQ _1TkV'}" th:value="${user.id}" onclick="executeattention(this)">
+													<div class="_3HO0">
+														<span th:text="${#frmUtils.getListIsId(user.fansList,session.user?.id) ? '已关注':'关注'}">已关注</span>
+													</div>
+												</button>
+											</div>
+										</div>
+										<div class="_1iEQ">
+											<a class="_2ywt _2fu6" target="" th:each="mens:${#numbers.sequence(0,2)}" th:if="${user.productionList.size()>mens}" th:href="@{/production/getPro/}+${user.productionList[mens].id}">
+												<div class="_2gPg _1Gim _1LNE _2G4A hUPH _2xhE" th:style="'background-image: url('+${application.httpURL}+${user.productionList[mens].hiapkURL}+');'">
+													<img th:src="${application.httpURL}+${user.productionList[mens].hiapkURL}" alt="宁波三江六岸" width="100%" height="100%">
+												</div>
+												<div class="_3i67" th:if="${user.productionList[mens].duration!=null and user.productionList[mens].duration!=''}"><span class="_1oYc" th:text="${user.productionList[mens].duration}"></span></div>
+											</a>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						</div>
+						<div class="_2_3u">
+							<ul class="rc-pagination pOYt mini" unselectable="unselectable">
+								<li title="上一页" th:class="${userPage.currPageNo<=1 ? 'rc-pagination-disabled rc-pagination-prev':'rc-pagination-prev'}" aria-disabled="true">
+									<a th:href="@{/user/getUserList(type=${type},currPage=${userPage.currPageNo-1})}">
+										<div class="_1Oh5 _1a-Q _1_oh EYLS">
+											<div class="lLO5 jZEM sQis">
+												<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+													<path d="M14.89 21.449c-.045.032-.088.069-.129.11l-2.053 2.071-.002.002a1 1 0 0 0 .01 1.414l15.938 15.706a1 1 0 0 0 1.409-.005l2.044-2.044a1 1 0 0 0-.004-1.419L19.008 24.35 32.1 11.215a1 1 0 0 0-.001-1.413l-2.094-2.094a1 1 0 0 0-1.415.001l-13.7 13.74z" fill="#B2B2B2" fill-rule="evenodd"></path>
+												</svg>
+											</div>
+										</div>
+									</a>
+								</li>
+								<li th:each="mens:${#numbers.sequence(1,userPage.totalPageCount)}" th:title="${mens}" th:class="${mens==userPage.currPageNo ? 'rc-pagination-item rc-pagination-item-1 rc-pagination-item-active':'rc-pagination-item rc-pagination-item-2'}">
+									<a th:text="${mens}" th:href="@{/user/getUserList(type=${type},currPage=${mens})}"></a>
+								</li>
+								<li title="下一页" th:class="${userPage.currPageNo<userPage.totalPageCount ? 'rc-pagination-next':'rc-pagination-disabled rc-pagination-next'}" aria-disabled="false" tabindex="0">
+									<a th:href="@{/user/getUserList(type=${type},currPage=${userPage.currPageNo+1})}">
+										<div class="_1Oh5 _1a-Q _1_oh EYLS">
+											<div class="lLO5 jZEM sQis A-w_">
+												<svg viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg" style="transform: rotate(180deg)">
+													<path d="M14.89 21.449c-.045.032-.088.069-.129.11l-2.053 2.071-.002.002a1 1 0 0 0 .01 1.414l15.938 15.706a1 1 0 0 0 1.409-.005l2.044-2.044a1 1 0 0 0-.004-1.419L19.008 24.35 32.1 11.215a1 1 0 0 0-.001-1.413l-2.094-2.094a1 1 0 0 0-1.415.001l-13.7 13.74z" fill="#B2B2B2" fill-rule="evenodd"></path>
+												</svg>
+											</div>
+										</div>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div th:replace="html/end :: footerCopy"></div>
+			</div>
+		</div>
+	<script th:src="@{/photographer/js/photographer.js}"></script>
+	</body>
+</html>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyoung.project.dao.GoodsDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.soyoung.project.entity.GoodsDO">
+        <id column="id" property="id"/>
+        <result column="gname" property="gname"/>
+        <result column="created" property="created"/>
+        <result column="created_user" property="createdUser"/>
+        <result column="phone" property="phone"/>
+        <result column="type" property="type"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="sql_columns">
+        id, gname, created, created_user, phone, type
+    </sql>
+
+    <!-- 条件查询 梅晓寒 -->
+    <select id="listGoodsCondition" resultMap="BaseResultMap">
+        select id,gname, created, created_user, phone, type from goods where 1=1
+        <if test="param != null">
+            <if test="param.gname != null and param.gname != ''">
+                and gname like concat('%',#{param.gname},'%')
+            </if>
+            <if test="param.created != null and param.created != ''">
+                and created = #{param.created}
+            </if>
+            <if test="param.createdUser != null and param.createdUser != ''">
+                and created_user = #{param.createdUser}
+            </if>
+            <if test="param.phone != null and param.phone != ''">
+                and phone = #{param.phone}
+            </if>
+            <if test="param.type != null and param.type != ''">
+                and type = #{param.type}
+            </if>
+        </if>
+    </select>
+    
+    <!-- 增加物品 梅晓寒 -->
+    <insert id="insertGoods">
+        insert into goods(gname,created,created_user,phone,type) values(#{gname},#{created},#{createdUser},#{phone},#{type})
+    </insert>
+
+    <!-- 修改物品 梅晓寒 -->
+    <update id="updateGoods">
+        update goods set gname=#{gname},created=#{created},created_user=#{createdUser},phone=#{phone},type=#{type}
+        where id=#{id}
+    </update>
+
+    <!-- 删除物品 梅晓寒 -->
+    <delete id="deleteGoods">
+        delete from goods where id=#{id}
+    </delete>
+</mapper>

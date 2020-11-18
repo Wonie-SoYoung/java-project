@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyoung.photo.freeanglequeen.dao.ReportMapper">
+
+    <!-- 查询所有举报信息 -->
+    <!--<select id="selReportListAll" resultType="Report">
+        select * from report
+          where 1=1
+        <if test="reType!=null">
+            and reType=#{reType}
+        </if>
+    </select>-->
+
+    <!-- 根据 rid 修改isnot -->
+    <update id="updReportRid" parameterType="Integer">
+        update report
+          set
+        isnot=#{isnot}
+        where
+          rid=#{rid}
+    </update>
+
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyoung.photo.freeanglequeen.dao.MedalMapper">
+
+    <!-- 范宏伦 -->
+    <!-- 查询所有勋章信息 -->
+    <select id="selMedalList" resultType="Medal">
+        select mId,mUrl,describes,createTime,updateTime from medal
+    </select>
+    <!-- 根据 mid 查询勋章信息 -->
+    <select id="selMedalMid" resultType="Medal">
+        select mId,mUrl,describes,createTime,updateTime from medal
+          where mId = #{mid}
+    </select>
+    <!-- 添加勋章信息 -->
+    <insert id="insMedal" parameterType="Medal">
+        insert into medal
+        (mId,mUrl,describes,createTime,updateTime)
+          value
+        (default,#{murl},#{describes},#{createTime},null)
+    </insert>
+    <!-- 修改勋章信息 -->
+    <update id="updMedalMid" parameterType="Medal">
+        update medal
+          set
+        describes = #{describes},updateTime = #{updateTime}
+          where
+        mId = #{mid}
+    </update>
+
+    <!-- 陈海嘉 -->
+    <!-- //查询全部
+    public List<Medal> getMdealList();-->
+    <select id="getMdealList" resultType="map">
+        select * from medal
+    </select>
+
+
+</mapper>

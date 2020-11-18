@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>全球航拍爱好者和专业摄影师的社交平台 | 自由角度</title>
+		<link rel="shortcut icon" th:href="@{/common/img/title.png}" href="/common/img/title.png" type="image/x-icon"/>
+		<link rel="stylesheet" th:href="@{/common/css/common.css}" href="/common/css/common.css" />
+		<link rel="stylesheet" th:href="@{/alertuser/css/alertpersonal.css}" href="/alertuser/css/alertpersonal.css" />
+	</head>
+	<body>
+		<div id="root">
+			<div class="_2gbz">
+				<div th:replace="html/head :: navCopy"></div>
+				<div class="_19U0">
+					<div class="xiWG">
+						<form class="SHEE" action="/user/updateuser" method="post" enctype="multipart/form-data">
+							<!-- id -->
+							<input type="hidden" name="id" th:value="${user.id}">
+							<input type="hidden" name="sex" th:value="${user.sex}">
+							<input type="hidden" name="headURL" th:value="${user.headURL}">
+							<div class="_3eau" aria-disabled="false">
+								<div class="JTA4 _2t7N undefined">
+									<div class="_3llO _1Gim _1LNE _2G4A hUPH">
+										<img th:src="${application.httpURL}+${user.headURL}" alt="" width="100%" height="100%" id="preview-canvas">
+										<input id="headUrl" accept=".jpg, .png, .jpeg" type="file" autocomplete="off" name="file"></div>
+									</div>
+								</div>
+							<div class="_3g_I">
+								<div class="iXLB ePKS">
+									<label for="username">
+										<div class="_2UVJ"><span>昵称</span></div>
+										<input id="username" name="userName" type="text" th:value="${user.userName}">
+									</label>
+								</div>
+								<div class="_3hMV" style="display: none;"><span></span></div>
+							</div>
+							<div class="_3g_I">
+								<div class="EbTa _3luR" id="gender">
+									<label for="gender" class="XvQu">
+										<div class="_1IbW">
+											<span>性别</span>
+										</div>
+										<div class="_2uwR">
+											<label for="" th:class="${user.sex=='男' ? '_2DQI _1RS_ _2Y8n':'_2DQI _1RS_'}">
+												<div class="ddFV">
+													<input type="radio" id="MALE" value="MALE" checked="">
+													<div class="_2niI"></div>
+												</div>
+												<span>男</span>
+											</label>
+											<label for="" th:class="${user.sex=='女' ? '_2DQI _1RS_ _2Y8n':'_2DQI _1RS_'}">
+												<div class="ddFV">
+													<input type="radio" id="FEMALE" value="FEMALE">
+													<div class="_2niI"></div>
+												</div>
+												<span>女</span>
+											</label>
+											<label for="" th:class="${user.sex=='不公布' ? '_2DQI _1RS_ _2Y8n':'_2DQI _1RS_'}">
+												<div class="ddFV">
+													<input type="radio" id="UNDISCLOSED" value="UNDISCLOSED">
+													<div class="_2niI"></div>
+												</div>
+												<span>不公开</span>
+											</label>
+										</div>
+								</label>
+							</div>
+							</div>
+							<div class="_3g_I">
+								<div class="_2QW5">
+									<label for="country">
+										<div class="_3U9T">
+											<span>国家 / 地区</span>
+										</div>
+										<div class="_2eAS" role="menuitem" tabindex="-1">
+											<div role="button" tabindex="0" class="Vnj8" aria-expanded="false">
+												<div class="I24N" th:each="state:${stateList}" th:if="${state.id==user.stateid}">
+													<input id="" class="_3tMe" tabindex="0" readonly="" autocomplete="off" th:value="${state.sName}">
+													<input id="country" type="hidden" name="stateid" th:value="${state.id}">
+													<div class="_3xGm _1a-Q">
+														<div class="lLO5 jZEM sQis _39d0">
+															<svg viewBox="0 0 48 48">
+																<path fill="#333" fill-rule="nonzero" d="M18.344 24.728l11.313 11.313.707-.707-11.313-11.313 11.313-11.314-.707-.707-12.021 12.021z"></path>
+															</svg>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div tabindex="-1" role="menu" aria-hidden="true" class="_3caY _27sX RfZQ _3RkB">
+												<div class="_1B4y L7_O">
+													<div class="Fgiu">
+														<ul class="_2KCW" role="menu">
+															<li class="_3YFh" role="menuitem" th:each="state:${stateList}" th:value="${state.id}">
+																<span class="_1skW">
+																	<span class="_2hdk">[[${state.sName}]]</span>
+																</span>
+															</li>
+														</ul>
+													</div>
+												</div>
+											</div>
+										</div>
+									</label>
+								</div>
+							</div>
+							<div class="_3g_I">
+								<div class="_2sB4">
+									<label for="introduction">
+										<div class="_3qSw">
+											<span>简介</span>
+										</div>
+										<textarea id="introduction" name="intro" rows="7" type="text" style="height: auto;">[[${user.intro}]]</textarea>
+									</label>
+								</div>
+							</div>
+							<div class="_3g_I">
+								<div role="checkbox" aria-hidden="true" aria-checked="true" class="_3Wca">
+									<label for="subscribed">
+										<div class="_3oWP"></div>
+										<input type="checkbox" value="true" checked="">
+										<div class="LKNy">
+											<span>获取天空之城最新活动、服务、资讯等信息。</span>
+										</div>
+									</label>
+								</div>
+							</div>
+							<div class="_3g_I _1kU4 _112F">
+								<button type="button" class="Xwom kdjc _1TkV tijiao">
+									<div class="_3HO0"><span>保存</span></div>
+								</button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div th:replace="html/end :: footerCopy"></div>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" th:src="@{/alertuser/js/alterpersonal.js}" ></script>
+</html>

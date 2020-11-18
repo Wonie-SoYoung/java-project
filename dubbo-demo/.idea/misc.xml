@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/dubbodemoapi" />
+    <file type="web" url="file://$PROJECT_DIR$/dubbodemoconsumer" />
+    <file type="web" url="file://$PROJECT_DIR$/dubbodemoprovider" />
+  </component>
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/dubbodemoapi/pom.xml" />
+        <option value="$PROJECT_DIR$/dubbodemoprovider/pom.xml" />
+        <option value="$PROJECT_DIR$/dubbodemoconsumer/pom.xml" />
+        <option value="$PROJECT_DIR$/dubbodemobootconsumer/pom.xml" />
+        <option value="$PROJECT_DIR$/dubbodemobootprovider/pom.xml" />
+      </list>
+    </option>
+  </component>
+</project>

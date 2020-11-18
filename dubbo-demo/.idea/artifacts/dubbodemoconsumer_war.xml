@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="dubbodemoconsumer:war">
+    <output-path>$PROJECT_DIR$/dubbodemoconsumer/target</output-path>
+    <root id="archive" name="dubbo-demo-consumer-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="dubbodemoconsumer:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyoung.photo.freeanglequeen.dao.HotlabelsMapper">
+
+    <!-- 范宏伦 -->
+    <!-- 一级标签查询 -->
+    <select id="selLabelTableListHId" resultType="Hotlabels">
+        select hId,hName,finehName,hUrl,parentId,ishot from hotlabels
+          where
+        hId=1 or hId=2 or hId = 3 or hId = 4;
+    </select>
+    <!-- 二级标签查询 -->
+    <select id="selLabelTableListParentId" resultType="Hotlabels">
+        select hId,hName,finehName,hUrl,parentId,ishot from hotlabels
+	      where 1=1
+        <if test="parentId!=null">
+            and parentId = #{parentId};
+        </if>
+
+    </select>
+    <!-- 查询全部标签 -->
+    <select id="selLabelTableListAll" resultType="Hotlabels">
+        select hId,hName,finehName,hUrl,parentId,ishot from hotlabels
+          where 1=1
+        <if test="parentId!=null">
+            and parentId=#{parentId}
+        </if>
+        <if test="hId!=null">
+            and hId=#{hId}
+        </if>
+          order by hId
+    </select>
+    <!-- 根据 hId 查询标签信息 -->
+    <select id="selHotlabelsHid" resultType="Hotlabels">
+        select hId,hName,finehName,hUrl,parentId,ishot from hotlabels
+          where
+        hId = #{hId}
+    </select>
+    <!-- 添加标签信息 -->
+    <insert id="insHotlabels" parameterType="Hotlabels">
+        insert into hotlabels
+        (hId,hName,finehName,hUrl,parentId,ishot)
+          values
+        (default,#{hName},#{finehName},#{hUrl},#{parentId},#{ishot})
+    </insert>
+    <!-- 根据 hId 修改标签信息 -->
+    <update id="updHotlabelsHid" parameterType="Hotlabels">
+        update hotlabels
+          set
+        hName=#{hName},finehName=#{finehName},hUrl=#{hUrl},parentId=#{parentId},ishot=#{ishot}
+          where
+        hId=#{hId}
+    </update>
+    <!-- 查询热门标签的数据条数 （前台热门标签的显示条数不得超过24条）-->
+    <select id="selHotlabelsIshot" resultType="Integer">
+        select count(1) from hotlabels
+          where 1=1
+        and ishot =1
+    </select>
+    <!-- 删除热门标签 -->
+    <delete id="delHotlabelsHid" parameterType="Integer">
+        delete from hotlabels
+          where
+        hId = #{hId}
+    </delete>
+
+</mapper>

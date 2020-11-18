@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>全球航拍爱好者和专业摄影师的社交平台 | 自由角度</title>
+		<link rel="shortcut icon" th:href="@{/common/img/title.png}" href="/common/img/title.png" type="image/x-icon"/>
+		<link rel="stylesheet" th:href="@{/common/css/common.css}" href="/common/css/common.css" />
+		<link rel="stylesheet" th:href="@{/uploading/css/uploading.css}" href="/uploading/css/uploading.css" />
+	</head>
+	<body onunload="uploadload();">
+		<div id="root">
+			<div class="_2gbz">
+				<div th:replace="html/head :: navCopy"></div>
+				<div class="_19U0">
+					<div class="_15hr">
+						<div class="_2PxM">
+							<h1><span>发布<span id="con">图片</span></span></h1></div>
+						<div class="_3Ap-">
+							<!-- 选择文件 -->
+							<div class="yizR _2Hpe">
+								<div class="_1Kfv _3Wkt" aria-disabled="false" style="position: relative;">
+									<div class="_2HCS Qgfg sQis"><img src="//spcn-webfront.skypixel.com/skypixel/v2/public/assets/images/upload.968392a7.svg" alt="Upload"></div>
+									<div class="tvnh">
+										<span>选择
+											<span th:each="proType:${application.dict}" th:if="${proType.id==type}">[[${proType.valueName}]]</span>
+										</span>
+									</div>
+									<div class="_2PII"><span>或将
+										<span th:each="proType:${application.dict}" th:if="${proType.id==type}">[[${proType.valueName}]]</span>
+										拖放至此</span>
+									</div>
+									<input type="hidden" name="uploadtype" th:value="${type}">
+									<input name="file" th:each="proType:${application.dict}" th:if="${proType.id==type and proType.valueName=='图片'}" id="html5_1da550j8t1trc15hs1nrq11e51rcp3" accept=".jpg, .png, .jpeg" type="file" multiple="" style="position:absolute;display: inline-block;width: 100%;height: 100%;cursor: pointer;opacity: 0;">
+									<input name="file" th:each="proType:${application.dict}" th:if="${proType.id==type and proType.valueName=='视频'}" id="html5_1da550j8t1trc15hs1nrq11e51rcp3" accept=".wmv, .wm, .asf, .asx, .rmvb, .rm, .ra, .ram, .mov, .3gp, .mp4, .mp4v, .m4v, .mkv, .avi, .flv, .f4v" type="file"  multiple="" style="position:absolute;display: inline-block;width: 100%;height: 100%;cursor: pointer;opacity: 0;">
+									<input name="file" th:each="proType:${application.dict}" th:if="${proType.id==type and proType.valueName=='360全景图'}" id="html5_1da550j8t1trc15hs1nrq11e51rcp3" accept=".jpg, .png, .jpeg" type="file" multiple="" style="position:absolute;display: inline-block;width: 100%;height: 100%;cursor: pointer;opacity: 0;">
+								</div>
+								<div class="LRQt">
+									<ul class="_1Fkd">
+										<li><span>一旦将您的作品发布到SkyPixel，即表示您同意遵守SkyPixel的<a class="" target="" href="/terms"><span>使用条款</span></a>和
+											<a class="" target="" href="/guidelines"><span>内容指引</span></a>。</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+							<!-- 填入发布信息 -->
+							<div class="yizR _1zEz" style="display: none;">
+								<!-- 图片 -->
+								<div class="_3_WY" style="display: none;">
+									<div class="_2JsV">
+										<div class="_28Hw"><span>共1张，还能上传8张</span></div>
+										<div class="_1Vk3">
+											<div class="_1Kfv _25dy" aria-disabled="false" style="position: relative;">
+												<div class="_2HCS Qgfg sQis"><img src="//spcn-webfront.skypixel.com/skypixel/v2/public/assets/images/upload.968392a7.svg" alt="Upload"></div>
+												<div class="tvnh"><span>选择<span>图片</span></span>
+												</div>
+												<div class="_2PII"><span>或将<span>图片</span>拖放至此</span>
+												</div><input id="goon" accept=".jpg, .png, .jpeg" type="file" multiple="" autocomplete="off" style="position: absolute;width: 100%;height: 100%;cursor: pointer;cursor: pointer;opacity: 0;">
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- 视频 -->
+								<div class="_3FRS" style="display: none;">
+									<div class="_2oFr">
+										<canvas id="preview-canvas" height="250" width="444"></canvas>
+										<div class="_2egK" style="display: none;">
+											<button class="_33fg" style="display: none;">
+												<div class="_3aNE Qgfg sQis">
+													<svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+														<path d="M10.381 29.252c.148-11.521 9.534-20.815 21.09-20.815 11.65 0 21.092 9.443 21.092 21.091 0 11.65-9.443 21.092-21.091 21.092v-4.038c9.418 0 17.053-7.635 17.053-17.054 0-9.418-7.635-17.053-17.053-17.053-9.327 0-16.905 7.486-17.052 16.777h4.023a1 1 0 0 1 .828 1.56l-5.867 8.685a1 1 0 0 1-1.658 0L5.88 30.812a1 1 0 0 1 .828-1.56h3.674z" fill="#B0B0B0" fill-rule="evenodd"></path>
+													</svg>
+												</div>
+												<div class="RP7m">
+													<span>上传失败，<br>
+														点击重新上传</span>
+												</div>
+											</button>
+											<div class="_1DX2" >
+												<div class="_21bR _2zIZ">
+													<svg class="" viewBox="0 0 100 100">
+														<circle class="_1NCc" cx="50" cy="50" r="50"></circle>
+														<path class="_3nDh" d="
+												      M 50,50
+												      m 0,-39
+												      a 39,39 0 1 1 0,78
+												      a 39,39 0 1 1 0,-78
+												    " stroke-width="8" fill-opacity="0"></path><path class="_1BRA" d="
+												      M 50,50
+												      m 0,-39
+												      a 39,39 0 1 1 0,78
+												      a 39,39 0 1 1 0,-78
+												    " stroke-width="8" fill-opacity="0" style="stroke-dasharray: 245.044px, 245.044px; stroke-dashoffset: 245.044px;"></path></svg>
+													<div class="_2JSC _1P1v"></div>
+												</div>
+												<div class="RP7m">
+													<span>正在上传...</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="_2fru _2BJb">
+										<div class="m8dh" aria-disabled="false">
+											<div class="_3mrK">
+												<div class="_1s_V Qgfg sQis">
+													<svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+														<g fill="#B2B2B2" fill-rule="evenodd">
+															<path d="M10.25 8.45v-6.7h-7v6.335L5.12 4.35a.18.18 0 0 1 .318-.008l1.627 2.875a.25.25 0 0 0 .397.052l.845-.868a.25.25 0 0 1 .377.022l1.566 2.027zm0 .293h-7v.007h7v-.007zM3 1h7.5a.5.5 0 0 1 .5.5V9a.5.5 0 0 1-.5.5H3a.5.5 0 0 1-.5-.5V1.5A.5.5 0 0 1 3 1zm5.75 3a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5z"></path>
+															<path d="M2 2.5H1v8a.5.5 0 0 0 .5.5h8v-.75H1.75V2.5H2z"></path>
+														</g>
+													</svg>
+												</div>
+												<span>上传自定义封面</span>
+												<span id="prickbash" style="margin-left: 10px;"></span>
+											</div>
+											<input id="hiapkFile" accept=".jpg, .png, .jpeg" type="file" autocomplete="off" style="background-color: red;position: absolute;width:100px;opacity:0;top: 10px;cursor: pointer;">
+										</div>
+									</div>
+								</div>
+								<div class="_2F4g BmnQ">
+									<form action="/production/addPro" method="post" enctype="multipart/form-data">
+										<input type="hidden" name="proURL">
+										<input type="hidden" name="hiapkURL">
+										<input type="hidden" name="protypeId" th:value="${type}">
+										<input type="hidden" name="copyrightId">
+										<input type="hidden" name="privacyId">
+										<!-- 上传视频或360文件时进行后台操作 -->
+										<div class="_3g_I">
+											<div class="iXLB ePKS"><label for="title"><div class="_2UVJ"><span>标题</span></div><input id="title" type="text" value="" name="pName"></label></div>
+											<div class="_3hMV" style="display: none;"><span></span></div>
+										</div>
+										<div class="_3g_I">
+											<div class="_2sB4"><label for="description"><div class="_3qSw"><span>描述</span></div><textarea id="description" name="describes" rows="7" type="text" style="height: auto;"></textarea></label></div>
+										</div>
+										<div class="_3g_I">
+											<label for="tags" class="_3B-3">
+												<div class="_enV">
+													<span>标签（按“回车”键添加标签）</span>
+												</div>
+												<div role="button" tabindex="-1" class="l-_8 _3xVR">
+													<span class="_1F4l">
+														<div class="_3s76">
+															<input maxlength="100" name="label" placeholder="" value="" style="outline:none;">
+														</div>
+													</span>
+												</div>
+											</label>
+										</div>
+										<div class="_23HU">
+											<button type="button" class="uCPq" th:each="label:${labels}">[[${label.hName}]]</button>
+										</div>
+										<div class="_3g_I">
+											<div class="_2QW5 w5lG">
+												<label for="equipment">
+													<div class="_3U9T">
+														<span>请选择拍摄设备</span>
+													</div>
+													<div class="_2eASs" role="menuitem" tabindex="-1">
+														<div role="button" tabindex="0" class="Vnj8" aria-expanded="true">
+															<div class="I24N">
+																<input class="_3tMe" tabindex="0" readonly="" autocomplete="off" value="" style="outline:none;">
+																<input id="equipment" type="hidden" value="" name="facilityId"><div class="_3xGm _1a-Q">
+																<div class="lLO5 jZEM sQis _39d0">
+																	<svg viewBox="0 0 48 48">
+																		<path fill="#333" fill-rule="nonzero" d="M18.344 24.728l11.313 11.313.707-.707-11.313-11.313 11.313-11.314-.707-.707-12.021 12.021z"></path>
+																	</svg>
+																</div>
+															</div>
+															</div>
+														</div>
+														<div tabindex="-1" role="menu" aria-hidden="false" class="_3caY _27sX RfZQ _3RkB _2VQI">
+															<div class="_1B4y L7_O">
+																<div class="Fgiu">
+																	<ul class="_2KCW" role="menu">
+																	</ul>
+																</div>
+															</div>
+														</div>
+													</div>
+												</label>
+											</div>
+											<div class="_3hMV" style="display: none;"><span></span></div>
+										</div>
+										<div class="_3g_I">
+											<div class="XJoj">
+												<div class="_2QW5">
+													<label for="">
+														<div class="_3U9T">
+															<span>位置</span>
+														</div>
+														<div class="_2eASc" role="menuitem" tabindex="-1">
+															<div role="button" tabindex="0" class="Vnj8" aria-expanded="false">
+																<div class="I24N">
+																	<input id="mapSearch" class="_3tMe" tabindex="0" autocomplete="off" value="" style="outline:none;">
+																	<input id="ismapSearch" name="location" type="hidden" value="">
+																</div>
+															</div>
+															<div tabindex="-1" role="menu" aria-hidden="true" class="_3caY _27sX RfZQ _3RkB">
+																<div class="_1B4y L7_O">
+																	<div class="Fgiu">
+																		<ul class="_2KCW" role="menu"></ul>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="_3g_I">
+											<div class="_2B3Z">
+												<div class="_2eASh" role="menuitem" tabindex="-1">
+													<div role="button" tabindex="0" class="Vnj8" aria-expanded="false">
+														<div class="_2S4a">
+															<div class="_3uQ0 Qgfg sQis">
+																<svg viewBox="0 0 12 12" xmlns="http://www.w3.org/2000/svg">
+																	<path d="M3.682 2.781c.185-.133.382-.25.59-.35l.09-1.2A.25.25 0 0 1 4.61 1h2.65c.13 0 .239.1.249.23l.094 1.203c.186.09.365.194.534.312l1.116-.537a.25.25 0 0 1 .325.1l1.325 2.295a.25.25 0 0 1-.075.33l-1.019.7a4.054 4.054 0 0 1 .009.62l1.061.723a.25.25 0 0 1 .076.332L9.63 9.603a.25.25 0 0 1-.325.1L8.23 9.19c-.165.122-.34.231-.523.326l-.094 1.254a.25.25 0 0 1-.249.231h-2.65a.25.25 0 0 1-.25-.23l-.089-1.153a3.867 3.867 0 0 1-.599-.333l-1.055.508a.25.25 0 0 1-.325-.1L1.07 7.397a.25.25 0 0 1 .075-.33l.921-.633a4.048 4.048 0 0 1-.01-.754l-.962-.656a.25.25 0 0 1-.076-.332l1.325-2.295a.25.25 0 0 1 .324-.1l1.014.484zM5.987 7.62c.892 0 1.615-.725 1.615-1.619S6.88 4.381 5.987 4.381c-.891 0-1.614.725-1.614 1.619s.723 1.619 1.614 1.619z" fill="#B0B0B0" fill-rule="evenodd"></path>
+																</svg>
+															</div><span>版权与隐私</span></div>
+													</div>
+													<div tabindex="-1" role="menu" aria-hidden="true" class="_2Xm- _27sX RfZQ _3RkB" style="position: absolute;left: 0;">
+														<div class="_1B4y _2n_w">
+															<div class="_2qs1 _2TXm">
+																<div class="_3Q2E"><span>版权</span></div>
+																<div th:each="copyright,copyStat:${application.dict}" th:if="${copyright!=null and copyright.typeCode=='COPYRIGHT'}" type="button" th:value="${copyright.id}" th:class="${copyright.valueName=='自由角度使用' ? 'CdlZ qa6C -Z6V':'CdlZ -Z6V'}">
+																	<div><span>[[${copyright.valueName}]]</span></div>
+																	<div class="_3erK jZEM sQis" th:if="${copyright.valueName=='自由角度使用'}">
+																		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 32">
+																			<path fill="#1088f2" d="M12.68 30.01L.547 17.299a2.023 2.023 0 0 1 0-2.766l2.64-2.766a1.807 1.807 0 0 1 2.64 0l8.174 8.563L31.508 1.99a1.807 1.807 0 0 1 2.64 0l2.64 2.766a2.023 2.023 0 0 1 0 2.766L15.321 30.011a1.807 1.807 0 0 1-2.64 0z"></path>
+																		</svg>
+																	</div>
+																</div>
+															</div>
+															<div class="_2TXm">
+																<div class="_3Q2E"><span>隐私</span></div>
+																<div th:each="private,privateStat:${application.dict}" th:if="${private!=null and private.typeCode=='PRIVACY'}" type="button" th:value="${private.id}" tabindex="0" th:class="${private.valueName=='公开' ? 'CdlZ qa6C -Z6V':'CdlZ -Z6V'}">
+																	<div><span>[[${private.valueName}]]</span></div>
+																	<div class="_3erK jZEM sQis" th:if="${private.valueName=='公开'}">
+																		<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 37 32">
+																			<path fill="#1088f2" d="M12.68 30.01L.547 17.299a2.023 2.023 0 0 1 0-2.766l2.64-2.766a1.807 1.807 0 0 1 2.64 0l8.174 8.563L31.508 1.99a1.807 1.807 0 0 1 2.64 0l2.64 2.766a2.023 2.023 0 0 1 0 2.766L15.321 30.011a1.807 1.807 0 0 1-2.64 0z"></path>
+																		</svg>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="_3g_I _1ziH"><button type="button" class="Xwom kdjc _1TkV"><div class="_3HO0"><span>发布</span></div></button></div>
+									</form>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div th:replace="html/end :: footerCopy"></div>
+			</div>
+		</div>
+		<script type="text/javascript" th:src="@{/uploading/js/uploading.js}"></script>
+		<script type="text/javascript" th:src="@{/uploading/js/put.js}"></script>
+	</body>
+</html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>自由角度后台管理平台 | 自由角度</title>
+    <link rel="stylesheet" type="text/css" href="../css/loginstyle.css">
+    <script type="text/javascript" src="../webjars/jquery/2.1.1/jquery.js"></script>
+</head>
+
+<body>
+<div class="container" id="container">
+    <div class="form-container sign-up-container">
+        <div class="fromdiv">
+            <div align="center">
+                <video id="video" width="100%" height="100%" autoplay></video>
+                <canvas hidden="hidden" id="canvas" width="626" height="800"></canvas>
+            </div>
+            <div id="saomiao"></div>
+            <span id="errorcode"></span>
+            <p align="center">
+                <button id="CatchCode">注册人脸</button>
+            </p>
+        </div>
+
+    </div>
+    <div class="form-container sign-in-container">
+        <div class="fromdiv">
+            <form action="/queen/Login" method="post">
+                <!--<span>账户密码登录</span>-->
+                <input type="text" id="userName" name="userName" placeholder="账户" autocomplete="off">
+                <input type="password" id="password" name="password" placeholder="密码">
+                <p align="center">
+                    <span style="color: #ff3566" th:text="${error}"></span>
+                </p>
+                <button id="deng">登录</button>
+            </form>
+        </div>
+    </div>
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>账号密码</h1>
+                <p>请输入账户密码登录您的个人信息</p>
+                <button class="ghost" id="signIn">账户登录</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+                <h1>人脸识别</h1>
+                <p>展示个人人脸，并与我们一起开始旅程</p>
+                <button class="ghost" id="signUp">人脸登录</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var signUpButton = document.getElementById('signUp');
+    var signInButton = document.getElementById('signIn');
+    var container = document.getElementById('container');
+    var timer=null;
+    signUpButton.addEventListener('click', () => {
+        container.classList.add("right-panel-active");
+        open()
+        timer=setInterval("CatchCode()","1000");
+    });
+
+    signInButton.addEventListener('click', () => {
+        container.classList.remove("right-panel-active");
+    });
+
+    var video; //视频流对象
+    var context; //绘制对象
+    var canvas; //画布对象
+    $(function() {
+        //关闭摄像头
+        $("#signIn").click(function() {
+            //判断摄像头是否打开
+            video.srcObject.getTracks()[0].stop();
+            clearInterval(timer);
+        });
+        //拍照
+        $("#CatchCode").click(function() {
+            // CatchCode();
+            register()
+        });
+        //账户密码登录时的验证
+        $("#deng").click(function() {
+            Subim();
+        });
+    });
+    //将当前图像传输到后台 登录
+    function CatchCode() {
+        //获取图像
+        var img = getBase64();
+        var errorP=document.getElementById("errorcode");
+        context.drawImage(video, 0, 0, 330, 250);
+        //Ajax将Base64字符串传输到后台处理
+        $.ajax({
+            type : "POST",
+            url : "/faceLogin/searchFace",
+            data : {
+                img : img
+            },
+            dataType : "JSON",
+            success : function(data) {
+                var errorcode = eval(data);
+                if (errorcode.error_code==223120){
+                    errorP.style.color="red";
+                    errorP.innerText="此次活体检测结果为非活体"
+                }else if (errorcode.error_code==223125){
+                    errorP.style.color="red";
+                    errorP.innerText="请勿遮挡嘴巴 "
+                }else if (errorcode.error_code == 223114){
+                    errorP.style.color="red";
+                    errorP.innerText="人脸图片模糊不清"
+                }else if (errorcode.error_code == 223116){
+                    errorP.style.color="red";
+                    errorP.innerText="提示用户请勿遮挡面部"
+                }else if (errorcode.error_code == 222202){
+                    errorP.style.color="red";
+                    errorP.innerText="面部不清晰，请重新尝试"
+                }else {
+                    errorP.style.color="#59dd30";
+                    errorP.innerText="请您针对屏幕，进行登录"
+                }
+                if(errorcode.error_code==0){
+                    //返回的结果
+                    //取出对比结果的返回分数，如果分数90以上就判断识别成功了
+                    // if(parseInt(data.result.user_list[0].score) > 90) {
+                    if(parseInt(data.result.user_list[0].score) > 90) {
+                        //关闭摄像头
+                        video.srcObject.getTracks()[0].stop();
+                        //提醒用户识别成功
+                        errorP.style.color="#59dd30";
+                        errorP.innerText="登录成功"
+                        //验证成功跳转页面
+                        window.location.href="/faceLogin/home";
+                    }else{
+                        errorP.style.color="#dd5b83";
+                        errorP.innerText="人脸库中没有此人脸"
+                    }
+                }
+            },
+            error : function(q, w, e) {
+                alert(q + w + e);
+            }
+        });
+    };
+    //开启摄像头
+    function open() {
+        //获取摄像头对象
+        canvas = document.getElementById("canvas");
+        context = canvas.getContext("2d");
+        //获取视频流
+        video = document.getElementById("video");
+        var videoObj = {
+                "video": true
+            },
+            errBack = function(error) {
+                console.log("Video capture error: ", error.code);
+            };
+        context.drawImage(video, 0, 0, 330, 250);
+        //初始化摄像头参数
+        if(navigator.getUserMedia || navigator.webkitGetUserMedia ||
+            navigator.mozGetUserMedia) {
+            navigator.getUserMedia = navigator.getUserMedia ||
+                navigator.webkitGetUserMedia ||
+                navigator.mozGetUserMedia;
+            navigator.getUserMedia(videoObj, function(stream) {
+                video.srcObject = stream;
+            }, errBack);
+        }
+    }
+    //将摄像头拍取的图片转换为Base64格式字符串
+    function getBase64() {
+        //获取当前图像并转换为Base64的字符串
+        var imgSrc = canvas.toDataURL("image/png");
+        //截取字符串
+        return imgSrc.substring(22);
+    };
+    // setInterval("CatchCode()","1000");
+</script>
+</body>
+
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="UTF-8">
+		<title>全球航拍爱好者和专业摄影师的社交平台 | 自由角度</title>
+		<link rel="shortcut icon" th:href="@{/common/img/title.png}" href="/common/img/title.png" type="image/x-icon"/>
+		<link rel="stylesheet" th:href="@{/common/css/common.css}" href="/common/css/common.css" />
+		<link rel="stylesheet" th:href="@{/home/css/home.css}" href="/home/css/home.css" />
+	</head>
+	<body>
+		<div id="root">
+			<div class="_2gbz">
+				<div class="shade"></div>
+				<div th:replace="html/head :: navCopy"></div>
+				<div class="con">
+					<div class="_19U0">
+						<div class="preface">
+							<div class="box">
+								<div class="box_wheel">
+									<ul class="box_ul bopage" th:value="${slideshowList.size()}">
+										<li class="carousel-item" th:each="slb:${slideshowList}"><img th:src="${application.httpURL}+${slb.picUrl}"/></li>
+									</ul>
+								</div>
+								<div class="btn btn_left">
+									<svg viewBox="0 0 48 48">
+										<path fill="#333" fill-rule="nonzero" d="M18.344 24.728l11.313 11.313.707-.707-11.313-11.313 11.313-11.314-.707-.707-12.021 12.021z"></path>
+									</svg>
+								</div>
+								<div class="btn btn_right">
+									<svg viewBox="0 0 48 48">
+										<path fill="#333" fill-rule="nonzero" d="M18.344 24.728l11.313 11.313.707-.707-11.313-11.313 11.313-11.314-.707-.707-12.021 12.021z"></path>
+									</svg>
+								</div>
+								<ol class="sign">
+									<li style="background-color: #1088F2;"></li>
+									<li th:each="slb:${#numbers.sequence(1,slideshowList.size()-1)}"></li>
+								</ol>
+							</div>
+							<div class="aerial">
+								<div class="aerial_title">
+									<h1>热门航拍点</h1>
+									<span id="film_show" href="#">热门航拍点集锦</span>
+								</div>
+								<div class="film">
+									<video src="/home/video/1080.mp4" controls="controls" width="100%">
+									</video>
+								</div>
+								<div class="aerial_site">
+									<ul>
+										<li>
+											<img src="/home/img/shanghai.png" />
+											<span>上海</span>
+										</li>
+										<li>
+											<img src="/home/img/shenzhen.png" />
+											<span>深圳</span>
+										</li>
+										<li>
+											<img src="/home/img/guangzho.png" />
+											<span>广州</span>
+										</li>
+										<li>
+											<img src="/home/img/xinjiang.png" />
+											<span>新疆</span>
+										</li>
+										<li>
+											<img src="/home/img/hangzho.png" />
+											<span>杭州</span>
+										</li>
+										<li>
+											<img src="/home/img/xizang.png" />
+											<span>西藏</span>
+										</li>
+									</ul>
+								</div>
+							</div>
+						</div>
+						<div class="sift">
+							<p class="selected labeltitle">精选</p>
+							<p class="labeltitle">关注</p>
+						</div>
+					</div>
+					<div class="choiceness">
+						<div class="content">
+							<div class="content_v">
+								<div class="ven1">
+									<div class="_3hb9">
+										<div>自然</div>
+										<div class="_28yB">
+											<a href="#">
+												<span>更多&nbsp;></span>
+											</a>
+										</div>
+									</div>
+								</div>
+								<div class="ven2">
+									<div class="slick-slider">
+										<div class="box">
+											<div class="box_wheel">
+												<ul class="box_ul_con box_ul_con1">
+													<li class="carousel-item" th:each="mens:${#numbers.sequence(1,4)}">
+														<ul class="carousel">
+															<li th:each="men:${#numbers.sequence(mens*4-4==0 ? 1:mens*4-4+1,mens*4)}">
+																<div class="chunk" th:if="${homePage1.list.size()>=men}">
+																	<div class="model1" th:onclick="'javascript:location.href=\'/production/getPro/'+${homePage1.list[men-1]['p_id']}+'\''">
+																		<div class="model_control" th:if="${homePage1.list[men-1]['p_duration']!=null}">
+																			<span th:text="${homePage1.list[men-1]['p_duration']}"></span>
+																			<div>
+																				<svg viewBox="0 0 48 48"><g fill="none" fill-rule="evenodd"><circle fill="#222" opacity=".8" cx="24" cy="24" r="24"></circle><path fill="#FFF" d="M30.692 24.5L21.5 33.692V15.308z"></path></g></svg>
+																			</div>
+																		</div>
+																		<div class="wallpaper">
+																			<img th:src="${application.httpURL}+${homePage1.list[men-1]['p_hiapkURL']}"/>
+																		</div>
+																		<button class="_1r-m _3Wrm" th:if="${homePage1.list[men-1]['p_duration']!=null}">
+																			<div class="v_ps _3bYN"></div>
+																		</button>
+																	</div>
+																	<div class="model2">
+																		<div class="moinfo">
+																			<p class="designation" th:text="${homePage1.list[men-1]['p_pName']}"></p>
+																			<p class="equipment">设备:<a th:text="${homePage1.list[men-1]['f_fName']}"></a></p>
+																			<div class="read">
+																				<span class="_2cdh">
+																					<svg viewBox="0 0 48 48"><path d="M24.585 10.012C33.08 10.287 40.552 14.95 47 24c-6.562 9.36-14.229 14.027-23 14-8.771.027-16.438-4.64-23-14 6.448-9.05 13.92-13.713 22.415-13.988a14.244 14.244 0 0 1 1.17 0zM24 34c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10zm0-3a7 7 0 1 1 0-14 7 7 0 0 1 0 14z" fill="#838385" fill-rule="evenodd"></path></svg>
+																					<span class="watch" th:text="${homePage1.list[men-1]['p_viewNum']}"></span>
+																				</span>
+																				<span class="_3chd">
+																					<svg viewBox="0 0 40 40">
+																						<path fill="#FFFFFF" d="M28.387 13.375h1.446c2.781.115 5 2.403 5 5.208a5.194 5.194 0 0 1-1.701 3.85l-.515 10.398a2.5 2.5 0 0 1-2.497 2.376H6.666a2.5 2.5 0 0 1-2.5-2.5V15.874a2.5 2.5 0 0 1 2.5-2.5h5.344c2.752-.787 4.168-2.653 4.247-5.599a4.958 4.958 0 1 1 9.908-.276l-.001.11c.006.513-.014 1.034-.054 1.562a24.287 24.287 0 0 1-.714 4.203h2.989z"></path><path fill="none" stroke="#838385" stroke-width="2.5" d="M29.833 14.625h-6.047l.401-1.561c.355-1.381.58-2.71.678-3.987a17 17 0 0 0 .051-1.494l.001-.083a3.708 3.708 0 1 0-7.41.207l.001.102c-.094 3.486-1.871 5.829-5.153 6.767l-.168.048H6.668c-.69 0-1.25.56-1.25 1.25v16.833c0 .69.56 1.25 1.25 1.25h23.454a1.25 1.25 0 0 0 1.248-1.188l.54-10.913.381-.347a3.944 3.944 0 0 0 1.293-2.927c0-2.126-1.681-3.872-3.75-3.958z"></path><path fill="#FFFFFF" d="M6.671 15.89h7.079v16.825H6.671z"></path><path fill="#838385" d="M11.25 14.375h2.5v20.833h-2.5V14.375z"></path></svg>
+																					<span class="like" th:text="${homePage1.list[men-1]['like_num']}"></span>
+																				</span>
+																			</div>
+																		</div>
+																		<div class="author">
+																			<div class="author_img">
+																				<img th:src="${application.httpURL}+${homePage1.list[men-1]['u_headURL']}"/>
+																				<span th:text="${homePage1.list[men-1]['u_userName']}"></span>
+																			</div>	
+																			<div class="ayuthor_date">
+																				<p th:text="${#dates.format(homePage1.list[men-1]['p_createTime'],'yyyy年MM月dd日')}"></p>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</li>
+														</ul>
+													</li>
+												</ul>
+											</div>
+											<div class="btn btn_left2" style="top: 165px;">
+												<svg viewBox="0 0 48 48">
+													<path fill="#333" fill-rule="nonzero" d="M18.344 24.728l11.313 11.313.707-.707-11.313-11.313 11.313-11.314-.707-.707-12.021 12.021z"></path>
+												</svg>
+											</div>
+											<div class="btn btn_right2" style="right:-100px;top: 212px;">
+												<svg viewBox="0 0 48 48">
+													<path fill="#333" fill-rule="nonzero" d="M18.344 24.728l11.313 11.313.707-.707-11.313-11.313 11.313-11.314-.707-.707-12.021 12.021z"></path>
+												</svg>
+											</div>
+											<ol class="sign sign_li1" style="right: 100px;bottom: 108%;">
+												<li style="background-color: #1088F2;"></li>
+												<li></li>
+												<li></li>
+												<li></li>
+											</ol>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content_v">
+								<div class="ven1">
+									<div class="_3hb9">
+										<div>城市</div>
+										<div class="_28yB">
+											<a href="#">
+												<span>更多&nbsp;></span>
+											</a>
+										</div>
+									</div>
+								</div>
+								<div class="ven2">
+									<div class="slick-slider">
+										<div class="box">
+											<div class="box_wheel">
+												<ul class="box_ul_con box_ul_con2">
+													<li class="carousel-item" th:each="mens:${#numbers.sequence(1,4)}">
+														<ul class="carousel">
+															<li th:each="men:${#numbers.sequence(mens*4-4==0 ? 1:mens*4-4+1,mens*4)}">
+																<div class="chunk" th:if="${homePage2.list.size()>=men}">
+																	<div class="model1" th:onclick="'javascript:location.href=\'/production/getPro/'+${homePage2.list[men-1]['p_id']}+'\''">
+																		<div class="model_control" th:if="${homePage2.list[men-1]['p_duration']!=null}">
+																			<span th:text="${homePage2.list[men-1]['p_duration']}"></span>
+																			<div>
+																				<svg viewBox="0 0 48 48"><g fill="none" fill-rule="evenodd"><circle fill="#222" opacity=".8" cx="24" cy="24" r="24"></circle><path fill="#FFF" d="M30.692 24.5L21.5 33.692V15.308z"></path></g></svg>
+																			</div>
+																		</div>
+																		<div class="wallpaper">
+																			<img th:src="${application.httpURL}+${homePage2.list[men-1]['p_hiapkURL']}"/>
+																		</div>
+																		<button class="_1r-m _3Wrm" th:if="${homePage2.list[men-1]['p_duration']!=null}"><div class="v_ps _3bYN"></div></button>
+																	</div>
+																	<div class="model2">
+																		<div class="moinfo">
+																			<p class="designation" th:text="${homePage2.list[men-1]['p_pName']}"></p>
+																			<p class="equipment">设备:<a th:text="${homePage2.list[men-1]['f_fName']}"></a></p>
+																			<div class="read">
+																				<span class="_2cdh">
+																					<svg viewBox="0 0 48 48"><path d="M24.585 10.012C33.08 10.287 40.552 14.95 47 24c-6.562 9.36-14.229 14.027-23 14-8.771.027-16.438-4.64-23-14 6.448-9.05 13.92-13.713 22.415-13.988a14.244 14.244 0 0 1 1.17 0zM24 34c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10zm0-3a7 7 0 1 1 0-14 7 7 0 0 1 0 14z" fill="#838385" fill-rule="evenodd"></path></svg>
+																					<span class="watch" th:text="${homePage2.list[men-1]['p_viewNum']}"></span>
+																				</span>
+																				<span class="_3chd">
+																					<svg viewBox="0 0 40 40">
+																						<path fill="#FFFFFF" d="M28.387 13.375h1.446c2.781.115 5 2.403 5 5.208a5.194 5.194 0 0 1-1.701 3.85l-.515 10.398a2.5 2.5 0 0 1-2.497 2.376H6.666a2.5 2.5 0 0 1-2.5-2.5V15.874a2.5 2.5 0 0 1 2.5-2.5h5.344c2.752-.787 4.168-2.653 4.247-5.599a4.958 4.958 0 1 1 9.908-.276l-.001.11c.006.513-.014 1.034-.054 1.562a24.287 24.287 0 0 1-.714 4.203h2.989z"></path><path fill="none" stroke="#838385" stroke-width="2.5" d="M29.833 14.625h-6.047l.401-1.561c.355-1.381.58-2.71.678-3.987a17 17 0 0 0 .051-1.494l.001-.083a3.708 3.708 0 1 0-7.41.207l.001.102c-.094 3.486-1.871 5.829-5.153 6.767l-.168.048H6.668c-.69 0-1.25.56-1.25 1.25v16.833c0 .69.56 1.25 1.25 1.25h23.454a1.25 1.25 0 0 0 1.248-1.188l.54-10.913.381-.347a3.944 3.944 0 0 0 1.293-2.927c0-2.126-1.681-3.872-3.75-3.958z"></path><path fill="#FFFFFF" d="M6.671 15.89h7.079v16.825H6.671z"></path><path fill="#838385" d="M11.25 14.375h2.5v20.833h-2.5V14.375z"></path></svg>
+																					<span class="like" th:text="${homePage1.list[men-1]['like_num']}"></span>
+																				</span>
+																			</div>
+																		</div>
+																		<div class="author">
+																			<div class="author_img">
+																				<img th:src="${application.httpURL}+${homePage2.list[men-1]['u_headURL']}"/>
+																				<span th:text="${homePage2.list[men-1]['u_userName']}"></span>
+																			</div>
+																			<div class="ayuthor_date">
+																				<p th:text="${#dates.format(homePage2.list[men-1]['p_createTime'],'yyyy年MM月dd日')}"></p>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</li>
+														</ul>
+													</li>
+												</ul>
+											</div>
+											<div class="btn btn_left3" style="top: 165px;">
+												<svg viewBox="0 0 48 48">
+													<path fill="#333" fill-rule="nonzero" d="M18.344 24.728l11.313 11.313.707-.707-11.313-11.313 11.313-11.314-.707-.707-12.021 12.021z"></path>
+												</svg>
+											</div>
+											<div class="btn btn_right3" style="right:-100px;top: 212px;">
+												<svg viewBox="0 0 48 48">
+													<path fill="#333" fill-rule="nonzero" d="M18.344 24.728l11.313 11.313.707-.707-11.313-11.313 11.313-11.314-.707-.707-12.021 12.021z"></path>
+												</svg>
+											</div>
+											<ol class="sign sign_li2" style="right: 100px;bottom: 108%;">
+												<li style="background-color: #1088F2;"></li>
+												<li></li>
+												<li></li>
+												<li></li>
+											</ol>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content_v">
+								<div class="ven1">
+									<div class="_3hb9">
+										<div>运动</div>
+										<div class="_28yB">
+											<a href="#">
+												<span>更多&nbsp;></span>
+											</a>
+										</div>
+									</div>
+								</div>
+								<div class="ven2">
+									<div class="slick-slider">
+										<div class="box">
+											<div class="box_wheel">
+												<ul class="box_ul_con box_ul_con3">
+													<li class="carousel-item" th:each="mens:${#numbers.sequence(1,4)}">
+														<ul class="carousel">
+															<li th:each="men:${#numbers.sequence(mens*4-4==0 ? 1:mens*4-4+1,mens*4)}">
+																<div class="chunk" th:if="${homePage3.list.size()>=men}">
+																	<div class="model1" th:onclick="'javascript:location.href=\'/production/getPro/'+${homePage3.list[men-1]['p_id']}+'\''">
+																		<div class="model_control" th:if="${homePage3.list[men-1]['p_duration']!=null}">
+																			<span th:text="${homePage3.list[men-1]['p_duration']}"></span>
+																			<div>
+																				<svg viewBox="0 0 48 48"><g fill="none" fill-rule="evenodd"><circle fill="#222" opacity=".8" cx="24" cy="24" r="24"></circle><path fill="#FFF" d="M30.692 24.5L21.5 33.692V15.308z"></path></g></svg>
+																			</div>
+																		</div>
+																		<div class="wallpaper">
+																			<img th:src="${application.httpURL}+${homePage3.list[men-1]['p_hiapkURL']}"/>
+																		</div>
+																		<button class="_1r-m _3Wrm" th:if="${homePage3.list[men-1]['p_duration']!=null}"><div class="v_ps _3bYN"></div></button>
+																	</div>
+																	<div class="model2">
+																		<div class="moinfo">
+																			<p class="designation" th:text="${homePage3.list[men-1]['p_pName']}"></p>
+																			<p class="equipment">设备:<a th:text="${homePage3.list[men-1]['f_fName']}"></a></p>
+																			<div class="read">
+																				<span class="_2cdh">
+																					<svg viewBox="0 0 48 48"><path d="M24.585 10.012C33.08 10.287 40.552 14.95 47 24c-6.562 9.36-14.229 14.027-23 14-8.771.027-16.438-4.64-23-14 6.448-9.05 13.92-13.713 22.415-13.988a14.244 14.244 0 0 1 1.17 0zM24 34c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10zm0-3a7 7 0 1 1 0-14 7 7 0 0 1 0 14z" fill="#838385" fill-rule="evenodd"></path></svg>
+																					<span class="watch" th:text="${homePage3.list[men-1]['p_viewNum']}"></span>
+																				</span>
+																				<span class="_3chd">
+																					<svg viewBox="0 0 40 40">
+																						<path fill="#FFFFFF" d="M28.387 13.375h1.446c2.781.115 5 2.403 5 5.208a5.194 5.194 0 0 1-1.701 3.85l-.515 10.398a2.5 2.5 0 0 1-2.497 2.376H6.666a2.5 2.5 0 0 1-2.5-2.5V15.874a2.5 2.5 0 0 1 2.5-2.5h5.344c2.752-.787 4.168-2.653 4.247-5.599a4.958 4.958 0 1 1 9.908-.276l-.001.11c.006.513-.014 1.034-.054 1.562a24.287 24.287 0 0 1-.714 4.203h2.989z"></path><path fill="none" stroke="#838385" stroke-width="2.5" d="M29.833 14.625h-6.047l.401-1.561c.355-1.381.58-2.71.678-3.987a17 17 0 0 0 .051-1.494l.001-.083a3.708 3.708 0 1 0-7.41.207l.001.102c-.094 3.486-1.871 5.829-5.153 6.767l-.168.048H6.668c-.69 0-1.25.56-1.25 1.25v16.833c0 .69.56 1.25 1.25 1.25h23.454a1.25 1.25 0 0 0 1.248-1.188l.54-10.913.381-.347a3.944 3.944 0 0 0 1.293-2.927c0-2.126-1.681-3.872-3.75-3.958z"></path><path fill="#FFFFFF" d="M6.671 15.89h7.079v16.825H6.671z"></path><path fill="#838385" d="M11.25 14.375h2.5v20.833h-2.5V14.375z"></path></svg>
+																					<span class="like" th:text="${homePage1.list[men-1]['like_num']}"></span>
+																				</span>
+																			</div>
+																		</div>
+																		<div class="author">
+																			<div class="author_img">
+																				<img th:src="${application.httpURL}+${homePage3.list[men-1]['u_headURL']}"/>
+																				<span th:text="${homePage3.list[men-1]['u_userName']}"></span>
+																			</div>
+																			<div class="ayuthor_date">
+																				<p th:text="${#dates.format(homePage3.list[men-1]['p_createTime'],'yyyy年MM月dd日')}"></p>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</li>
+														</ul>
+													</li>
+												</ul>
+											</div>
+											<div class="btn btn_left4" style="top: 165px;">
+												<svg viewBox="0 0 48 48">
+													<path fill="#333" fill-rule="nonzero" d="M18.344 24.728l11.313 11.313.707-.707-11.313-11.313 11.313-11.314-.707-.707-12.021 12.021z"></path>
+												</svg>
+											</div>
+											<div class="btn btn_right4" style="right:-100px;top: 212px;">
+												<svg viewBox="0 0 48 48">
+													<path fill="#333" fill-rule="nonzero" d="M18.344 24.728l11.313 11.313.707-.707-11.313-11.313 11.313-11.314-.707-.707-12.021 12.021z"></path>
+												</svg>
+											</div>
+											<ol class="sign sign_li3" style="right: 100px;bottom: 108%;">
+												<li style="background-color: #1088F2;"></li>
+												<li></li>
+												<li></li>
+												<li></li>
+											</ol>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content_v">
+								<div class="ven1">
+									<div class="_3hb9">
+										<div>人物</div>
+										<div class="_28yB">
+											<a href="#">
+												<span>更多&nbsp;></span>
+											</a>
+										</div>
+									</div>
+								</div>
+								<div class="ven2">
+									<div class="slick-slider">
+										<div class="box">
+											<div class="box_wheel">
+												<ul class="box_ul_con box_ul_con4">
+													<li class="carousel-item" th:each="mens:${#numbers.sequence(1,4)}">
+														<ul class="carousel">
+															<li th:each="men:${#numbers.sequence(mens*4-4==0 ? 1:mens*4-4+1,mens*4)}">
+																<div class="chunk" th:if="${homePage4.list.size()>=men}">
+																	<div class="model1" th:onclick="'javascript:location.href=\'/production/getPro/'+${homePage4.list[men-1]['p_id']}+'\''">
+																		<div class="model_control" th:if="${homePage4.list[men-1]['p_duration']!=null}">
+																			<span th:text="${homePage4.list[men-1]['p_duration']}"></span>
+																			<div>
+																				<svg viewBox="0 0 48 48"><g fill="none" fill-rule="evenodd"><circle fill="#222" opacity=".8" cx="24" cy="24" r="24"></circle><path fill="#FFF" d="M30.692 24.5L21.5 33.692V15.308z"></path></g></svg>
+																			</div>
+																		</div>
+																		<div class="wallpaper">
+																			<img th:src="${application.httpURL}+${homePage4.list[men-1]['p_hiapkURL']}"/>
+																		</div>
+																		<button class="_1r-m _3Wrm" th:if="${homePage4.list[men-1]['p_duration']!=null}"><div class="v_ps _3bYN"></div></button>
+																	</div>
+																	<div class="model2">
+																		<div class="moinfo">
+																			<p class="designation" th:text="${homePage4.list[men-1]['p_pName']}"></p>
+																			<p class="equipment">设备:<a th:text="${homePage4.list[men-1]['f_fName']}"></a></p>
+																			<div class="read">
+																				<span class="_2cdh">
+																					<svg viewBox="0 0 48 48"><path d="M24.585 10.012C33.08 10.287 40.552 14.95 47 24c-6.562 9.36-14.229 14.027-23 14-8.771.027-16.438-4.64-23-14 6.448-9.05 13.92-13.713 22.415-13.988a14.244 14.244 0 0 1 1.17 0zM24 34c5.523 0 10-4.477 10-10s-4.477-10-10-10-10 4.477-10 10 4.477 10 10 10zm0-3a7 7 0 1 1 0-14 7 7 0 0 1 0 14z" fill="#838385" fill-rule="evenodd"></path></svg>
+																					<span class="watch" th:text="${homePage4.list[men-1]['p_viewNum']}"></span>
+																				</span>
+																				<span class="_3chd">
+																					<svg viewBox="0 0 40 40">
+																						<path fill="#FFFFFF" d="M28.387 13.375h1.446c2.781.115 5 2.403 5 5.208a5.194 5.194 0 0 1-1.701 3.85l-.515 10.398a2.5 2.5 0 0 1-2.497 2.376H6.666a2.5 2.5 0 0 1-2.5-2.5V15.874a2.5 2.5 0 0 1 2.5-2.5h5.344c2.752-.787 4.168-2.653 4.247-5.599a4.958 4.958 0 1 1 9.908-.276l-.001.11c.006.513-.014 1.034-.054 1.562a24.287 24.287 0 0 1-.714 4.203h2.989z"></path><path fill="none" stroke="#838385" stroke-width="2.5" d="M29.833 14.625h-6.047l.401-1.561c.355-1.381.58-2.71.678-3.987a17 17 0 0 0 .051-1.494l.001-.083a3.708 3.708 0 1 0-7.41.207l.001.102c-.094 3.486-1.871 5.829-5.153 6.767l-.168.048H6.668c-.69 0-1.25.56-1.25 1.25v16.833c0 .69.56 1.25 1.25 1.25h23.454a1.25 1.25 0 0 0 1.248-1.188l.54-10.913.381-.347a3.944 3.944 0 0 0 1.293-2.927c0-2.126-1.681-3.872-3.75-3.958z"></path><path fill="#FFFFFF" d="M6.671 15.89h7.079v16.825H6.671z"></path><path fill="#838385" d="M11.25 14.375h2.5v20.833h-2.5V14.375z"></path></svg>
+																					<span class="like" th:text="${homePage1.list[men-1]['like_num']}"></span>
+																				</span>
+																			</div>
+																		</div>
+																		<div class="author">
+																			<div class="author_img">
+																				<img th:src="${application.httpURL}+${homePage4.list[men-1]['u_headURL']}"/>
+																				<span th:text="${homePage4.list[men-1]['u_userName']}"></span>
+																			</div>
+																			<div class="ayuthor_date">
+																				<p th:text="${#dates.format(homePage4.list[men-1]['p_createTime'],'yyyy年MM月dd日')}"></p>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</li>
+														</ul>
+													</li>
+												</ul>
+											</div>
+											<div class="btn btn_left5" style="top: 165px;">
+												<svg viewBox="0 0 48 48">
+													<path fill="#333" fill-rule="nonzero" d="M18.344 24.728l11.313 11.313.707-.707-11.313-11.313 11.313-11.314-.707-.707-12.021 12.021z"></path>
+												</svg>
+											</div>
+											<div class="btn btn_right5" style="right:-100px;top: 212px;">
+												<svg viewBox="0 0 48 48">
+													<path fill="#333" fill-rule="nonzero" d="M18.344 24.728l11.313 11.313.707-.707-11.313-11.313 11.313-11.314-.707-.707-12.021 12.021z"></path>
+												</svg>
+											</div>
+											<ol class="sign sign_li4" style="right: 100px;bottom: 108%;">
+												<li style="background-color: #1088F2;"></li>
+												<li></li>
+												<li></li>
+												<li></li>
+											</ol>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="content_v">
+								<div class="ven1">
+									<div class="_3hb9">
+										<div>热门标签</div>
+										<div class="_28yB">
+											<a href="#">
+												<span>更多&nbsp;></span>
+											</a>
+										</div>
+									</div>
+								</div>
+								<div class="ven2">
+									<div class="slick-slider">
+										<div class="box">
+											<div class="box_wheel">
+												<ul class="box_ul_con box_ul_con5">
+													<li class="carousel-item" th:each="mens:${#numbers.sequence(1,4)}" style="width: 1200px">
+														<ul class="carousel">
+															<li style="border:1px solid #FFFFFF;width: 183px; height: 171px;border-radius: 3px;" th:each="men:${#numbers.sequence(mens*6-6==0 ? 1:mens*6-6+1,mens*6)}">
+																<div class="title_content">
+																	<img th:src="${application.httpURL}+${hotTitle[men-1]?.hUrl}"/>
+																	<p th:text="${hotTitle[men-1]?.hName}"></p>
+																</div>
+															</li>
+														</ul>
+													</li>
+												</ul>
+											</div>
+											<div class="btn btn_left6" style="top: 90px;">
+												<svg viewBox="0 0 48 48">
+													<path fill="#333" fill-rule="nonzero" d="M18.344 24.728l11.313 11.313.707-.707-11.313-11.313 11.313-11.314-.707-.707-12.021 12.021z"></path>
+												</svg>
+											</div>
+											<div class="btn btn_right6" style="right:-100px;top: 140px;">
+												<svg viewBox="0 0 48 48">
+													<path fill="#333" fill-rule="nonzero" d="M18.344 24.728l11.313 11.313.707-.707-11.313-11.313 11.313-11.314-.707-.707-12.021 12.021z"></path>
+												</svg>
+											</div>
+											<ol class="sign sign_li5" style="right: 100px;bottom: 108%;">
+												<li style="background-color: #1088F2;"></li>
+												<li></li>
+												<li></li>
+												<li></li>
+											</ol>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="attention" style="display: none">
+							<div class="content_v">
+							</div>
+						</div>
+					</div>
+					<div class="load" value="0" style="display: none;opacity:0;text-align: center;position: relative;top: -20px;background-color: #F7F8F9;margin-bottom: 30px;">
+						<img th:src="@{/explore/img/load.gif}" width="60px" height="50px"/>
+						<span style="font-size: 14px;position: absolute;bottom: 22px;left: 51.2%;color: #595959;">正在加载</span>
+					</div>
+				</div>
+				<div th:replace="html/end :: footerCopy"></div>
+			</div>
+		</div>
+		<script type="text/javascript" th:src="@{/home/js/home.js}" src="/home/js/home.js"></script>
+		<script>
+			$(function() {
+				//悬停btn样式事件
+				$(".btn").mouseenter(function() {
+					$(this).css("background-color", "#A7A7A7")
+					$(this).children("svg").children("path").attr("fill", "#fff");
+				})
+				$(".btn").mouseleave(function() {
+					$(this).css("background-color", "transparent")
+					$(this).children("svg").children("path").attr("fill", "#333");
+				})
+
+				//停止或开启自动主题轮播
+				$(".preface .box_wheel").mouseover(function() {
+					clearInterval(timer);
+				})
+				$(".preface .box_wheel").mouseout(function() {
+					timer = setInterval(function() {
+						toRight();
+					}, 3000);
+				})
+
+				//点击视频精选出现
+				$("#film_show").click(function() {
+					$(".film").removeClass("addw").removeClass("del");
+					$(".film").addClass("addw").addClass("add");
+					$(".shade").show();
+				})
+				$(".shade").click(function() {
+					$(".film").removeClass("addw").removeClass("add");
+					$(".film").addClass("addw").addClass("del");
+					$(".shade").hide();
+				})
+				//悬停菜单作品
+				$(".model1").mouseover(function () {
+					$(this).children("._3Wrm").css("opacity","0.7");
+                })
+                $(".model1").mouseout(function () {
+                    $(this).children("._3Wrm").css("opacity","0");
+                })
+			})
+            $(window).scroll(function() {
+                if (($(window).scrollTop() + $(window).height()) > $(document).height() - 1) {
+                    var node=$(".load");
+                    if(node.is(':hidden')){
+					}else{
+                        focusList(node.attr("value"));
+                    }
+                }
+            });
+		</script>
+	</body>
+
+</html>

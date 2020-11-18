@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>勋章修改/添加 | 自由角度</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css" th:href="@{/../../vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css" th:href="@{/../../vendors/css/vendor.bundle.base.css}">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.addons.css" th:href="@{/../../vendors/css/vendor.bundle.addons.css}">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="../../vendors/iconfonts/font-awesome/css/font-awesome.min.css" th:href="@{/../../vendors/iconfonts/font-awesome/css/font-awesome.min.css}" />
+    <link rel="stylesheet" href="../../vendors/icheck/skins/all.css" th:href="@{/../../vendors/icheck/skins/all.css}">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/style.css" th:href="@{/../../css/style.css}">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="images/favicon.png" th:href="@{/images/favicon.png}" />
+
+    <style>
+        #uploadFile{
+            opacity:0;
+            width: 350px;
+            height: 250px;
+            position:absolute;
+            top:72px;
+            right:170px;
+        }
+        #uploadimg{
+            position:absolute;
+            top:75px;
+            right:180px;
+        }
+        #dotted{
+            width: 350px;
+            height: 250px;
+            border-style: dashed;
+            border-color: #DFDFDF;
+            position:relative;
+            top:-30px;
+            right:-250px;
+        }
+    </style>
+
+</head>
+    <body>
+        <div class="container-scroller">
+            <!-- partial:partials/_navbar.html
+                引入顶部栏
+            -->
+            <div th:replace="~{partials/_navbar :: _navbar}"></div>
+
+            <!-- partial -->
+            <div class="container-fluid page-body-wrapper">
+                <!-- partial:partials/_sidebar.html
+
+                  引入左边栏
+
+                  -->
+                <div th:replace="~{partials/_sidebar :: _sidebar}"></div>
+                <!-- partial -->
+                <div class="main-panel">
+                    <div class="content-wrapper">
+                        <!--
+                                    导航栏
+                        -->
+                        <div class="row">
+                            <div class="col-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="template-demo">
+                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                <button type="button" class="btn btn-outline-secondary">位置信息：</button>
+                                                <button type="button" class="btn btn-outline-secondary">首页管理 > </button>
+                                                <button type="button" class="btn btn-outline-secondary">勋章管理 > </button>
+                                                <button type="button" class="btn btn-outline-secondary" th:text="${medalUpd!=null}?'修改勋章':'添加勋章'">添加勋章 > </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <!--
+                                        勋章信息
+                            -->
+                            <div class="col-4 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">勋章信息</h4>
+
+                                        <!-- 需要区分是修改还是添加 -->
+                                        <form class="form-sample" method="post" th:action="@{/MedalController/toMedal-add-upd}">
+                                            <!-- 发送put请求修改轮播图数据 -->
+                                            <!--
+                                                1、SpringMVC中配置HiddenHttpMethodFilter;（SpringBoot自动配置好的）
+                                                2、页面创建一个post表单
+                                                3、创建一个input项，name="_method";值就是我们指定的请求方式
+                                            -->
+                                            <input type="hidden" name="_method" value="put" th:if="${medalUpd!=null}"/>
+                                            <input type="hidden" name="sid" th:if="${medalUpd!=null}" th:value="${medalUpd.mid}"/>
+                                            <div class="row">
+                                                <div class="col-md-12" th:if="${medalUpd!=null}">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 col-form-label">ID</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" class="form-control" placeholder="1" name="mid" th:value="${medalUpd!=null}?${medalUpd.mid}" readonly="readonly"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 col-form-label">勋章地址</label>
+                                                        <div class="col-sm-8">
+                                                            <input id="murl" type="text" class="form-control" placeholder="XXX" name="murl" th:value="${medalUpd!=null}?${medalUpd.murl}" readonly="readonly"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 col-form-label">勋章名称</label>
+                                                        <div class="col-sm-8">
+                                                            <input id="picName" type="text" class="form-control" placeholder="XXX" name="describes" th:value="${medalUpd!=null}?${medalUpd.describes}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 col-form-label">创建时间</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" class="form-control" placeholder="yyyy/MM/dd" name="createTime" readonly="readonly" th:value="${medalUpd!=null}?${medalUpd.createTime}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 col-form-label">修改时间</label>
+                                                        <div class="col-sm-8">
+                                                            <input type="text" class="form-control" placeholder="yyyy/MM/dd" name="updateTime" readonly="readonly" th:value="${medalUpd!=null}?${medalUpd.updateTime}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                            <button type="submit" class="btn btn-info btn-block" th:text="${medalUpd!=null}?'修改':'提交'">提交</button>
+                                                            <a class="btn btn-light btn-block" th:href="@{/TablesController/toMedal-table}">返回</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-8 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div th:if="${medalUpd!=null}">
+                                            <h4 class="card-title">图片展示</h4>
+                                            <div class="row">
+                                                <img src="images/slideshowManage/11.jpg" height="330" width="770" th:src="${application.httpURL}+${medalUpd.murl}"/>
+                                            </div>
+                                        </div>
+                                        <div th:if="${medalUpd==null}">
+                                            <h4 class="card-title">上传图片</h4>
+                                            <p class="card-description">
+                                                进度：
+                                                <code id="schedule">0.0</code><code>%</code>
+                                            </p>
+                                            <div id="preview-canvas">
+                                                <div id="dotted"></div>
+                                                <div >
+                                                    <img id="uploadimg" src="//spcn-webfront.skypixel.com/skypixel/v2/public/assets/images/upload.968392a7.svg" alt="Upload" width="350" height="250">
+                                                    <input id="uploadFile" type="file" name="file" multiple="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!--
+                            作品热门推荐
+                        -->
+
+
+
+                    <!-- partial:partials/_footer.html
+                        引入底部栏
+                    -->
+                    <div th:replace="~{partials/_footer :: _footer}"></div>
+                    <!-- partial -->
+                </div>
+            </div>
+        </div>
+
+            <!-- container-scroller -->
+            <!-- plugins:js -->
+            <script src="../../vendors/js/vendor.bundle.base.js" th:src="@{/../../vendors/js/vendor.bundle.base.js}"></script>
+            <script src="../../vendors/js/vendor.bundle.addons.js" th:src="@{/../../vendors/js/vendor.bundle.addons.js}"></script>
+            <!-- endinject -->
+            <!-- Plugin js for this page-->
+            <!-- End plugin js for this page-->
+            <!-- inject:js -->
+            <script src="../../js/off-canvas.js" th:src="@{/../../js/off-canvas.js}"></script>
+            <script src="../../js/misc.js" th:src="@{/../../js/misc.js}"></script>
+            <!-- endinject -->
+            <!-- Custom js for this page-->
+            <!-- End custom js for this page-->
+
+        </div>
+        <script>
+            $("#uploadFile").change(function () {
+                //获取到本地图片路径显示图片
+                var $file = $(this);
+                var fileObj = $file[0];
+                var windowURL = window.URL || window.webkitURL;
+                var dataURL;
+                var $img = $("#uploadimg");
+                if (fileObj && fileObj.files && fileObj.files[0]) {
+                    var fileType = fileObj.files[0].name.substr(fileObj.files[0].name.lastIndexOf(".")).toUpperCase();
+                    if (fileType != ".SVG") {
+                        alert("勋章图片仅限于svg格式");
+                    } else {
+                        dataURL = windowURL.createObjectURL(fileObj.files[0]);
+                        /*$img.css("background-image","url("+dataURL+")");*/
+                        $img.attr('src',dataURL);
+
+                    }
+                }
+                //异步上传图片
+                var $file=$(this)[0];
+                var formData = new FormData();
+                formData.append("file",$file.files[0]);
+                $.ajax({
+                    url:'/MedalController/file', /*接口域名地址*/
+                    type:'post',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success:function(d){
+                        var json=eval("("+d+")");
+                        var intervalId = setInterval(function () {
+                            $.get("/MedalController/medal/percent",{key:json.newName},function (data) {
+                                //alert(data);
+                                var percent = data;
+                                if (percent >= 100) {
+                                    clearInterval(intervalId);
+                                    percent = 100;//不能大于100
+                                }
+                                $("#schedule").html(data);//进度
+                                $("#murl").attr('value',json.proURL);//服务器路径
+                                $("#picName").attr('value',json.newName);//图片名称
+                            },"json")
+                        }, 100);
+                    }
+                })
+            })
+        </script>
+    </body>
+</html>

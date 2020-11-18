@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyoung.photo.mapper.UserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.soyoung.photo.entity.User">
+        <id column="id" property="id" />
+        <result column="userName" property="userName" />
+        <result column="sex" property="sex" />
+        <result column="intro" property="intro" />
+        <result column="headURL" property="headURL" />
+        <result column="backgroundURL" property="backgroundURL" />
+        <result column="prestige" property="prestige" />
+        <result column="stateid" property="stateid" />
+        <result column="createTime" property="createTime" />
+        <result column="updateTime" property="updateTime" />
+        <result column="logins" property="logins" />
+        <result column="ifrecommend" property="ifrecommend" />
+        <result column="ifexpert" property="ifexpert" />
+    </resultMap>
+
+</mapper>

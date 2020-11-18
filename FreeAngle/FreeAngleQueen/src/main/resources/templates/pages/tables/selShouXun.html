@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>后台用户管理 | 自由角度</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css" th:href="@{/vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css" th:href="@{/vendors/css/vendor.bundle.base.css}">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.addons.css" th:href="@{/vendors/css/vendor.bundle.addons.css}">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="../../vendors/iconfonts/font-awesome/css/font-awesome.min.css" th:href="@{/vendors/iconfonts/font-awesome/css/font-awesome.min.css}" />
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/style.css" th:href="@{/css/style.css}">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="images/favicon.png" th:href="@{/images/favicon.png}" />
+
+    <link rel="stylesheet" th:href="@{/webjars/layui/dist/css/layui.css}" href="webjars/layui/dist/css/layui.css" />
+    <style>
+        .modal-content {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            width: 100%;
+            pointer-events: auto;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 0.3rem;
+            outline: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="content-wrapper">
+    <div class="card">
+        <div class="card-body">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title">
+                    <li class="fabu ">授予勋章</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="layui-tab-item layui-show">
+                        <div class="layui-row">
+                            <table class="table table-striped">
+                                <input type="hidden" name="currentPage" value="1">
+                                <thead>
+                                <tr>
+                                    <th>
+                                        选择
+                                    </th>
+                                    <th>
+                                        勋章图
+                                    </th>
+                                    <th>
+                                        勋章描述
+                                    </th>
+                                    <th>
+                                        创建时间
+                                    </th>
+                                    <!--<th>-->
+                                        <!--操作-->
+                                    <!--</th>-->
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="mdeal :${mdealList}">
+                                    <th>
+                                        <input type="checkbox" name="" th:value="${mdeal.mId}" title="">
+                                    </th>
+                                    <td class="py-1">
+                                        <img src="../../images/faces-clipart/pic-1.png" alt="image" th:src="${application.httpURL}+${mdeal.mUrl}" />
+                                    </td>
+
+                                    <td th:text="${mdeal.describes}"></td>
+                                    <!--<td ><span class="badge badge-success" th:text="${message.isNot ==0 ? '未读消息' : '已读'}"></span></td>-->
+                                    <td th:text="${#dates.format(mdeal.createTime, 'yyyy-MM-dd  HH:mm:ss')}">/td>
+                                   <!-- <td>
+                                        <div class="btn-group dropdown">
+                                            <button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                管理
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item updmessage" href="javascript:void(0);" data-id="1" nid="1">
+                                                    <i class="fa fa-reply fa-fw"></i>修改消息</a>
+                                                <a class="dropdown-item delmsg" href="javascript:void (0)" delid="1">
+                                                    <i class="fa fa-history fa-fw"></i>删除消息</a>
+                                            </div>
+                                        </div>
+                                    </td>-->
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="layui-row" style="line-height: 60px">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- container-scroller -->
+<!-- plugins:js -->
+<script src="../../vendors/js/vendor.bundle.base.js" th:src="@{/vendors/js/vendor.bundle.base.js}"></script>
+<script src="../../vendors/js/vendor.bundle.addons.js" th:src="@{/vendors/js/vendor.bundle.addons.js}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="../../js/off-canvas.js" th:src="@{/js/off-canvas.js}"></script>
+<script src="../../js/misc.js" th:src="@{/js/misc.js}"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<!-- End custom js for this page-->
+<script th:src="@{/webjars/layui/dist/layui.js}" src="webjars/layui/dist/layui.js"></script>
+<script>
+
+
+</script>
+</body>
+</html>

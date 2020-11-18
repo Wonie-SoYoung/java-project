@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>用户管理 | 自由角度</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css" th:href="@{/vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css" th:href="@{/vendors/css/vendor.bundle.base.css}">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.addons.css" th:href="@{/vendors/css/vendor.bundle.addons.css}">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="../../vendors/iconfonts/font-awesome/css/font-awesome.min.css" th:href="@{/vendors/iconfonts/font-awesome/css/font-awesome.min.css}" />
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/style.css" th:href="@{/css/style.css}">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="images/favicon.png" th:href="@{/images/favicon.png}" />
+
+    <link rel="stylesheet" th:href="@{/webjars/layui/dist/css/layui.css}" href="webjars/layui/dist/css/layui.css">
+    <style>
+        .modal-content {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            width: 100%;
+            pointer-events: auto;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 0.3rem;
+            outline: 0;
+        }
+    </style>
+</head>
+<body>
+            <div class="content-wrapper">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                            <ul class="layui-tab-title">
+                                <li class="fabu ">发布消息</li>
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <div class="layui-row">
+                                    </div>
+                                    <div class="layui-row" style="line-height: 60px">
+                                        <button type="button" hidden class="btn btn-outline-primary btnQun">群发通知</button>
+                                        <button type="button" class="btn btn-outline-warning btnGe">个人通知</button>
+
+                                        <input type="text" hidden="hidden" style="line-height: 160px" name="title" autocomplete="off" placeholder="请选择需要发布的用户信息" class="layui-input selUser">
+                                    </div>
+                                    <textarea id="demo" style="display: none;"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+<!-- container-scroller -->
+<!-- plugins:js -->
+<script src="../../vendors/js/vendor.bundle.base.js" th:src="@{/vendors/js/vendor.bundle.base.js}"></script>
+<script src="../../vendors/js/vendor.bundle.addons.js" th:src="@{/vendors/js/vendor.bundle.addons.js}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="../../js/off-canvas.js" th:src="@{/js/off-canvas.js}"></script>
+<script src="../../js/misc.js" th:src="@{/js/misc.js}"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<!-- End custom js for this page-->
+<script th:src="@{/webjars/layui/dist/layui.js}" src="webjars/layui/dist/layui.js"/>
+<script></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use('element', function(){
+        var $ = layui.jquery
+            ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+
+
+        $('.site-demo-active').on('click', function(){
+            var othis = $(this), type = othis.data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+
+        //Hash地址的定位
+        var layid = location.hash.replace(/^#test=/, '');
+        element.tabChange('test', layid);
+
+        element.on('tab(test)', function(elem){
+            location.hash = 'test='+ $(this).attr('lay-id');
+        });
+
+        /*
+        * 富文本编辑器
+        * */
+
+        var index;
+        var layedit
+        layui.use('layedit', function(){
+            layedit = layui.layedit;
+            index = layedit.build('demo',{height:280}); //建立编辑器
+        });
+
+        /*
+         * Ajax , 进行提交通知
+         * */
+        $(".btnQun").click(function () {
+            var content = layedit.getContent(index);
+            if (content!=null && content!=""){
+                $.post("/message/qunMessage/",{content:content},function (data) {
+                    if (data == "sourcss") {
+                        layer.msg('发布群通知成功');
+                        layer.closeAll()
+                    }
+                    if (data == "error") {
+                        layer.msg('消息发布失败');
+                    }
+                })
+            } else {
+                layer.msg("内容为空，无法提交")
+            }
+        })
+        $(".btnGe").click(function () {
+            var content = layedit.getContent(index);
+            var userid =$(this).attr("userid");
+            var  selUser = $(".selUser").val();
+            if (content!=null && content!="") {
+                if (selUser!=null && selUser!=""){
+
+                    $.post  ("/message/geMessage", {content: content, selUser: selUser}, function (data) {
+                        if (data == "sourcss") {
+                            layer.closeAll()
+                            layer.msg('发布个人通知成功');
+                        }
+                        if (data == "error") {
+                            layer.msg('消息个人发布失败');
+                        }
+                    })
+                } else {
+                    layer.msg("请选择要发送的用户")
+                }
+
+            } else {
+                layer.msg("内容为空，无法提交")
+            }
+        })
+    });
+
+    $(function () {
+       /* $(".selUser").focus(function () {
+            layer.open({
+                type: 2,
+                skin: 'layui-layer-demo', //样式类名
+                id:'layerDemo'+1,
+                title: '选择通知的用户',
+                closeBtn: 1, //不显示关闭按钮
+                anim: 0,
+                maxmin:true,
+                btn: ['确认', '取消'],
+                yes: function(index){//layer.msg('yes');    //点击确定回调
+                    var selUser = $(".selUser").val();
+                    var checked=[];
+                    $(window.frames["layui-layer-iframe"+index].document).find("input[type=checkbox]:checked").each(function(){
+                        checked.push($(this).val())
+                        $(".selUser").val(checked);
+                    });
+                    for(var i=0;i<checked.length;i++){
+                        selUser += checked[i].value +",";
+                    }
+                    layer.closeAll();
+
+                },
+                area: ['993px', '600px'],
+                shadeClose: true, //开启遮罩关闭
+                content: '/back/srcuserlist'
+            });
+        })*/
+    })
+</script>
+</body>
+</html>

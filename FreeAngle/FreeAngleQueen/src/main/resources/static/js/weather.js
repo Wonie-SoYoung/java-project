@@ -1,0 +1,52 @@
+var httpRequest = new XMLHttpRequest();
+httpRequest.open("GET", "https://api.gugudata.com/weather/weatherinfo?appkey=FKRU7A26W8V8&code=101180101&days=7", false);
+httpRequest.send(null);
+var r = JSON.parse(httpRequest.response);
+console.log(r);
+var weather_location="";
+var ws=new Array();
+var weather_date="";
+var wifs=new Array();
+for(i in r.Data){
+    weather_location=r.Data[0].WeatherRegion.CityName+","+r.Data[0].WeatherRegion.ProvinceName;
+    weather_date=r.Data[0].WeatherDate;
+    ws.push(r.Data[i].TemperatureHigh);
+    wifs.push(r.Data[i].WeatherInfo)
+}
+var a,b,c,d,e,f,g;
+a1=ws[0]+"&deg;";
+b1=ws[1]+"&deg;";
+c1=ws[2]+"&deg;";
+d1=ws[3]+"&deg;";
+e1=ws[4]+"&deg;";
+f1=ws[5]+"&deg;";
+g1=ws[6]+"&deg;";
+var today=ws[0];
+var a,b,c,d,e,f,g;
+a=wifs[0];
+b=wifs[1];
+c=wifs[2];
+d=wifs[3];
+e=wifs[4];
+f=wifs[5];
+g=wifs[6];
+var WeatherInfo=wifs[0];
+document.getElementById("weather_location").innerHTML = weather_location;
+document.getElementById("weather_date").innerHTML = weather_date;
+document.getElementById("today").innerHTML = today;
+document.getElementById("a1").innerHTML = a1;
+document.getElementById("b1").innerHTML = b1;
+document.getElementById("c1").innerHTML = c1;
+document.getElementById("d1").innerHTML = d1;
+document.getElementById("e1").innerHTML = e1;
+document.getElementById("f1").innerHTML = f1;
+document.getElementById("g1").innerHTML = g1;
+document.getElementById("WeatherInfo").innerHTML = WeatherInfo;
+document.getElementById("a").innerHTML = a;
+document.getElementById("b").innerHTML = b;
+document.getElementById("c").innerHTML = c;
+document.getElementById("d").innerHTML = d;
+document.getElementById("e").innerHTML = e;
+document.getElementById("f").innerHTML = f;
+document.getElementById("g").innerHTML = g;
+

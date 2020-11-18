@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyoung.photo.freeanglequeen.dao.QueenUserMapper">
+
+
+    <!-- 范宏伦 -->
+    <!-- 修改头像 -->
+    <update id="updQueenUserIdHeadURL" parameterType="User">
+        update queenuser
+          set
+        headURL=#{headURL}
+          where
+        id=#{id}
+    </update>
+
+    <!-- 陈海嘉 -->
+    <!--后台账户登录-->
+    <select id="getUserByPwd" resultType="QueenUser">
+          SELECT * from queenuser WHERE userName=#{userName} and password=#{password}
+    </select>
+    <select id="getFaceUrlByIdQueenUser" resultType="QueenUser">
+        SELECT * from queenuser where id=#{id}
+    </select>
+
+    <!--  //查询后台用户分页插件
+    public List<Map<String ,Object>> getQueenUserList(Map<String ,Object> parmmap);-->
+    <select id="getQueenUserList" resultType="map">
+        select id,userName,phone,sex,headURL,ustart,createTime,updateTime,delFlag
+        from queenuser
+        <where>
+            <if test="userName!=null and userName!=''">
+                and userName like concat('%',#{userName},'%')
+            </if>
+            <if test="phone!=null and phone!=''">
+                and phone = #{phone}
+            </if>
+            <if test="ustart!=null and ustart!=''">
+                and ustart=#{ustart}
+            </if>
+            <if test="createTime!=null and createTimeDao==null">
+                and  DATE_FORMAT(createTime,'%Y-%m-%d')   = DATE_FORMAT(#{createTime},'%Y-%m-%d')
+            </if>
+            <if test="createTimeDao!=null and createTime==null">
+                and DATE_FORMAT(createTime,'%Y-%m-%d')  = DATE_FORMAT(#{createTimeDao},'%Y-%m-%d')
+            </if>
+            <if test="createTime!=null and createTimeDao!=null">
+                and  DATE_FORMAT(createTime,'%Y-%m-%d')  BETWEEN #{createTime} and #{createTimeDao}
+            </if>
+        </where>
+        order by createTime desc
+    </select>
+
+    <!-- //修改密码
+    public int updPwd(Integer id,String pwd);-->
+    <update id="updPwd">
+        UPDATE queenuser set password = #{pwd} where id=#{id}
+
+    </update>
+
+    <!--  //添加用户密码
+    public int addQueenUser(QueenUser queenUser);-->
+    <insert id="addQueenUser">
+        INSERT INTO queenuser VALUES(DEFAULT,#{userName},#{password},#{phone},#{email},#{sex},#{headURL},DEFAULT,DEFAULT,null,#{describe},DEFAULT)
+
+    </insert>
+
+    <!--//注销此用户
+    public int delQueenUser(Integer id);-->
+    <delete id="delQueenUser">
+        delete from queenuser where id = #{id}
+    </delete>
+
+
+
+</mapper>

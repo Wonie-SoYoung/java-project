@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyoung.core.dao.GoodsDao">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.soyoung.core.entity.Goods">
+                <id column="id" property="id"/>
+                <result column="gname" property="gname"/>
+                <result column="created" property="created"/>
+                <result column="created_user" property="createdUser"/>
+                <result column="phone" property="phone"/>
+                <result column="type" property="type"/>
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="sql_columns">
+        id, gname, created, created_user, phone, type
+    </sql>
+
+</mapper>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyoung.photo.freeanglequeen.dao.UserMapper">
+
+    <!-- 范宏伦 -->
+    <!-- 根据 ID 查询用户信息 -->
+    <select id="selUserId" resultType="User">
+        select id,userName,sex,intro,headURL,backgroundURL,prestige,stateid,createTime,updateTime,logins,ifrecommend,ifexpert from user
+          where
+        id = #{id}
+    </select>
+    <!-- 查询封号天数不为零的用户 -->
+    <select id="selUserSealList" resultType="User">
+        select id,seal from user
+          where
+        seal!=0
+    </select>
+    <!-- 修改封号天数-->
+    <update id="updUserId" parameterType="Integer">
+        update user
+          set
+        seal=#{seal}
+          where
+        id=#{id}
+    </update>
+
+
+    <!-- 陈海嘉 -->
+    <!--查询总条数-->
+    <select id="getUserSum" resultType="int">
+        SELECT count(1) from User
+    </select>
+
+    <select id="getUserPageSum" resultType="int">
+        SELECT count(1) from User  WHERE to_days( createTime ) = to_days( now( ) )
+    </select>
+
+    <select id="getUserById" resultType="map">
+       select id,userName,intro,sex,prestige,(SELECT sName FROM  state WHERE id = user.stateid) AS stateid,logins,
+          createTime,updateTime,ifrecommend,ifexpert
+       from user
+       where id = #{id}
+    </select>
+
+    <select id="getUserId" resultType="map">
+       select id,userName,intro,sex,prestige,stateid,logins,
+          createTime,updateTime,ifrecommend,ifexpert,seal
+       from user
+       where id = #{id}
+    </select>
+
+    <!--//首页查询，按每天的时间，获取当天注册的用户
+    public  List<Map<String ,Object>> everyDayUser();-->
+
+    <select id="everyDayUser" resultType="map">
+        SELECT id,userName,sex,prestige,(SELECT sName FROM  state WHERE id = user.stateid) AS stateid,logins,createTime,updateTime,ifrecommend,ifexpert
+        FROM user  WHERE to_days( createTime ) = to_days( now( ) )
+        order by createTime DESC limit ${currentPage},${pageSize};
+    </select>
+
+    <!--
+    //分页插件
+    public List<Map<String ,Object>> everyDayUserPageHelper(Map<String ,Object> parmmap);-->
+    <select id="everyDayUserPageHelper" resultType="map">
+        SELECT id,userName,sex,prestige,headURL,intro,
+        (SELECT sName FROM  state WHERE id = user.stateid) AS stateid,
+        logins,createTime,updateTime,ifrecommend,ifexpert
+        FROM user
+
+        <where>
+            <if test="userName!=null and userName!=''">
+                and userName like concat('%',#{userName},'%')
+            </if>
+            <!-- <if test="createTime!=null and createTimeDao==null">
+                 and  DATE_FORMAT(createTime,'%Y-%m-%d')  = DATE_FORMAT(#{createTime},'%Y-%m-%d')
+             </if>
+             <if test="createTimeDao!=null and createTime==null">
+                 and DATE_FORMAT(createTime,'%Y-%m-%d') = DATE_FORMAT(#{createTimeDao},'%Y-%m-%d')
+             </if>-->
+            <if test="createTime!=null and createTimeDao==null">
+                and  DATE_FORMAT(createTime,'%Y-%m-%d')   = #{createTime}
+            </if>
+            <if test="createTimeDao!=null and createTime==null">
+                and DATE_FORMAT(createTime,'%Y-%m-%d')  = #{createTimeDao}
+            </if>
+            <if test="createTime!=null and createTimeDao!=null">
+                and  DATE_FORMAT(createTime,'%Y-%m-%d')  BETWEEN #{createTime} and #{createTimeDao}
+            </if>
+        </where>
+        order by createTime DESC
+    </select>
+
+    <!-- //用户统计，统计每年的增加的用户数量
+    public List<User> getUserByCreatetime();-->
+
+    <select id="getUserByCreatetime" resultType="map">
+        select  DATE_FORMAT( createtime, "%Y") as createtime,count(1) as count from user GROUP BY  DATE_FORMAT( createtime, "%Y")
+    </select>
+
+    <!-- //查询全部，插入消息的时候使用
+    public List<Map<String,Object>> getUserList();-->
+    <select id="getUserList" resultType="map">
+        select * from user
+    </select>
+
+    <!--//推荐用户
+    public int tuiJian(Map<String ,Object> map);-->
+    <update id="tuiJian">
+        update user set ifrecommend =#{ifrecommend} where id = #{id}
+
+    </update>
+    <!--//赋予达人
+    public int daRen(Map<String ,Object> map);-->
+    <update id="daRen">
+        update user set ifexpert =#{ifexpert} where id = #{id}
+
+    </update>
+
+    <!--  //封号处理
+   public int fengHao(@Param("seal") Integer seal, @Param("id") Integer id);-->
+    <update id="fengHao">
+         update user set seal =#{seal} where id = #{id}
+    </update>
+
+
+</mapper>

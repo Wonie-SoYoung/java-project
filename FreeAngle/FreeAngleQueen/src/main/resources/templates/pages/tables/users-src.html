@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>用户管理 | 自由角度</title>
+        <!-- plugins:css -->
+        <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css" th:href="@{/vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
+        <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css" th:href="@{/vendors/css/vendor.bundle.base.css}">
+        <link rel="stylesheet" href="../../vendors/css/vendor.bundle.addons.css" th:href="@{/vendors/css/vendor.bundle.addons.css}">
+        <!-- endinject -->
+        <!-- plugin css for this page -->
+        <link rel="stylesheet" href="../../vendors/iconfonts/font-awesome/css/font-awesome.min.css" th:href="@{/vendors/iconfonts/font-awesome/css/font-awesome.min.css}" />
+        <!-- End plugin css for this page -->
+        <!-- inject:css -->
+        <link rel="stylesheet" href="../../css/style.css" th:href="@{/css/style.css}">
+        <!-- endinject -->
+        <link rel="shortcut icon" href="images/favicon.png" th:href="@{/images/favicon.png}" />
+
+    </head>
+    <body>
+            <div class="container-fluid page-body-wrapper">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="table-responsive">
+                                            <form th:action="@{/back/srcuserlist}" method="get">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <div class="form-group row">
+                                                            <label class="col-sm-1 col-form-label">名称</label>
+                                                            <div class="col-sm-3">
+                                                                <input type="text" class="form-control" value="" name="userName" placeholder="请输入用户名称">
+                                                            </div>
+                                                            <label class="col-sm2 col-form-label">开始时间</label>
+                                                            <div class="col-sm-2">
+                                                                <input type="text" class="form-control" value=""id="createTime" name="createTime" autocomplete="off" placeholder="开始查询时间">
+                                                            </div>
+                                                            <label class="col-sm-2 col-form-label">结束时间</label>
+                                                            <div class="col-sm-2">
+                                                                <input type="text" class="form-control" value="" id="createTimeDao" name="createTimeDao" autocomplete="off" placeholder="结束查询时间">
+                                                            </div>
+                                                            <div class="col-sm-1">
+                                                                <button type="submit" class="btn btn-success mr-2">查询</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <table class="table table-striped">
+                                                <input type="hidden" name="currentPage" value="1"/>
+                                                <thead>
+                                                    <tr>
+                                                        <th>
+                                                            选择
+                                                        </th>
+                                                        <th>
+                                                            摄影师
+                                                        </th>
+                                                        <th>
+                                                            名字
+                                                        </th>
+                                                        <th>
+                                                            性别
+                                                        </th>
+                                                        <th>
+                                                            国家
+                                                        </th>
+                                                        <th>
+                                                            注册日期
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr th:each="user : ${usermap}">
+                                                        <td><input type="checkbox" class="checkbox" name="check" th:value="${user.id}"></td>
+                                                        <td class="py-1">
+                                                            <img src="../../images/faces-clipart/pic-1.png" alt="image" th:src="${application.httpURL}+${user.headURL}" />
+                                                        </td>
+                                                        <td class="userName" th:text="${user.userName}"></td>
+                                                        <td th:text="${user.sex}"></td>
+                                                        <td th:text="${user.stateid}"></td>
+                                                        <td th:text="${user.createTime}"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            </form>
+
+                                            <div class="card-body">
+                                                <div class="template-demo">
+                                                    <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                                        <div class="btn-group" role="group" aria-label="First group">
+                                                            <button type="button" class="btn btn-outline-secondary" th:disabled="${pageInfo.pageNum==1}" th:onclick="page_nav(1)">首页</button>
+                                                            <button type="button" class="btn btn-outline-secondary" th:disabled="${pageInfo.pageNum==1}"  th:onclick="page_nav([[${pageInfo.pageNum - 1}]])">«</button>
+                                                            <button type="button" class="btn btn-outline-secondary" th:text="${pageInfo.pageNum}"> </button>
+                                                            <button type="button" class="btn btn-outline-secondary">/</button>
+                                                            <button type="button" class="btn btn-outline-secondary" th:text="${pageInfo.pages}"></button>
+                                                            <button type="button" class="btn btn-outline-secondary" th:disabled="${pageInfo.pageNum}==${pageInfo.pages}" th:onclick="page_nav([[${pageInfo.pageNum+1}]])">»</button>
+                                                            <button type="button" class="btn btn-outline-secondary" th:disabled="${pageInfo.pageNum}==${pageInfo.pages}" th:onclick="page_nav([[${pageInfo.pages}]])">尾页</button>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <!-- container-scroller -->
+        <!-- plugins:js -->
+        <script src="../../vendors/js/vendor.bundle.base.js" th:src="@{/vendors/js/vendor.bundle.base.js}"></script>
+        <script src="../../vendors/js/vendor.bundle.addons.js" th:src="@{/vendors/js/vendor.bundle.addons.js}"></script>
+        <!-- endinject -->
+        <!-- Plugin js for this page-->
+        <!-- End plugin js for this page-->
+        <!-- inject:js -->
+        <script src="../../js/off-canvas.js" th:src="@{/js/off-canvas.js}"></script>
+        <script src="../../js/misc.js" th:src="@{/js/misc.js}"></script>
+        <!-- endinject -->
+        <!-- Custom js for this page-->
+        <!-- End custom js for this page-->
+
+        <script th:src="@{/layui/laydate/laydate.js}"></script> <!-- 改成你的路径，引入layui -->
+        <script>
+            function page_nav(num){
+                document.forms[0].currentPage.value = num;
+                document.forms[0].submit();
+            }
+            //执行一个laydate实例
+            laydate.render({
+                elem: '#createTimeDao' //指定元素
+            }); laydate.render({
+                elem: '#createTime' //指定元素
+            });
+        </script>
+    </body>
+</html>

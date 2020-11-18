@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyoung.photo.freeanglequeen.dao.DictionaryMapper">
+
+    <!-- 范宏伦 -->
+    <!-- 根据 类型码 查询字典信息 -->
+    <select id="selDictionaryListTypeCode" resultType="Dictionary">
+        select * from dictionary
+          where
+        typeCode=#{typeCode}
+    </select>
+    <!-- 根据 ID 查询字典信息 -->
+    <select id="selDictionaryID" resultType="Dictionary">
+        select id,typeCode,typeName,valueId,valueName from dictionary
+          where
+        id=#{id}
+    </select>
+
+    <!-- 陈海嘉 -->
+    <!-- //查询作品的类型
+    public List<Dictionary> getDictionaryList();-->
+    <select id="getDictionaryList" resultType="Dictionary">
+        SELECT id,valueName FROM dictionary WHERE typeCode='PRODUCTION_TYPE'
+    </select>
+
+    <!--//查询消息类型
+    public List<Dictionary> getMsg();-->
+    <select id="getMsg" resultType="Dictionary">
+        SELECT id,valueName FROM dictionary WHERE typeCode='NEWS_TYPE' and valueId=5 or valueId = 6
+    </select>
+
+</mapper>

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8" />
+		<title>自由角度 | 权限登录</title>
+		<link rel="stylesheet" th:href="@{/login/css/login.css}" href="/login/css/login.css">
+		<link rel="shortcut icon" th:href="@{/common/img/title.png}" href="/common/img/title.png" type="image/x-icon"/>
+		<script type="text/javascript" th:src="@{/common/js/jquery.min.js}" src="/common/js/jquery.min.js" ></script>
+	</head>
+	<body>
+		<div class="shadow" style="display: none;"></div>
+		<div id="login1">
+			<img src="/login/img/load.gif" class="open" />
+			<div class="m-logbg">
+				<img id="bg2">
+			</div>
+			<div class="m-logbg2">
+				<div class="logo">
+					<h1>FreeAngle</h1>
+					<h2>
+						让兴趣<span class="dian">·</span>更有趣
+					</h2>
+				</div>
+				<div class="login-menu">
+					<div class="login">
+						<p class="m-userlnks">账户登录</p>
+						<div class="newlogin">
+							<div class="leftlogin">
+								<form action="/oauth/phoneBypwdLogin" method="post">
+									<div class="isolation">
+										<input id="phone" type="text" name="phone" placeholder="请输入手机号"/>
+									</div>
+									<div class="isolation" style="display: none">
+										<input id="note" type="text" name="note" placeholder="手机号验证码"/>
+										<a class="codetext">获取验证码</a>
+									</div>
+									<div class="isolation">
+										<input id="pwd" type="password" name="password" placeholder="请输入密码"/>
+									</div>
+									<div class="isolation" style="text-align: start;height: 30px;">
+										<p class="choice">
+											<input style="width: 15px;opacity: 0;" type="checkbox" name="isNot"/>
+											<span class="assgin"></span>
+											<span class="assgintext">记住我</span>
+										</p>
+										<span class="agreement">没有账户即<a href="/register">点击注册</a></span>
+									</div>
+									<div class="isolation">
+										<input type="button" style="cursor:pointer;border-radius:5px;letter-spacing:5px;height: 40px; border: none; background-color: #75A2D6; color: #FFFFFF;font-size: 16px;width: 290px;margin-top: 15px;"
+											 class="commit" name="tijiao" value="登录"/>
+									</div>
+								</form>
+							</div>
+							<div class="gelilogin">
+								<span class="sepln" style="margin-bottom: 20px;"></span>
+								<span class="septxt">或</span>
+								<span class="sepln" style="margin-top: 60px;"></span>
+							</div>
+							<div class="rightlogin">
+								<ul>
+									<li class="tel">
+										<a class="w-btn3 w-btn3-01">手机号登录</a>
+									</li>
+									<li class="sina">
+										<a class="w-btn3 w-btn3-02">新浪微博登录</a>
+									</li>
+									<li class="qq">
+										<a href="/oauth/qqlogin" class="w-btn3 w-btn3-1" style="text-decoration: none">腾讯QQ登录</a>
+									</li>
+									<li class="weixin">
+										<a class="w-btn3 w-btn3-4">微信登录</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="imgtag">
+				<span>背景作品来自:&nbsp;FreeAngle</span>
+				<a class="itm-prv opentag"></a>
+				<a class="itm-nxt opentag"></a>
+			</div>
+		</div>
+		<div id="errey"><span class="tishi" th:text="${error}">asdasdasdasd</span></div>
+	</body>
+<script>
+    $(function(){
+        //出场提示
+        if($("#errey span").html()!=''){
+            erreyshow();
+        }
+        //切换背景
+        $('.itm-prv').click(function(){
+            if(rand>0){
+                rand=rand-1;
+            }else{
+                rand=9;
+            }
+            $('#bg2').animate({opacity:'0'},500,function(){
+                $('#bg2').attr("src",imgarray[rand]);
+            });
+            $('#bg2').animate({opacity:'1'},500,function(){
+                $('#bg2').attr("src",imgarray[rand]);
+            });
+        })
+        $('.itm-nxt').click(function(){
+            if(rand<imgarray.length){
+                rand=rand+1;
+            }else{
+                rand=0;
+            }
+            $('#bg2').animate({opacity:'0'},500,function(){
+                $('#bg2').attr("src",imgarray[rand]);
+            });
+            $('#bg2').animate({opacity:'1'},500,function(){
+                $('#bg2').attr("src",imgarray[rand]);
+            });
+        })
+        //背景设置
+        var x = 9;
+        var y = 0;
+        var rand = parseInt(Math.random() * (x - y + 1) + y);
+        var imgarray=new Array('/login/img/setting/tag0.png','/login/img/setting/tag1.png','/login/img/setting/tag2.png'
+            ,'/login/img/setting/tag3.png','/login/img/setting/tag4.png','/login/img/setting/tag5.png','/login/img/setting/tag6.png'
+            ,'/login/img/setting/tag7.png','/login/img/setting/tag8.png','/login/img/setting/tag9.png');
+        $('.open').animate({top:'50%',opacity:'1'},600,function(){
+            $(this).css("opacity","0");
+        });
+        $('.m-logbg').animate({height:'100%'},450,function(){
+            $('#bg2').attr("src",imgarray[rand]);
+            $('#bg2').animate({opacity:'1'},300,function(){
+                $('.m-logbg2').animate({opacity:'1'},300);
+                $('.imgtag').animate({opacity:'1'},300);
+            });
+        });
+    });
+    //异常特效
+    function erreyshow(){
+        $("#errey").animate({"top":15,"opacity":1},500);
+        setTimeout("$('#errey').animate({'top':-40,'opacity':0},800)",2000);
+    }
+    // 验证手机号
+    function isPhoneNo(phone) {
+        var pattern = /^1[34578]\d{9}$/;
+        return pattern.test(phone);
+    }
+
+    $(".codetext").click(function () {
+        if($(this).html()!='获取验证码'){
+            $("#errey span").html("不可重复点击!").attr("class","tishi");
+            erreyshow();
+        }else{
+            getCode();
+        }
+    })
+    //点击发送验证码
+    function getCode() {
+        var nums=60;	//时间
+        var clock = '';	//定时事件
+        var $phone=$("#phone").val();
+        var code=$(".codetext");
+        var context=/^1(3[0-9]|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8[56789])[0-9]{8}$/;
+        // 判断手机号码
+        if ($phone=="" || $phone==null) {
+            $("#errey span").html("手机号没有输入!").attr("class","tishi");
+            erreyshow();
+            $('#phone').focus();
+        } else if(context.test($phone)==false){
+            $("#errey span").html("手机号码不正确!").attr("class","tishi");
+            erreyshow();
+            $('#phone').focus();
+        }else{
+            $.post("/oauth/getCode/"+$phone,'',function (data) {
+                if(data=='1'){
+                    $("#errey span").html("验证码发送成功！").attr("class","tongguo");
+                    erreyshow();
+                    code.html(nums+"秒");
+                    clock = setInterval(function(){
+                        nums--;
+                        if(nums > 0){
+                            code.html(nums+"秒");
+                        }else{
+                            clearInterval(clock);
+                            //清除js定时器
+                            code.html('获取验证码');
+                            nums = 60; //重置时间
+                        }
+                    }, 1000); //一秒执行一次
+                }else{
+                    $("#errey span").html("验证码发送失败！").attr("class","tishi");
+                    erreyshow();
+                }
+            },'json');
+        }
+    }
+    //手机号验证码验证
+	function phoneBycode(){
+        var $phone=$("#phone").val();
+        var $note=$("#note").val();
+        var context=/^1(3[0-9]|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8[56789])[0-9]{8}$/;
+        // 判断手机号码
+        if ($phone=="" || $phone==null) {
+            $("#errey span").html("手机号没有输入!").attr("class","tishi");
+            erreyshow();
+            $('#phone').focus();
+        } else if(context.test($phone)==false){
+            $("#errey span").html("手机号码不正确!").attr("class","tishi");
+            erreyshow();
+            $('#phone').focus();
+        }else if($note==null ||$note==''){
+            $("#errey span").html("请输入验证码！").attr("class","tishi");
+            erreyshow();
+            $('#note').focus();
+        }else{
+            $("form").submit();
+        }
+	}
+	//手机号密码验证
+	function phoneBypwd(){
+        var $phone=$("#phone").val();
+        var $pwd=$("#pwd").val();
+        var context=/^1(3[0-9]|4[4-9]|5[0-35-9]|6[67]|7[013-8]|8[56789])[0-9]{8}$/;
+        // 判断手机号码
+        if ($phone=="" || $phone==null) {
+            $("#errey span").html("手机号没有输入!").attr("class","tishi");
+            erreyshow();
+            $('#phone').focus();
+        } else if(context.test($phone)==false){
+            $("#errey span").html("手机号码不正确!").attr("class","tishi");
+            erreyshow();
+            $('#phone').focus();
+        }else if($pwd==null ||$pwd==''){
+            $("#errey span").html("请输入密码!").attr("class","tishi");
+            erreyshow();
+            $('#pwd').focus();
+        }else{
+            $("form").submit();
+        }
+	}
+    //登录验证
+    $(".commit").click(function () {
+		if($("form").attr("action")=='/oauth/phoneLogin'){
+		    phoneBycode();
+		}else{
+		    phoneBypwd();
+		}
+    })
+	//切换登录方式
+	$(".tel").click(function () {
+	    if($("form").attr("action")=='/oauth/phoneLogin'){
+            $("form").animate({opacity:"0"},300,function () {
+                $("form").animate({opacity:"1"},300,function () {
+                    $("input[name='password']").parent().show();
+                    $("input[name='note']").parent().hide();
+                    $("form").attr("action","/oauth/phoneBypwdLogin");
+                });
+            });
+		}else{
+            $("form").animate({opacity:"0"},300,function () {
+                $("form").animate({opacity:"1"},300,function () {
+                    $("input[name='password']").parent().hide();
+                    $("input[name='note']").parent().show();
+                    $("form").attr("action","/oauth/phoneLogin");
+                });
+            });
+		}
+
+    })
+</script>
+</html>

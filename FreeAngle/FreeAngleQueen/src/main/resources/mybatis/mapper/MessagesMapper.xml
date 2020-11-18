@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyoung.photo.freeanglequeen.dao.MessagesMapper">
+
+    <!-- 陈海嘉 -->
+    <!-- //查询所有
+    public List<Map<String,Object>> getMessage();-->
+    <select id="getMessage" resultType="map">
+        select
+        mid,
+        (select userName from queenuser where id = messages.uid) as uid,
+        (select valueName from dictionary where id = messages.mType) as mType,
+        (select userName from user where id = messages.byuid) as byuid,keyid,isNot,createTime
+        from messages
+        <where>
+            <if test="uid!=null and  uid !=''">
+                and uid = #{uid}
+            </if>
+            <if test="mType!=null and mType != ''">
+                and mType = #{mType}
+            </if>
+        </where>
+    </select>
+
+    <!--  //添加
+    public int addMessage(Map<String , Object> map);-->
+    <insert id="addMessage">
+        insert  into messages values(default ,#{uid},#{byuid},#{mType},#{keyid},#{isNot},default ,#{createTime});
+    </insert>
+
+    <!--//删除信息
+    public int delMsg(Integer id);-->
+    <delete id="delMsg">
+        delete
+        from messages where keyid = #{id}
+    </delete>
+
+</mapper>

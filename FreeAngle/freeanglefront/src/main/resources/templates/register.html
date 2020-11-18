@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>自由角度 | 用户注册</title>
+  <link rel="shortcut icon" th:href="@{/common/img/title.png}" href="/common/img/title.png" type="image/x-icon"/>
+  <link rel="stylesheet" th:href="@{/login/css/materialdesignicons.min.css}" href="/login/css/materialdesignicons.min.css">
+  <link rel="stylesheet" th:href="@{/login/css/feather.css}" href="/login/css/feather.css">
+  <link rel="stylesheet" th:href="@{/login/css/vendor.bundle.base.css}" href="/login/css/vendor.bundle.base.css">
+  <link rel="stylesheet" th:href="@{/login/css/vendor.bundle.addons.css}" href="/login/css/vendor.bundle.addons.css">
+  <link rel="stylesheet" th:href="@{/login/css/style.css}" href="/login/css/style.css">
+  <script src="/common/js/jquery.min.js"></script>
+  <style>
+  	.auth.auth-bg-1{
+  			background:url(/login/img/login_1.jpg);
+    		background-size: cover;
+  	}
+    #errey{
+      display: inline-block;
+      position: absolute;
+      left: 46%;
+      top: -40px;
+      background-color: #FFFFFF;
+      font-size: 14px;
+      color: #333333;
+      border-radius: 2px;
+      z-index: 999;
+    }
+    #errey span{
+      display: inline-block;
+      margin: 5px 15px;
+      margin-left: 35px;
+      text-align: center;
+      line-height: 30px;
+    }
+    .tishi:before{
+      display: inline-block;
+      content: "";
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: url(/login/img/tishi.png) no-repeat;
+      background-size: cover;
+    }
+    .tongguo:before{
+      display: inline-block;
+      content: "";
+      width: 16px;
+      height: 16px;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      background: url(/login/img/tonguo.png) no-repeat;
+      background-size: cover;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper auth-page">
+      <div class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
+        <div class="row w-100">
+          <div class="col-lg-4 mx-auto">
+            <div class="auto-form-wrapper">
+              <form action="/oauth/register" method="post">
+                <div class="form-group">
+                  <label class="label">Phone</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Phone" name="uuid" id="phone">
+                    <div class="input-group-append">
+                      <span class="input-group-text">
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="label">Captcha</label>
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Captcha" name="code" id="code">
+                    <div class="input-group-append">
+                      <span class="input-group-text codetext" style="color: #BFBFBF;font-size: 11px;cursor: pointer;">获取验证码</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="label">Password</label>
+                  <div class="input-group">
+                    <input type="password" class="form-control" placeholder="*********" name="password" id="pwd">
+                    <div class="input-group-append">
+                      <span class="input-group-text">
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="btn btn-primary submit-btn btn-block rsub">Register</div>
+                </div>
+                <div class="form-group">
+                  <button class="btn btn-block g-login" onclick="javascript:location.href='/login'">
+                    Jump to login</button>
+                </div>
+                <div class="text-block text-center my-3">
+                  <span class="text-small font-weight-semibold">Current page !</span>
+                  <a href="#" class="text-black text-small">Create new account</a>
+                </div>
+              </form>
+            </div>
+            <ul class="auth-footer">
+              <li>
+                <a href="#">Conditions</a>
+              </li>
+              <li>
+                <a href="#">Help</a>
+              </li>
+              <li>
+                <a href="#">Terms</a>
+              </li>
+            </ul>
+            <p class="footer-text text-center">copyright © 2019 SoYoung Limited company. All rights reserved.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="errey"><span class="tishi" th:text="${error}"></span></div>
+</body>
+  <script th:src="@{/login/js/register.js}"></script>
+</html>

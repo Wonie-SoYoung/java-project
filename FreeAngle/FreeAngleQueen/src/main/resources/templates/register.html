@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <title>管理员账户注册 | 自由角度</title>
+        <!-- plugins:css -->
+        <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css" th:href="@{/../../vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
+        <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css" th:href="@{/../../vendors/css/vendor.bundle.base.css}">
+        <link rel="stylesheet" href="../../vendors/css/vendor.bundle.addons.css" th:href="@{/../../vendors/css/vendor.bundle.addons.css}">
+        <!-- endinject -->
+        <!-- plugin css for this page -->
+        <link rel="stylesheet" href="../../vendors/iconfonts/font-awesome/css/font-awesome.min.css" th:href="@{/../../vendors/iconfonts/font-awesome/css/font-awesome.min.css}" />
+        <!-- End plugin css for this page -->
+        <!-- inject:css -->
+        <link rel="stylesheet" href="../../css/style.css" th:href="@{/../../css/style.css}">
+        <!-- endinject -->
+        <link rel="shortcut icon" href="images/favicon.png" th:href="@{/images/favicon.png}" />
+
+        <script type="text/javascript" src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+        <style type="text/css">
+            #saomiao {
+                width: 350px;
+                height: 268px;
+                position: absolute;
+                background: linear-gradient(#03a9f4, #03a9f4), linear-gradient(90deg, #ffffff33 1px, transparent 0, transparent 19px), linear-gradient(#ffffff33 1px, transparent 0, transparent 19px), linear-gradient(transparent, #2196f3);
+                background-size: 100% 1.5%, 10% 100%, 100% 10%, 100% 100%;
+                background-repeat: no-repeat, repeat, repeat, repeat;
+                background-position: 0 0, 0 0, 0 0, 0 0;
+                clip-path: polygon(0% 0%, 100% 0%, 100% 1.5%, 0% 1.5%);
+                animation: move 4s linear infinite;
+                position: absolute;
+                top: 83px;
+            }
+
+            @keyframes move {
+                to {
+                    background-position: 0 100%, 0 0, 0 0, 0 0;
+                    clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+                }
+            }
+        </style>
+
+    </head>
+    <body>
+        <div class="container-scroller">
+            <!-- partial:partials/_navbar.html
+                引入顶部栏
+            -->
+            <div th:replace="~{partials/_navbar :: _navbar}"></div>
+
+            <!-- partial -->
+            <div class="container-fluid page-body-wrapper">
+                <!-- partial:partials/_sidebar.html
+
+                  引入左边栏
+
+                  -->
+                <div th:replace="~{partials/_sidebar :: _sidebar}"></div>
+                <!-- partial -->
+                <div class="main-panel">
+                    <div class="content-wrapper">
+                        <div class="row">
+
+                            <div class="col-12 stretch-card stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">账户注册</h4>
+
+
+                                        <div class="booth">
+                                            <div class="form-container sign-up-container">
+                                                <div class="fromdiv">
+                                                    <div align="center">
+                                                        <video id="video" width="500px" height="500px" autoplay></video>
+                                                        <canvas hidden="hidden" id="canvas" width="626" height="800"></canvas>
+                                                    </div>
+                                                    <!--<div id="saomiao"></div>-->
+                                                    <p align="center">
+                                                        <span id="errorcode"></span>
+                                                    </p>
+
+                                                    <p align="center">
+                                                        <button id="CatchCode">注册</button>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <script>
+                                            var container = document.getElementById('container');
+                                            var video; //视频流对象
+                                            var context; //绘制对象
+                                            var canvas; //画布对象
+                                            var errorP=document.getElementById("errorcode");
+                                            $(function() {
+                                                //关闭摄像头
+                                                $("#signIn").click(function() {
+                                                    video.srcObject.getTracks()[0].stop();
+                                                    flag = false;
+                                                });
+                                                //拍照
+                                                $("#CatchCode").click(function() {
+                                                    context.drawImage(video, 0, 0, 330, 250);
+                                                    CatchCode();
+                                                });
+                                            });
+                                            //将当前图像传输到后台  注册
+                                            function CatchCode() {
+                                                //获取图像
+                                                var img = getBase64();
+                                                context.drawImage(video, 0, 0, 330, 250);
+                                                //Ajax将Base64字符串传输到后台处理
+                                                $.ajax({
+                                                    type: "POST",
+                                                    async: false,
+                                                    url: "/faceLogin/registered",
+                                                    data: {
+                                                        img: img
+                                                    },
+                                                    dataType: "JSON",
+                                                    success: function(data) {
+                                                        // var errorcode = eval(data);
+                                                        //返回的结果
+                                                        if(data.error_code!=null){
+                                                            errorP.style.color="red";
+                                                            errorP.innerText="检测失败，请重新检测"
+                                                        }else if(data.frr_1e_3!=null){
+                                                            errorP.style.color="red";
+                                                            errorP.innerText="此次检测不是活体,请使用把脸部对准相机   "
+                                                        }else if(data.test){
+                                                            errorP.style.color="#89dd4f";
+                                                            errorP.innerText="人脸注册成功"
+                                                        }
+                                                    }
+                                                });
+                                            };
+
+
+                                            //开启摄像头
+                                            open();
+                                            function open() {
+                                                //获取摄像头对象
+                                                canvas = document.getElementById("canvas");
+                                                context = canvas.getContext("2d");
+                                                //获取视频流
+                                                video = document.getElementById("video");
+                                                var videoObj = {
+                                                        "video": true
+                                                    },
+                                                    errBack = function(error) {
+                                                        console.log("Video capture error: ", error.code);
+                                                    };
+                                                context.drawImage(video, 0, 0, 330, 250);
+                                                //初始化摄像头参数
+                                                if(navigator.getUserMedia || navigator.webkitGetUserMedia ||
+                                                    navigator.mozGetUserMedia) {
+                                                    navigator.getUserMedia = navigator.getUserMedia ||
+                                                        navigator.webkitGetUserMedia ||
+                                                        navigator.mozGetUserMedia;
+                                                    navigator.getUserMedia(videoObj, function(stream) {
+                                                        video.srcObject = stream;
+                                                        video.play();
+                                                    }, errBack);
+                                                }
+                                            }
+                                            //将摄像头拍取的图片转换为Base64格式字符串
+                                            function getBase64() {
+                                                //获取当前图像并转换为Base64的字符串
+                                                var imgSrc = canvas.toDataURL("image/png");
+                                                //截取字符串
+                                                return imgSrc.substring(22);
+                                            };
+                                        </script>
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+                        </div>
+                    </div>
+
+
+                    <!-- partial:partials/_footer.html
+                        引入底部栏
+                    -->
+                    <div th:replace="~{partials/_footer :: _footer}"></div>
+                    <!-- partial -->
+                </div>
+            </div>
+        </div>
+
+        <!-- container-scroller -->
+        <!-- plugins:js -->
+        <script src="../../vendors/js/vendor.bundle.base.js" th:src="@{/../../vendors/js/vendor.bundle.base.js}"></script>
+        <script src="../../vendors/js/vendor.bundle.addons.js" th:src="@{/../../vendors/js/vendor.bundle.addons.js}"></script>
+        <!-- endinject -->
+        <!-- Plugin js for this page-->
+        <!-- End plugin js for this page-->
+        <!-- inject:js -->
+        <script src="../../js/off-canvas.js" th:src="@{/../../js/off-canvas.js}"></script>
+        <script src="../../js/misc.js" th:src="@{/../../js/misc.js}"></script>
+        <!-- endinject -->
+        <!-- Custom js for this page-->
+        <!-- End custom js for this page-->
+    </body>
+</html>
+
+
+
+
+
+
+

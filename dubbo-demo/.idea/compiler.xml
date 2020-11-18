@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <option name="DEFAULT_COMPILER" value="Eclipse" />
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="dubbodemoapi" />
+        <module name="dubbodemobootconsumer" />
+        <module name="dubbodemobootprovider" />
+        <module name="dubbodemoconsumer" />
+        <module name="dubbodemoprovider" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="dubbodemoapi" target="1.5" />
+      <module name="dubbodemobootconsumer" target="1.8" />
+      <module name="dubbodemobootprovider" target="1.8" />
+      <module name="dubbodemoconsumer" target="1.5" />
+      <module name="dubbodemoprovider" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

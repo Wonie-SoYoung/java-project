@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>用户管理 | 自由角度</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css" th:href="@{/vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css" th:href="@{/vendors/css/vendor.bundle.base.css}">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.addons.css" th:href="@{/vendors/css/vendor.bundle.addons.css}">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="../../vendors/iconfonts/font-awesome/css/font-awesome.min.css" th:href="@{/vendors/iconfonts/font-awesome/css/font-awesome.min.css}" />
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/style.css" th:href="@{/css/style.css}">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="images/favicon.png" th:href="@{/images/favicon.png}" />
+
+    <link rel="stylesheet" th:href="@{/webjars/layui/dist/css/layui.css}" href="webjars/layui/dist/css/layui.css">
+    <style>
+        .modal-content {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            width: 100%;
+            pointer-events: auto;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 0.3rem;
+            outline: 0;
+        }
+    </style>
+</head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html引入顶部栏-->
+    <div th:replace="~{partials/_navbar :: _navbar}"></div>
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html引入左边栏 -->
+        <div th:replace="~{partials/_sidebar :: _sidebar}"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">信息列表</li>
+                                <!--<li>私信用户</li>-->
+                                <li class="fabu ">发布消息</li>
+                                <!--<li>商品管理</li>
+                                <li>订单管理</li>-->
+                            </ul>
+                            <div class="layui-tab-content">
+                                <div class="layui-tab-item layui-show">
+                                    <div class="table-responsive">
+                                        <form action="#" method="get">
+
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="form-group row">
+                                                        <!--<label class="col-sm-1 col-form-label">用户名称</label>
+                                                        <div class="col-sm-3">
+                                                            <input type="text" class="form-control" value="" name="userName" autocomplete="off  " placeholder="请输入用户名称">
+                                                        </div>-->
+                                                        <label class="col-sm-1 col-form-label">操作人员</label>
+                                                        <div class="col-sm-3">
+                                                            <input type="text" class="form-control" id="aid" name="aid" autocomplete="off" placeholder="操作人员" lay-key="2">
+                                                        </div>
+                                                        <label class="col-sm-1 col-form-label">公告类型</label>
+                                                        <div class="col-sm-2">
+                                                            <select class="form-control" name="utype">
+                                                                <option value="">所有类型</option>
+                                                                <option value="1">个人信息</option>
+                                                                <option value="0">群发消息</option>
+                                                            </select>
+                                                        </div>
+                                                        <div class="col-sm-1">
+                                                            <button type="submit" class="btn btn-success mr-2">查询</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="layui-card">
+                                               <!-- <a class="btn btn-success" onclick="$.operate.addFull()">
+                                                    <i class="fa fa-plus"></i> 新增
+                                                </a>-->
+                                            </div>
+                                            <table class="table table-striped">
+                                                <input type="hidden" name="currentPage" value="1">
+                                                <thead>
+                                                <tr>
+                                                    <th>
+                                                        发布通知人
+                                                    </th>
+                                                    <th>
+                                                        消息类型
+                                                    </th>
+                                                    <th>
+                                                        被通知人
+                                                    </th>
+                                                    <!--<th>
+                                                        消息状态
+                                                    </th>-->
+                                                    <th>
+                                                        发布时间
+                                                    </th>
+                                                    <th>
+                                                        操作
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr th:each="message : ${message}">
+                                                    <td th:text="${message.aid}"></td>
+                                                    <td >
+                                                        <span class="badge badge-info"th:if="${message.utype==0}">群发消息</span>
+                                                        <span class="badge badge-info" th:if="${message.utype!=0}">个人消息</span>
+                                                    </td>
+
+                                                    <td th:text="${message.uid !=null ? message.uid : '全部用户'}"></td>
+                                                    <!--<td ><span class="badge badge-success" th:text="${message.isNot ==0 ? '未读消息' : '已读'}"></span></td>-->
+                                                    <td th:text="${message.createTime}"></td>
+                                                    <td>
+                                                        <div class="btn-group dropdown">
+                                                            <button type="button" class="btn btn-success dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                                管理
+                                                            </button>
+                                                            <div class="dropdown-menu">
+                                                                <a class="dropdown-item updmessage" href="javascript:void(0);" th:data-id="${message.nid}" th:attr="nid = ${message.nid}">
+                                                                    <i class="fa fa-reply fa-fw"></i>修改消息</a>
+                                                                <a class="dropdown-item delmsg" href="javascript:void (0)"  th:attr="delid = ${message.nid}">
+                                                                    <i class="fa fa-history fa-fw"></i>删除消息</a>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </form>
+
+                                        <div class="card-body">
+                                            <div class="template-demo">
+                                                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                                                    <div class="btn-group" role="group" aria-label="First group">
+                                                        <button type="button" class="btn btn-outline-secondary" th:disabled="${pageInfo.pageNum==1}" th:onclick="page_nav(1)">首页</button>
+                                                        <button type="button" class="btn btn-outline-secondary" th:disabled="${pageInfo.pageNum==1}"  th:onclick="page_nav([[${pageInfo.pageNum - 1}]])">«</button>
+                                                        <button type="button" class="btn btn-outline-secondary" th:text="${pageInfo.pageNum}"> </button>
+                                                        <button type="button" class="btn btn-outline-secondary">/</button>
+                                                        <button type="button" class="btn btn-outline-secondary" th:text="${pageInfo.pages}"></button>
+                                                        <button type="button" class="btn btn-outline-secondary" th:disabled="${pageInfo.pageNum}==${pageInfo.pages}" th:onclick="page_nav([[${pageInfo.pageNum+1}]])">»</button>
+                                                        <button type="button" class="btn btn-outline-secondary" th:disabled="${pageInfo.pageNum}==${pageInfo.pages}" th:onclick="page_nav([[${pageInfo.pages}]])">尾页</button>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <!--<div class="layui-tab-item"></div>-->
+
+                                <div class="layui-tab-item">
+                                    <div class="layui-row">
+                                        <div class="form-group row">
+
+                                            <!--<label class="col-sm-2 control-label">公告类型：</label>
+                                            <div class="col-sm-10">
+                                                <select name="noticeType" id="group_id" class="form-control m-b valid" aria-invalid="false">
+                                                 &lt;!&ndash;   <option value="1">通知</option>
+                                                    <option value="2">私聊</option>&ndash;&gt;
+                                                </select>
+                                            </div>-->
+                                        </div>
+                                    </div>
+                                    <div class="layui-row" style="line-height: 60px">
+                                        <button type="button" class="btn btn-outline-primary btnQun">群发通知</button>
+                                        <button type="button" class="btn btn-outline-warning btnGe">个人通知</button>
+
+                                        <input type="text" style="line-height: 160px" name="title" autocomplete="off" placeholder="请选择需要发布的用户信息" class="layui-input showUser">
+                                        <input type="hidden" style="line-height: 160px" name="title" autocomplete="off" placeholder="请选择需要发布的用户信息" class="layui-input selUser">
+                                    </div>
+                                    <textarea id="demo" style="display: none;"></textarea>
+                                </div>
+                              <!--  <div class="layui-tab-item">内容4</div>
+                                <div class="layui-tab-item">内容5</div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- partial:partials/_footer.html引入底部栏-->
+            <!--<div th:replace="~{partials/_footer :: _footer}"></div>-->
+            <!-- partial -->
+        </div>
+    </div>
+</div>
+
+<!-- container-scroller -->
+<!-- plugins:js -->
+<script src="../../vendors/js/vendor.bundle.base.js" th:src="@{/vendors/js/vendor.bundle.base.js}"></script>
+<script src="../../vendors/js/vendor.bundle.addons.js" th:src="@{/vendors/js/vendor.bundle.addons.js}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="../../js/off-canvas.js" th:src="@{/js/off-canvas.js}"></script>
+<script src="../../js/misc.js" th:src="@{/js/misc.js}"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<!-- End custom js for this page-->
+<script th:src="@{/webjars/layui/dist/layui.js}" src="webjars/layui/dist/layui.js"/>
+<script></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+    layui.use('element', function(){
+        var $ = layui.jquery
+            ,element = layui.element; //Tab的切换功能，切换事件监听等，需要依赖element模块
+        //触发事件
+        var active = {
+            tabAdd: function(){
+                //新增一个Tab项
+                element.tabAdd('demo', {
+                    title: '新选项'+ (Math.random()*1000|0) //用于演示
+                    ,content: '内容'+ (Math.random()*1000|0)
+                    ,id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+                })
+            }
+            ,tabDelete: function(othis){
+                //删除指定Tab项
+                element.tabDelete('demo', '44'); //删除：“商品管理”
+
+
+                othis.addClass('layui-btn-disabled');
+            }
+            ,tabChange: function(){
+                //切换到指定Tab项
+                element.tabChange('demo', '22'); //切换到：用户管理
+            }
+        };
+
+        $('.site-demo-active').on('click', function(){
+            var othis = $(this), type = othis.data('type');
+            active[type] ? active[type].call(this, othis) : '';
+        });
+
+        //Hash地址的定位
+        var layid = location.hash.replace(/^#test=/, '');
+        element.tabChange('test', layid);
+
+        element.on('tab(test)', function(elem){
+            location.hash = 'test='+ $(this).attr('lay-id');
+        });
+
+        /*
+        * 富文本编辑器
+        * */
+
+        var index;
+        var layedit
+        layui.use('layedit', function(){
+            layedit = layui.layedit;
+            index = layedit.build('demo',{height:280}); //建立编辑器
+        });
+
+        /*
+         * Ajax , 进行提交通知
+         * */
+        $(".btnQun").click(function () {
+            var content = layedit.getContent(index);
+            if (content!=null && content!=""){
+                $.post("/message/qunMessage/",{content:content},function (data) {
+                    if (data == "sourcss") {
+                        window.location.href="/message/message";
+                        layer.msg('发布群通知成功');
+                    }
+                    if (data == "error") {
+                        layer.msg('消息发布失败');
+                    }
+                })
+            } else {
+                layer.msg("内容为空，无法提交")
+            }
+        })
+        $(".btnGe").click(function () {
+            var content = layedit.getContent(index);
+            var  selUser = $(".selUser").val();
+            if (content!=null && content!="") {
+                if (selUser!=null && selUser!=""){
+                    $.post  ("/message/geMessage", {content: content, selUser: selUser}, function (data) {
+                        if (data == "sourcss") {
+                            window.location.href="/message/message";
+                            layer.msg('发布个人通知成功');
+                        }
+                        if (data == "error") {
+                            layer.msg('消息个人发布失败');
+                        }
+                    })
+                } else {
+                    layer.msg("请选择要发送的用户")
+                }
+
+            } else {
+                layer.msg("内容为空，无法提交")
+            }
+        })
+    });
+
+    $(function () {
+        $(".showUser").focus(function () {
+            layer.open({
+                type: 2,
+                    skin: 'layui-layer-demo', //样式类名
+                id:'layerDemo'+1,
+                title: '选择通知的用户',
+                closeBtn: 1, //不显示关闭按钮
+                anim: 0,
+                maxmin:true,
+                btn: ['确认', '取消'],
+                yes: function(index){//layer.msg('yes');    //点击确定回调
+                    var selUser = $(".selUser").val();
+                    var selUsertext = $(".selUser").text();
+                    var checked=[];
+                    var checked1=[];
+                    $(window.frames["layui-layer-iframe"+index].document).find("input[type=checkbox]:checked").each(function(){
+                        checked.push($(this).val())
+                        var usertd=$(this).parent().next().next().text();
+                        $(".selUser").val(checked);
+                        $(".showUser").val($(".showUser").val()+usertd+"\t");
+                    });
+                    layer.closeAll();
+
+                },
+                area: ['993px', '600px'],
+                shadeClose: true, //开启遮罩关闭
+                content: '/back/srcuserlist'
+            });
+        })
+
+        $(".updmessage").click(function () {
+            $(this).siblings().attr("class",$(this).attr("class"));
+            $(this).attr("class",$(this).attr("class")+" btnId");
+            layer.open({
+                type: 2,
+                skin: 'layui-layer-demo', //样式类名
+                title: '选择通知的用户',
+                closeBtn: 1, //不显示关闭按钮
+                anim: 0,
+                maxmin:true,
+                btn: ['确认', '取消'],
+                yes: function(index){//layer.msg('yes');    //点击确定回调
+                    layer.closeAll();
+
+                },
+                area: ['993px', '600px'],
+                shadeClose: true, //开启遮罩关闭
+                content: '/message/updmsg'
+            });
+        })
+
+        $(".delmsg").click(function () {
+            var delid  =$(this).attr("delid")
+            layer.open({
+                type: 1
+                ,title: false //不显示标题栏
+                ,closeBtn: false
+                ,area: '300px;'
+                ,shade: 0.8
+                ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+                ,btn: ['确定删除', '取消删除']
+                ,btnAlign: 'c'
+                ,moveType: 1 //拖拽模式，0或者1
+                ,content: '<div style="padding: 50px; line-height: 22px; background-color: #393D49; color: #fff; font-weight: 300;">确定删除吗</div>'
+                ,yes: function(layero){
+                   //Ajax进行删除
+                    $.post  ("/message/delMsg", {id:delid}, function (data) {
+                        if (data=="sourcess"){
+                            window.location.href="/message/message";
+                            layer.msg("删除成功")
+                        }
+                        if (data=="error"){
+                            layer.msg("删除成功")
+                        }
+                    });
+                }
+            });
+        })
+    })
+
+    function page_nav(num) {
+        document.forms[0].currentPage.value = num;
+        document.forms[0].submit();
+    }
+
+
+</script>
+</body>
+</html>

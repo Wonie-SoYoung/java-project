@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>标签添加/修改 | 自由角度</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css" th:href="@{/../../vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css" th:href="@{/../../vendors/css/vendor.bundle.base.css}">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.addons.css" th:href="@{/../../vendors/css/vendor.bundle.addons.css}">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="../../vendors/iconfonts/font-awesome/css/font-awesome.min.css" th:href="@{/../../vendors/iconfonts/font-awesome/css/font-awesome.min.css}" />
+    <link rel="stylesheet" href="../../vendors/icheck/skins/all.css" th:href="@{/../../vendors/icheck/skins/all.css}">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/style.css" th:href="@{/../../css/style.css}">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="images/favicon.png" th:href="@{/images/favicon.png}" />
+
+    <style>
+        #uploadFile{
+            opacity:0;
+            width: 350px;
+            height: 250px;
+            position:absolute;
+            top:72px;
+            right:170px;
+        }
+        #uploadimg{
+            position:absolute;
+            top:75px;
+            right:180px;
+        }
+        #dotted{
+            width: 350px;
+            height: 250px;
+            border-style: dashed;
+            border-color: #DFDFDF;
+            position:relative;
+            top:-30px;
+            right:-250px;
+        }
+    </style>
+
+</head>
+    <body>
+        <div class="container-scroller">
+            <!-- partial:partials/_navbar.html
+                引入顶部栏
+            -->
+            <div th:replace="~{partials/_navbar :: _navbar}"></div>
+
+            <!-- partial -->
+            <div class="container-fluid page-body-wrapper">
+                <!-- partial:partials/_sidebar.html
+
+                  引入左边栏
+
+                  -->
+                <div th:replace="~{partials/_sidebar :: _sidebar}"></div>
+                <!-- partial -->
+                <div class="main-panel">
+                    <div class="content-wrapper">
+                        <!--
+                                    导航栏
+                        -->
+                        <div class="row">
+                            <div class="col-12 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="template-demo">
+                                            <div class="btn-group" role="group" aria-label="Basic example">
+                                                <button type="button" class="btn btn-outline-secondary">位置信息：</button>
+                                                <button type="button" class="btn btn-outline-secondary">首页管理 > </button>
+                                                <button type="button" class="btn btn-outline-secondary">标签管理 > </button>
+                                                <button type="button" class="btn btn-outline-secondary" th:text="${hotlabelsUpd!=null}?'修改标签 > ':'添加标签 > '">添加标签 > </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="row">
+
+                            <!--
+                                        标签信息
+                            -->
+                            <div class="col-4 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title">标签详细信息</h4>
+
+                                        <!-- 需要区分是修改还是添加 -->
+                                        <form id="form" class="form-sample" method="post" action=""><!--th:action="@{/HotlabelsController/toHotlabels-add-upd}"-->
+                                            <!-- 发送put请求修改标签数据 -->
+                                            <!--
+                                                1、SpringMVC中配置HiddenHttpMethodFilter;（SpringBoot自动配置好的）
+                                                2、页面创建一个post表单
+                                                3、创建一个input项，name="_method";值就是我们指定的请求方式
+                                            -->
+                                            <input type="hidden" name="_method" value="put" th:if="${hotlabelsUpd!=null}"/>
+                                            <input type="hidden" name="sid" th:if="${hotlabelsUpd!=null}" th:value="${hotlabelsUpd.hId}"/>
+                                            <div class="row">
+                                                <div class="col-md-12" th:if="${hotlabelsUpd!=null}">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 col-form-label">ID</label>
+                                                        <div class="col-sm-8">
+                                                            <input id="hId" type="text" class="form-control" placeholder="1" name="hId" th:value="${hotlabelsUpd!=null}?${hotlabelsUpd.hId}" readonly="readonly"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 col-form-label">图片地址</label>
+                                                        <div class="col-sm-8">
+                                                            <input id="picUrl" type="text" class="form-control" placeholder="XXXX" name="hUrl" th:value="${hotlabelsUpd!=null}?${hotlabelsUpd.hUrl}" readonly="readonly"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 col-form-label">父级标签</label>
+                                                        <div class="col-sm-8">
+                                                            <select id="oneLabel" class="form-control" name="parentId" th:value="${hotlabelsUpd!=null}?${hotlabelsUpd.parentId}">
+                                                                <option value="0">请选择</option>
+                                                                <option th:each="oneLabel : ${oneLabel}" th:value="${oneLabel.hId}" th:text="${oneLabel.hName}" th:selected="${oneLabel.hId}==${hotlabelsUpd!=null ? hotlabelsUpd.parentId : -1}?'selected'"></option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 col-form-label">子级标签</label>
+                                                        <div class="col-sm-8">
+                                                            <input id="hName" type="text" class="form-control" placeholder="XX" name="hName" th:value="${hotlabelsUpd!=null}?${hotlabelsUpd.hName}"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                        <label class="col-sm-4 col-form-label">是否热门</label>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-radio">
+                                                                <label class="form-check-label">
+                                                                    <input type="radio" class="form-check-input ishot" name="ishot" id="membershipRadios1" value="" th:value="${hotlabelsUpd!=null?hotlabelsUpd.ishot:1}" th:checked="${hotlabelsUpd != null ? hotlabelsUpd.ishot : -1}==1?'checked'"> 是
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            <div class="form-radio">
+                                                                <label class="form-check-label">
+                                                                    <input type="radio" class="form-check-input ishot" name="ishot" id="membershipRadios2" value="" th:value="${hotlabelsUpd!=null?hotlabelsUpd.ishot:0}" th:checked="${hotlabelsUpd != null ? hotlabelsUpd.ishot : 0}==0?'checked'"> 否
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-group row">
+                                                            <a id="sub" class="btn btn-info btn-block" th:value="${hotlabelsUpd!=null}?'修改':'提交'" th:text="${hotlabelsUpd!=null}?'修改':'提交'">提交</a>
+                                                            <a class="btn btn-light btn-block" th:href="@{/TablesController/toHotlabels-table}">返回</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-8 grid-margin">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div th:if="${hotlabelsUpd!=null && hotlabelsUpd.hUrl!=null}">
+                                            <h4 class="card-title">图片展示</h4>
+                                            <div class="row">
+                                                <img id="hotlabelsUpdHurl" src="images/slideshowManage/11.jpg" height="330" width="770" th:src="${application.httpURL}+${hotlabelsUpd.hUrl}"/>
+                                            </div>
+                                        </div>
+                                        <div id="upload" th:if="${hotlabelsUpd==null || hotlabelsUpd.hUrl==null}">
+                                            <h4 class="card-title">上传图片</h4>
+                                            <p class="card-description">
+                                                进度：
+                                                <code id="schedule">0.0</code><code>%</code>
+                                            </p>
+                                            <div id="preview-canvas">
+                                                <div id="dotted"></div>
+                                                <div >
+                                                    <img id="uploadimg" src="//spcn-webfront.skypixel.com/skypixel/v2/public/assets/images/upload.968392a7.svg" alt="Upload" width="350" height="250">
+                                                    <input id="uploadFile" type="file" name="file" multiple="">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    <!-- partial:partials/_footer.html
+                        引入底部栏
+                    -->
+                    <div th:replace="~{partials/_footer :: _footer}"></div>
+                    <!-- partial -->
+                </div>
+            </div>
+        </div>
+
+            <!-- container-scroller -->
+            <!-- plugins:js -->
+            <script src="../../vendors/js/vendor.bundle.base.js" th:src="@{/../../vendors/js/vendor.bundle.base.js}"></script>
+            <script src="../../vendors/js/vendor.bundle.addons.js" th:src="@{/../../vendors/js/vendor.bundle.addons.js}"></script>
+            <!-- endinject -->
+            <!-- Plugin js for this page-->
+            <!-- End plugin js for this page-->
+            <!-- inject:js -->
+            <script src="../../js/off-canvas.js" th:src="@{/../../js/off-canvas.js}"></script>
+            <script src="../../js/misc.js" th:src="@{/../../js/misc.js}"></script>
+            <!-- endinject -->
+            <!-- Custom js for this page-->
+            <!-- End custom js for this page-->
+
+        </div>
+        <script>
+            $("#uploadFile").change(function () {
+                //获取到本地图片路径显示图片
+                var $file = $(this);
+                var fileObj = $file[0];
+                var windowURL = window.URL || window.webkitURL;
+                var dataURL;
+                var $img = $("#uploadimg");
+                if (fileObj && fileObj.files && fileObj.files[0]) {
+                    var fileType = fileObj.files[0].name.substr(fileObj.files[0].name.lastIndexOf(".")).toUpperCase();
+                    //图片格式必须为大写
+                    if (fileType != ".BMP" && fileType != ".PNG" && fileType != ".GIF" && fileType != ".JPG" && fileType != ".JPEG") {
+                        alert("图片限于bmp,png,gif,jpeg,jpg格式");
+                    } else {
+                        dataURL = windowURL.createObjectURL(fileObj.files[0]);
+                        /*$img.css("background-image","url("+dataURL+")");*/
+                        $img.attr('src',dataURL);
+
+                    }
+                }
+                //异步上传图片
+                var $file=$(this)[0];
+                var formData = new FormData();
+                formData.append("file",$file.files[0]);
+                $.ajax({
+                    url:'/HotlabelsController/file', /*接口域名地址*/
+                    type:'post',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    success:function(d){
+                        var json=eval("("+d+")");
+                        var intervalId = setInterval(function () {
+                            $.get("/HotlabelsController/hotlabels/percent",{key:json.newName},function (data) {
+                                //alert(data);
+                                var percent = data;
+                                if (percent >= 100) {
+                                    clearInterval(intervalId);
+                                    percent = 100;//不能大于100
+                                }
+                                $("#schedule").html(data);//进度
+                                $("#picUrl").attr('value',json.proURL);//服务器路径
+
+                            },"json")
+                        }, 100);
+                    }
+                })
+            });
+            $(function() {
+                $("#oneLabel").change(function () {
+                    var hId = $("#oneLabel option:selected").val();
+                    if (hId=="请选择"){
+                        hId = 0;
+                    }
+                    $.ajax({
+                        "url":"/HotlabelsController/selTwoLabel",
+                        "type":"get",
+                        "data":{"hId":hId},
+                        "dataType":"json",
+                        "success":function (date) {
+                            var str = "";
+                            str+="<option value='0'>请选择</option>"
+                            $(date).each(function (m,n) {
+                                str+="<option value="+ n.hId +">"+ n.hName +"</option>"
+                            });
+                            $("#submit").html(str);
+                        }
+                    });
+                });
+                $("#sub").click(function () {
+                    var hId = $("#hId").val();
+                    var hName = $("#hName").val();
+                    var hUrl = $("#picUrl").val();
+                    var parentId = $("#oneLabel").val();
+                    var ischecked = $("#membershipRadios1").is(':checked');
+
+                    //当没有上传图片时，添加标签信息，不能上热门！或修改标签信息为热门时，且必须上传图片
+                    //console.info(hUrl);
+                    //alert(hUrl);
+                    //th:value为空时，不是null，而是空字符串
+                    if ($.trim(hUrl) == '' &&ischecked){
+                        alert("添加或修改标签信息为热门时，必须上传图片");
+                    }else{
+                        var sub = $("#sub").attr("value");
+                        var ishot = null;
+                        //alert(sub);
+                        if (ischecked==true){
+                            ishot = 1;
+                        }else {
+                            ishot = 0;
+                        }
+                        if (sub=="修改"){
+                            var istf = false;
+                            /*修改热门标签，情况有：
+                            *   1、如果热门标签为19-23个时，修改标签为热门时，将提示：影响美观，......
+                            *   2、如果热门标签为24个时，将不能修改标签为热门
+                            * */
+                            $.ajax({
+                                "url":"/HotlabelsController/selHotlabelsIshot",
+                                "type":"get",
+                                "dataType":"json",
+                                "success":function (date) {
+                                    /*if ((date+1)<=24 && ishot==1) {*/
+                                        istf=confirm("添加标签须知：\n 1、热门标签不得超过24个！\n 2、一组标签少于6个将有可能影响美观!");
+
+                                        if (ishot==0){
+                                            //数据测试阶段：上线时需要将30改为24！！！！！
+                                                $.ajax({
+                                                    "url":"/HotlabelsController/toHotlabels-add-upd",
+                                                    "type":"post",
+                                                    "data":{"_method":"put","hId":hId,"hName":hName,"hUrl":hUrl,"parentId":parentId,"ishot":ishot},
+                                                    "dataType":"json",
+                                                    "success":function (date) {
+                                                        alert("成功处理"+date+"条数据！1");
+                                                        window.location.href="/TablesController/toHotlabels-table";
+                                                    }
+                                                });
+                                        }else if (ishot==1){
+                                            //数据测试阶段：上线时需要将30改为24！！！！！
+                                            if (date<24 && ishot==1){
+                                                $.ajax({
+                                                    "url":"/HotlabelsController/toHotlabels-add-upd",
+                                                    "type":"post",
+                                                    "data":{"_method":"put","hId":hId,"hName":hName,"hUrl":hUrl,"parentId":parentId,"ishot":ishot},
+                                                    "dataType":"json",
+                                                    "success":function (date) {
+                                                        alert("成功处理"+date+"条数据！2");
+                                                        window.location.href="/TablesController/toHotlabels-table";
+                                                    }
+                                                });
+                                            }else{
+                                                alert("前台热门标签的显示条数不得超过24条!2")
+                                            }
+                                        }
+
+                                    /*}else{
+                                        alert("添加标签须知：\n 1、热门标签不得超过25个！\n 2、一组标签少于6个将有可能影响美观!你可以取消热门，作为备选热门标签");
+                                    }*/
+                                }
+                            });
+                        } else if (sub=="提交"){
+                            if (parentId==0){
+                                alert("请选择父级标签！");
+                            }else {
+                                var istf = false;
+                                /*添加热门标签
+                                *   热门标签最多24个，情况有：
+                                *   1、如果标签为19-23个时，添加一个标签，如果热门为否时，将提示：影响美观，......如果热门为是时，直接添加数据
+                                *   2、如果标签为24个时，将不能添加标签
+                                * */
+                                $.ajax({
+                                    "url":"/HotlabelsController/selHotlabelsIshot",
+                                    "type":"get",
+                                    "dataType":"json",
+                                    "success":function (date) {
+                                        //数据测试阶段：上线时需要将30改为24！！！！！
+                                        if ((date+1)>24 && ishot==1){
+                                            alert("前台热门标签的显示条数不得超过30条!你可以取消热门，作为备选热门标签")
+                                        }else if ((date+1)%6!=0 && ishot==1) {
+                                            istf=confirm("一组热门标签为6个，少于6个将有可能影响美观!你可以取消热门，作为备选热门标签");
+                                        }
+                                        if (istf==true || ishot==0){
+                                            $.ajax({
+                                                "url":"/HotlabelsController/toHotlabels-add-upd",
+                                                "type":"post",
+                                                "data":{"hName":hName,"hUrl":hUrl,"parentId":parentId,"ishot":ishot},
+                                                "dataType":"json",
+                                                "success":function (date) {
+                                                    alert("成功提交"+date+"条数据！1");
+                                                    window.location.href="/TablesController/toHotlabels-table";
+                                                }
+                                            });
+                                        }else if (istf==false && ishot==0) {
+                                            $.ajax({
+                                                "url":"/HotlabelsController/toHotlabels-add-upd",
+                                                "type":"post",
+                                                "data":{"hName":hName,"hUrl":hUrl,"parentId":parentId,"ishot":ishot},
+                                                "dataType":"json",
+                                                "success":function (date) {
+                                                    alert("成功提交"+date+"条数据！2");
+                                                    window.location.href="/TablesController/toHotlabels-table";
+                                                }
+                                            });
+                                        //数据测试阶段：上线时需要将30改为24！！！！！
+                                        }else if (istf==false && ishot==1 && date<24) {
+                                            $.ajax({
+                                                "url":"/HotlabelsController/toHotlabels-add-upd",
+                                                "type":"post",
+                                                "data":{"hName":hName,"hUrl":hUrl,"parentId":parentId,"ishot":ishot},
+                                                "dataType":"json",
+                                                "success":function (date) {
+                                                    alert("成功提交"+date+"条数据！3");
+                                                    window.location.href="/TablesController/toHotlabels-table";
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    }
+                })
+            });
+        </script>
+    </body>
+</html>

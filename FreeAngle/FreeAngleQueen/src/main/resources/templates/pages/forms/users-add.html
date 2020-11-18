@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>用户表单 | 自由角度</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css" th:href="@{/../../vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css" th:href="@{/../../vendors/css/vendor.bundle.base.css}">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.addons.css" th:href="@{/../../vendors/css/vendor.bundle.addons.css}">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="../../vendors/iconfonts/font-awesome/css/font-awesome.min.css" th:href="@{/../../vendors/iconfonts/font-awesome/css/font-awesome.min.css}" />
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/style.css" th:href="@{/css/style.css}">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="images/favicon.png" th:href="@{/images/favicon.png}" />
+    <link rel="stylesheet" th:href="@{/webjars/layui/dist/css/layui.css}" href="webjars/layui/dist/css/layui.css" />
+    <style>
+        .modal-content {
+            position: relative;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            width: 100%;
+            pointer-events: auto;
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid rgba(0, 0, 0, 0.2);
+            border-radius: 0.3rem;
+            outline: 0;
+        }
+    </style>
+
+
+</head>
+<body>
+<div class="container-scroller">
+    <!-- partial:partials/_navbar.html
+        引入顶部栏
+    -->
+    <div th:replace="~{partials/_navbar :: _navbar}"></div>
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+        <!-- partial:partials/_sidebar.html
+
+          引入左边栏
+
+          -->
+        <div th:replace="~{partials/_sidebar :: _sidebar}"></div>
+        <!-- partial -->
+        <div class="main-panel">
+            <div class="content-wrapper">
+                <div class="row">
+
+                    <!--
+                                添加用户表单
+                    -->
+                    <div class="col-12 grid-margin">
+                        <div class="card">
+                            <div class="card-body">
+                                <h4 class="card-title">用户的详细信息</h4>
+
+                                <!-- 需要区分是用户修改还是添加 -->
+                                <form class="form-sample" th:action="@{/}" method="post">
+                                    <!-- 发送put请求修改用户信息，分为三个步骤： -->
+                                    <!--
+                                        1、SpringMVC中配置HiddenHttpMethodFilter；
+                                        2、页面创建一个post表单
+                                        3、创建一个input项，name="_method";值就是我们指定的请求方式
+                                    -->
+                                    <input type="hidden" name="_method" value="put" th:if="${user!=null}" />
+                                    <input type="hidden" name="id" th:if="${user!=null}" th:value="${user.id}" />
+
+                                    <p class="card-description">
+                                        用户信息
+                                    </p>
+                                    <input type="hidden" name="userid" th:value="${userById['id']}" />
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">昵称</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" placeholder="zhangsan" name="userName" th:value="${userById['userName']}" disabled="disabled"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">性别</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control" name="sex" disabled="disabled">
+                                                        <option th:selected="${userById['sex']}">男</option>
+                                                        <option>女</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">声望</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" placeholder="1" name="prestige" th:value="${userById['prestige']}"disabled="disabled" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">国家</label>
+                                                <div class="col-sm-9">
+                                                    <!-- 提交的是国家id -->
+                                                    <select class="form-control" name="stateid" disabled="disabled">
+                                                        <!--<option th:selected="${user!=null}?${state.id == user.stateid.id}" th:value="${state.id}" th:each="state:${states}" th:text="${state.state}">中国</option>-->
+                                                        <option value="">请选择地区</option>
+                                                        <option th:each="state : ${stateList}" th:selected="${state.id} eq ${userById['stateid']}" th:value="${state.id}" th:text="${state.sName}" th>中国香港</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">登录次数</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" class="form-control" placeholder="1" name="logins" th:value="${userById['logins']}"disabled="disabled" />
+                                                </div>
+                                              </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">注册时间</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" placeholder="dd/mm/yyyy" name="createTime" th:value="${userById['createTime']}" disabled="disabled" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">修改时间</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" placeholder="暂无修改时间" name="updateTime" value="" th:value="${userById['updateTime']}" disabled="disabled" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label">简介</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" placeholder="暂无个人简介" name="intro" th:value="${userById['intro']}" disabled="disabled" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-6 col-form-label">是否作品达人</label>
+                                                <div class="col-sm-3">
+                                                    <div class="form-radio">
+                                                        <label class="form-check-label">
+                                                            <input type="radio"  class="form-check-input" name="membershipRadios1" id="membershipRadios1" disabled="disabled" th:checked="${userById['ifexpert']==1}"> 是
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" class="ifexpert" name="ifexpert" th:value="${userById['ifexpert']}">
+
+                                                <div class="col-sm-3">
+                                                    <div class="form-radio">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="form-check-input" name="membershipRadios1" id="membershipRadios2" disabled="disabled" th:checked="${userById['ifexpert']==0}" value="option2"> 否
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="form-group row">
+                                                <label class="col-sm-6 col-form-label">是否推荐</label>
+                                                <div class="col-sm-3">
+                                                    <div class="form-radio">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="form-check-input" name="membershipRadios2" id="membershipRadios3" disabled="disabled" th:checked="${userById['ifrecommend']==1}"> 是
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <input type="hidden" class="ifrecommend" name="ifrecommend" th:value="${userById['ifrecommend']}">
+
+                                                <div class="col-sm-3">
+                                                    <div class="form-radio">
+                                                        <label class="form-check-label">
+                                                            <input type="radio" class="form-check-input" name="membershipRadios2" id="membershipRadios4" disabled="disabled" th:checked=" ${userById['ifrecommend']==0}"> 否
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <button type="button" class="layui-btn layui-btn-normal layui-btn-radius tuijian">推荐用户</button>
+                            <div class="layui-row" style="padding: 10px"></div>
+                            <!--layui-btn-disabled：禁用属性-->
+                            <button type="button" class="layui-btn layui-btn-warm layui-btn-radius daren">赋予达人</button>
+                            <div class="layui-row" style="padding: 10px"></div>
+                            <button type="button" class="layui-btn layui-btn-radius feng" data-toggle="modal" data-target="#myModal" th:text="${userById['seal']==0?'封除账号':'已封除账号('+userById['seal']+')天'}">封除账号</button>
+                            <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                                <legend>用户作品</legend>
+                            </fieldset>
+                            <div class="layui-collapse" lay-accordion lay-filter="test">
+                                <div class="layui-colla-item">
+                                    <h2 class="layui-colla-title">图片</h2>
+                                    <div class="layui-colla-content layui-show">
+                                        <div class="card-body">
+
+                                            <table class="table table-striped">
+                                                <input type="hidden" name="currentPage" value="1">
+                                                <thead>
+                                                <tr>
+                                                    <th>
+                                                        作品名称
+                                                    </th>
+                                                    <th>
+                                                        作品壁纸
+                                                    </th>
+                                                    <th>
+                                                        作品预览
+                                                    </th>
+                                                    <th>
+                                                        发布时间
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody class="classimage">
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-colla-item">
+                                    <h2 class="layui-colla-title">视频</h2>
+                                    <div class="layui-colla-content ">
+                                        <div class="card-body">
+
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>
+                                                        作品名称
+                                                    </th>
+                                                    <th>
+                                                        作品壁纸
+                                                    </th>
+                                                    <th>
+                                                        作品预览
+                                                    </th>
+                                                    <th>
+                                                        发布时间
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody class="classvideo">
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-colla-item">
+                                    <h2 class="layui-colla-title">360°</h2>
+                                    <div class="layui-colla-content ">
+                                        <div class="card-body">
+
+                                            <table class="table table-striped">
+                                                <thead>
+                                                <tr>
+                                                    <th>
+                                                        作品名称
+                                                    </th>
+                                                    <th>
+                                                        作品壁纸
+                                                    </th>
+                                                    <th>
+                                                        作品预览
+                                                    </th>
+                                                    <th>
+                                                        发布时间
+                                                    </th>
+                                                </tr>
+                                                </thead>
+                                                <tbody class="classthree">
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 模态框   信息删除确认 -->
+                    <div class="modal fade" id="delcfmOverhaul">
+                        <div class="modal-dialog">
+                            <div class="modal-content message_align">
+                                <div class="modal-header">
+                                    <h4 class="modal-title">请输入封禁的天数</h4>
+
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                            <!--<h4 class="modal-title">提示</h4>-->
+                                </div>
+                                <div class="modal-body">
+                                    <!-- 隐藏需要删除的id -->
+                                    <input type="hidden" id="deleteHaulId" />
+                                    <p></p>
+                                    <input type="text" class="form-control" placeholder="1" name="tainshu" id="tianshu" value="0">
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                                    <button type="button" class="btn btn-primary" id="deleteHaulBtn">确认</button>
+                                </div>
+                            </div>
+                            <!-- /.modal-content -->
+                        </div>
+
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+
+
+            <!-- partial:partials/_footer.html
+                引入底部栏
+            -->
+            <div th:replace="~{partials/_footer :: _footer}"></div>
+            <!-- partial -->
+        </div>
+    </div>
+</div>
+
+<!-- container-scroller -->
+<!-- plugins:js -->
+<script src="../../vendors/js/vendor.bundle.base.js" th:src="@{/../../vendors/js/vendor.bundle.base.js}"></script>
+<script src="../../vendors/js/vendor.bundle.addons.js" th:src="@{/../../vendors/js/vendor.bundle.addons.js}"></script>
+<!-- endinject -->
+<!-- Plugin js for this page-->
+<!-- End plugin js for this page-->
+<!-- inject:js -->
+<script src="../../js/off-canvas.js" th:src="@{/../../js/off-canvas.js}"></script>
+<script src="../../js/misc.js" th:src="@{/../../js/misc.js}"></script>
+<!-- endinject -->
+<!-- Custom js for this page-->
+<!-- End custom js for this page-->
+<script th:src="@{/webjars/layui/dist/layui.js}" src="webjars/layui/dist/layui.js"></script>
+<script>
+    layui.use(['element', 'layer'], function(){
+        var element = layui.element;
+        var layer = layui.layer;
+
+        //监听折叠
+        element.on('collapse(test)', function(data){
+           /* layer.msg('展开状态：'+ data.show);*/
+        });
+    });
+
+    $(function () {
+        var ifrecommend = $("[name ='ifrecommend']").val();
+        var ifexpert = $("[name ='ifexpert']").val();
+        if (ifrecommend==1){
+            $(".tuijian").attr("class",$(".tuijian").attr("class")+" layui-btn-disabled")
+        }
+        if (ifexpert==1){
+            $(".daren").attr("class",$(".daren").attr("class")+" layui-btn-disabled")
+
+        }
+        $(".tuijian").click(function () {
+            var id = $("input:hidden[name='userid']").val();
+            $.post("/back/tuijian",{id:id},function (data) {
+                if (data=="sourcess"){
+                    window.location.href="/back/userByid/"+id;
+                    layer.msg("推荐达人成功");
+                }
+                if (data=="error"){
+                    layer.msg("推荐达人成功");
+                }
+            })
+        })
+        $(".daren").click(function () {
+            var id = $("input:hidden[name='userid']").val();
+            $.post("/back/daren",{id,id},function (data) {
+                if (data=="sourcess"){
+                    window.location.href="/back/userByid/"+id;
+                    layer.msg("达人赋予成功");
+                }
+                if (data=="error"){
+                    layer.msg("达人赋予失败");
+                }
+
+            })
+        })
+        selZuoPin()
+        function selZuoPin() {
+            var userId = $("input:hidden[name='userid']").val();
+            $.post("/production/productionByType",{userId,userId},function (data) {
+                $(".classimage").html(" ");
+                for (var i = 0; i < data.productionByType.length; i++) {
+                    // alert(data.productionByType[i].pName)
+                    $(".classimage").append("<tr>" +
+                        "<td>"+data.productionByType[i].pName+"</td>\n" +
+                        "<td hiapkURL = "+data.productionByType[i].hiapkURL+" class='selImage'> <button type=\"button\" class=\"layui-btn layui-btn-primary layui-btn-radius\">查看壁纸</button></td>\n" +
+                        "<td th:attr='${proURL = "+data.productionByType[i].proURL+"}'><button type=\"button\" class=\"layui-btn layui-btn-warm layui-btn-radius\">查看作品</button></td>\n" +
+                        "<td>"+data.productionByType[i].createTime+"</td>\n" +
+                        "\n" +
+                        "</tr>\n");
+                }
+
+                $(".classvideo").html(" ");
+                for (var i = 0; i < data.productionByType1.length; i++) {
+                    // alert(data.productionByType[i].pName)
+                    $(".classvideo").append("<tr>" +
+                        "<td>"+data.productionByType1[i].pName+"</td>\n" +
+                        "<td th:attr=${hiapkURL ="+data.productionByType1[i].hiapkURL+"}' class='selImage'><button type=\"button\" class=\"layui-btn layui-btn-primary layui-btn-radius\">查看壁纸</button></td>\n" +
+                        "<td th:attr=${proURL ="+data.productionByType1[i].proURL+"}'>  <button type=\"button\" class=\"layui-btn layui-btn-warm layui-btn-radius\">查看作品</button></td>\n" +
+                        "<td>"+data.productionByType1[i].createTime+"</td>\n" +
+                        "\n" +
+                        "</tr>\n");
+                }
+
+                $(".classthree").html(" ");
+                for (var i = 0; i < data.productionByType2.length; i++) {
+                    // alert(data.productionByType[i].pName)
+                    $(".classthree").append("<tr>" +
+                        "<td>"+data.productionByType2[i].pName+"</td>\n" +
+                        "<td th:attr='${hiapkURL ="+data.productionByType2[i].hiapkURL+"}' class='selImage'><button type=\"button\" class=\"layui-btn layui-btn-primary layui-btn-radius\">查看壁纸</button></td>\n" +
+                        "<td th:attr='${proURL ="+data.productionByType2[i].proURL+"}'>  <button type=\"button\" class=\"layui-btn layui-btn-warm layui-btn-radius\">查看作品</button></td>\n" +
+                        "<td>"+data.productionByType2[i].createTime+"</td>\n" +
+                        "\n" +
+                        "</tr>\n");
+                }
+            });
+        }
+        /*查看壁纸*/
+        $(document).on('click','.selImage',function () {
+            //获取图片路径
+            var hiapkURL = $(this).attr("hiapkURL");
+            var hihiapkURLArray = new Array();
+            var httpurl;
+
+
+            layer.open({
+                type: 2,
+                skin: 'layui-layer-demo', //样式类名
+                id:'layerDemo'+1,
+                title: '查看壁纸',
+                closeBtn: 1, //不显示关闭按钮
+                anim: 0,
+                maxmin:true,
+                btn: ['关闭'],
+                success :function(layero, index){
+                    var body = layer.getChildFrame('body');
+                    var hihiapkURLArray = hiapkURL.split("+");
+                    for (var i = 0; i < hihiapkURLArray.length; i++) {
+                        httpurl = "https://free-angle.oss-cn-beijing.aliyuncs.com/"+hihiapkURLArray[i];
+                        // alert(httpurl)
+                        body.find(".lunbo").append(" <div><img src="+httpurl+"></div>");
+                        // alert( body.find(".lunbo").html())
+                        body.find(".lunbo").html();
+                    }
+                },
+                yes: function(index){//layer.msg('yes');    //点击确定回调
+                    layer.closeAll()
+                },
+                area: ['993px', '600px'],
+                shadeClose: true, //开启遮罩关闭
+                content: '/production/selimage'
+            });
+
+        })
+
+
+        $(".feng").click(function () {
+
+            //删除当前员工的
+            $("#delcfmOverhaul").modal({
+                backdrop: 'static',
+                keyboard: false
+            });
+            // 删除大修模态框的确定按钮的点击事件
+            $("#deleteHaulBtn").click(function() {
+                var seal =$("#tianshu").val();
+                var id = $("input:hidden[name='userid']").val();
+
+                $.post("/back/fengHao",{seal:seal,id:id},function (data) {
+                    if (data=="sourcess"){
+                        layer.msg("封号成功,封号"+seal+"天")
+                        var feng = $(".feng").text('已封除账号('+seal+')天');
+                    }
+                    if (data=="error") {
+                        layer.msg("失败成功")
+                    }
+
+
+                });
+                return false;
+            });
+        })
+    })
+
+</script>
+
+</body>
+</html>

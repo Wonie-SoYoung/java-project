@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.soyoung.photo.mapper.ProductionMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.soyoung.photo.entity.Production">
+        <id column="id" property="id" />
+        <result column="pName" property="pName" />
+        <result column="proURL" property="proURL" />
+        <result column="uid" property="uid" />
+        <result column="protypeId" property="protypeId" />
+        <result column="describes" property="describes" />
+        <result column="label" property="label" />
+        <result column="duration" property="duration" />
+        <result column="facilityId" property="facilityId" />
+        <result column="location" property="location" />
+        <result column="copyrightId" property="copyrightId" />
+        <result column="privacyId" property="privacyId" />
+        <result column="viewNum" property="viewNum" />
+        <result column="createTime" property="createTime" />
+        <result column="updateTime" property="updateTime" />
+    </resultMap>
+
+</mapper>

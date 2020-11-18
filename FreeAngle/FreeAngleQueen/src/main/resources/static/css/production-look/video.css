@@ -1,0 +1,38 @@
+/*视频*/
+
+.xiaoTu {
+    position: relative;
+}
+
+.xiaoTu>a {
+
+}
+
+.xiaoTuPian {
+    float: left;
+    margin-left: 10px;
+}
+
+iframe {
+    src: inherit;
+    width: 550px;
+    height: 250px;
+
+    overflow: hidden;
+}
+.xiaoTuPian:hover iframe {
+
+
+    top: -400px;
+    left: 200px;
+    z-index: 2;
+    animation: shiPinDong 1.5s linear forwards;
+}
+
+/*移动视频地方*/
+.xiaoTuPian a{
+    position: absolute;
+    top: -500px;
+    left: 430px;
+    opacity: 0.7;
+}

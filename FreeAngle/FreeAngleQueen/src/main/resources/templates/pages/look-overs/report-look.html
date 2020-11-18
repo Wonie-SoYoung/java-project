@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>查看举报详情 | 自由角度</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="../../vendors/iconfonts/mdi/css/materialdesignicons.min.css" th:href="@{/../../vendors/iconfonts/mdi/css/materialdesignicons.min.css}">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.base.css" th:href="@{/../../vendors/css/vendor.bundle.base.css}">
+    <link rel="stylesheet" href="../../vendors/css/vendor.bundle.addons.css" th:href="@{/../../vendors/css/vendor.bundle.addons.css}">
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <link rel="stylesheet" href="../../vendors/iconfonts/font-awesome/css/font-awesome.min.css" th:href="@{/../../vendors/iconfonts/font-awesome/css/font-awesome.min.css}" />
+    <link rel="stylesheet" href="../../vendors/icheck/skins/all.css" th:href="@{/../../vendors/icheck/skins/all.css}">
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="../../css/style.css" th:href="@{/../../css/style.css}">
+    <!-- endinject -->
+    <link rel="shortcut icon" href="images/favicon.png" th:href="@{/images/favicon.png}" />
+    <link rel="stylesheet" th:href="@{/webjars/layui/dist/css/layui.css}" href="webjars/layui/dist/css/layui.css">
+    
+
+    <style type="text/css">
+        *{
+            margin: 0px;
+            padding: 0px;
+        }
+        .box{
+            width: 530px;
+            height: 300px;
+            background-repeat: no-repeat;
+            background-image: url(img/a.png);
+            overflow: hidden;
+        }
+        .box ul{
+            width: 600%;
+            height: 380px;
+            /*适应手机边框*/
+            padding-top: 8px;
+            padding-left: 8px;
+            transition: 1s;
+            overflow: hidden;
+        }
+        li>img{
+            width: 530px;
+            height: 300px;
+        }
+        li{
+            float: left;
+            list-style: none;
+        }
+    </style>
+
+    <style>
+        .Jgy0 {
+            border-top: 1px solid #ececec;
+            padding: 0 .8rem;
+        }
+        ._3mH0 {
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            padding: .8rem 0;
+        }
+        ._2ggr .Jgy0 ._3mH0 a {
+            outline: none;
+        }
+        .Jgy0 .yZCl {
+            width: 2rem;
+            height: 2rem;
+            -webkit-flex: none;
+            -ms-flex: none;
+            flex: none;
+            margin-right: .4rem;
+        }
+        .JTA4 {
+            width: 1.2rem;
+            height: 1.2rem;
+            transition: background .3s ease;
+            box-sizing: border-box;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        /*评论*/
+        ._3qwe {
+            overflow: hidden;
+            -webkit-flex: 1 1 auto;
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+        }
+        ._1SCg ._2643 {
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+        ._1SCg {
+            -ms-flex-align: center;
+            width: 100%;
+        }
+        ._11Bg {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            word-break: break-word;
+            word-wrap: break-word;
+        }
+        ._2643 {
+            -webkit-flex: 1 1 auto;
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            -ms-flex-align: center;
+            margin-bottom: .4rem;
+        }
+        ._2643 {
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+        ._11Bg {
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            word-break: break-word;
+            word-wrap: break-word;
+        }
+        ._3U-j {
+            margin: 0 .4rem;
+            -webkit-flex: none;
+            -ms-flex: none;
+            flex: none;
+            font-size: .5rem;
+            color: #b0b0b0;
+        }
+        ._3fuh {
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+        ._3fuh span:not(:last-child) {
+            margin-right: .2rem;
+        }
+        ._1cq7 {
+            font-size: .6rem;
+            color: #838385;
+            line-height: 1.28;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        ._1Ihd {
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            margin-top: .4rem;
+            font-size: .5rem;
+            color: #b0b0b0;
+        }
+        .Jgy0 ._3mH0 a {
+            outline: none;
+        }
+        .Jgy0 ._3mH0 a:-webkit-any-link {
+            color: -webkit-link;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .sQis svg {
+            overflow: visible;
+        }
+        svg:not(:root) {
+            overflow: hidden;
+        }
+        .Jgy0 ._3mH0 ._3qwe ._1Ihd ._3_de path {
+            fill: #b0b0b0;
+        }
+
+        /*._1Gim {
+            background-size: cover;
+            background-position: 50%;
+            background-repeat: no-repeat;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            -webkit-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+            overflow: hidden;
+            height: 40px;
+            width: 40px;
+        }*/
+
+
+
+
+    </style>
+
+</head>
+    <body>
+        <div class="container-scroller">
+            <!-- partial:partials/_navbar.html
+                引入顶部栏
+            -->
+            <div th:replace="~{partials/_navbar :: _navbar}"></div>
+
+            <!-- partial -->
+            <div class="container-fluid page-body-wrapper">
+            <!-- partial:partials/_sidebar.html
+
+              引入左边栏
+
+              -->
+            <div th:replace="~{partials/_sidebar :: _sidebar}"></div>
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+                    <!--
+                                导航栏
+                    -->
+                    <div class="row">
+                        <div class="col-12 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="template-demo">
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                            <button type="button" class="btn btn-outline-secondary">位置信息：</button>
+                                            <button type="button" class="btn btn-outline-secondary">举报管理 > </button>
+                                            <button type="button" class="btn btn-outline-secondary">所有举报 > </button>
+                                            <button type="button" class="btn btn-outline-secondary">查看举报 > </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <!-- 作品 -->
+                        <div class="col-6 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12" th:if="${production.protypeId}==6">
+
+                                            <iframe id="iframne" name="shiPin1" th:data-id="${application.httpURL}+${production.hiapkURL}" th:data-rel="${application.httpURL}+${production.proURL}" src="/html/show.html" width="530px" height="300px"></iframe>
+
+                                        </div>
+                                        <div class="col-md-12" th:if="${production.protypeId}!=6">
+                                            <!--<img src="#" th:src="${application.httpURL}+${production.proURL}" width="530px" height="300px">-->
+
+                                            <div class="box" th:if="${lb>1}">
+                                                <ul>
+                                                    <li th:each="production : ${production.picUrl}" >
+                                                        <img src="img/b.png" th:src="${application.httpURL}+${production}"/>
+                                                    </li>
+                                                </ul>
+                                            </div>
+
+                                            <div th:if="${lb==1}">
+                                                <img src="#" th:src="${application.httpURL}+${production.proURL}" width="530px" height="300px">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 被举报的评论信息 -->
+                        <div class="col-6 grid-margin" >
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">被举报评论信息：<code th:if="${c!=null}" th:text="'('+${c}+')'">（评论举报）</code></h4>
+                                </div>
+
+                                <div th:if="${n!=null}">
+                                    <div>
+                                        <div class="Jgy0">
+                                            <div class="_3mH0" th:each="comment : ${comment}">
+                                                <a class="" target="" href="#">
+                                                    <div class="JTA4 yZCl undefined">
+                                                        <div class="_3llO _1Gim _1LNE _2G4A hUPH">
+                                                            <img class="imgs" src="" alt="" width="40px" height="40px" th:src="${application.httpURL}+${comment.user.headURL}" >
+                                                            <input th:id="commentCid" type="hidden" th:value="${comment.cid}">
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                                <div class="_3qwe">
+                                                    <div class="_1SCg">
+                                                        <div class="_2643">
+                                                            <div class="_11Bg" >
+                                                                <a class="userId" th:id="${comment.cid}" data-toggle="modal" data-target="#myModal" th:value="${comment.user.id}" th:text="${comment.user.userName}">陈则宏©知心</a>
+                                                            </div>
+                                                            <div class="_3U-j">
+                                                                <div class="_3fuh">
+                                                                    <span th:text="${comment.createTime}">9-22</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="_1cq7" th:text="${comment.content}">迷弟首评</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <!--
+                                    被举报作品信息
+                        -->
+                        <div class="col-6 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">被举报作品信息：<code th:if="${a!=null}" th:text="'('+${a}+')'">作品举报</code></h4>
+
+                                    <form class="form-sample">
+                                        <input type="hidden" name="id" />
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">ID</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" placeholder="1" readonly="readonly" th:value="${production.id}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">作品名称</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" placeholder="秦岭南五台山" readonly="readonly" th:value="${production.pName}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">标签</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" placeholder="标签 > 题材 > 城市 > 图片" readonly="readonly" th:value="${production.label}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">作品类型</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" placeholder="图片" readonly="readonly" th:value="${production.dictionaryProtype.valueName}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">时长</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" placeholder="--" readonly="readonly" th:value="${production.duration}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">拍摄设备</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" placeholder="Spark 系列 > Spark" readonly="readonly" th:value="${production.facility.fName}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">位置</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" placeholder="标签 > 题材 > 城市 > 图片" readonly="readonly" th:value="${production.location}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">浏览次数</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" placeholder="1892" readonly="readonly" th:value="${production.viewNum}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">创建时间</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" placeholder="yyyy/MM/dd" readonly="readonly" th:value="${production.createTime}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">修改时间</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" placeholder="yyyy/MM/dd" readonly="readonly" th:value="${production.updateTime}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-2 col-form-label">作品地址</label>
+                                                    <div class="col-sm-10">
+                                                        <input id="proURL" type="text" class="form-control" placeholder="\Free\Work\Picture\XXX.jpg" readonly="readonly" th:value="${production.proURL}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-2 col-form-label">壁纸地址</label>
+                                                    <div class="col-sm-10">
+                                                        <input id="hiapkURL" type="text" class="form-control" placeholder="\Free\Work\Picture\XXX.jpg" readonly="readonly" th:value="${production.hiapkURL}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-2 col-form-label">版权说明</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" placeholder="版权所有 © 自由角度使用" readonly="readonly" th:value="${production.dictionaryCopyright.valueName}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-2 col-form-label">隐私说明</label>
+                                                    <div class="col-sm-10">
+                                                        <input type="text" class="form-control" placeholder="公开" readonly="readonly" th:value="${production.dictionaryPrivacy.valueName}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" th:if="${a!=null}">
+                                            <div class="col-md-12">
+                                                <div class="form-group row">
+                                                    <a id="delProduction" class="btn btn-reddit btn-block" th:value="${production.id}">举报通过</a>
+                                                    <a id="updProduction" class="btn btn-success btn-block" th:value="${production.id}">举报不通过</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <input id="rid" type="hidden" th:value="${rid}"><!-- 该条举报数据ID-->
+                                        <input id="uid" type="hidden" th:value="${uid}"><!-- 举报人ID -->
+                                        <input id="byuid" type="hidden" th:value="${byuid}"><!-- 被举报人ID -->
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--
+                                    用户信息
+                        -->
+                        <div class="col-6 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">被举报用户信息：<code th:if="${b!=null}" th:text="'('+${b}+')'">用户举报</code></h4>
+
+                                    <form class="form-sample">
+                                        <input type="hidden" name="id" />
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">账户</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" placeholder="1" readonly="readonly" th:value="${user.id}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">发布人</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" placeholder="小范" readonly="readonly" th:value="${user.userName}"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">性别</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" placeholder="男" readonly="readonly" th:value="${user.sex}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">声望</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" placeholder="190" readonly="readonly" th:value="${user.prestige}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">国家</label>
+                                                    <div class="col-sm-8">
+                                                        <input type="text" class="form-control" placeholder="中国" readonly="readonly" th:value="${user.state.sName}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">登录次数</label>
+                                                    <div class="col-sm-8">
+                                                        <input class="form-control" placeholder="190" readonly="readonly" th:value="${user.logins}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">注册时间</label>
+                                                    <div class="col-sm-8">
+                                                        <input class="form-control" placeholder="2019/11/11" readonly="readonly" th:value="${#dates.format(user.createTime, 'yyyy-MM-dd')}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">修改时间</label>
+                                                    <div class="col-sm-8">
+                                                        <input class="form-control" placeholder="yyyy/MM/dd" readonly="readonly" th:value="${#dates.format(user.updateTime, 'yyyy-MM-dd')}" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">页面推荐</label>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-radio">
+                                                            <label class="form-check-label">
+                                                                <!--<input type="radio" class="form-check-input" id="membershipRadios1" disabled="disabled" th:checked="${user.ifrecommend}==1?'checked'"> 是-->
+                                                                <input type="radio" class="form-check-input" id="membershipRadios1" disabled="disabled" value="" th:value="${user!=null?user.ifrecommend:1}" th:checked="${user != null ? user.ifrecommend : -1}==1?'checked'"> 是
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-radio">
+                                                            <label class="form-check-label">
+                                                                <!--<input type="radio" class="form-check-input" id="membershipRadios2" disabled="disabled" th:checked="${user.ifrecommend}==0 ? 'checked'"> 否-->
+                                                                <input type="radio" class="form-check-input" id="membershipRadios2" disabled="disabled" value="" th:value="${user!=null?user.ifrecommend:0}" th:checked="${user != null ? user.ifrecommend : 0}==0?'checked'"> 是
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-4 col-form-label">作品达人</label>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-radio">
+                                                            <label class="form-check-label">
+                                                                <input type="radio" class="form-check-input" id="membershipRadios3" disabled="disabled" value="" th:value="${user!=null?user.ifexpert:1}" th:checked="${user != null ? user.ifexpert : -1}==1?'checked'"> 是
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                        <div class="form-radio">
+                                                            <label class="form-check-label">
+                                                                <!--<input type="radio" class="form-check-input" id="membershipRadios4" disabled="disabled" th:checked="${user.ifexpert}==0?'checked'"> 否-->
+                                                                <input type="radio" class="form-check-input" id="membershipRadios4" disabled="disabled" value="" th:value="${user!=null?user.ifexpert:0}" th:checked="${user != null ? user.ifexpert : 0}==0?'checked'"> 否
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <!-- 所有评论信息 -->
+                    <div class="row">
+                        <div class="col-md-12 grid-margin">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h4 class="card-title">所有评论信息：</h4>
+                                </div>
+                                <div>
+                                    <div class="Jgy0">
+
+                                        <div class="_3mH0" th:each="comments : ${comments}">
+                                            <a class="" target="" href="#">
+                                                <div class="JTA4 yZCl undefined">
+                                                    <div class="_3llO _1Gim _1LNE _2G4A hUPH">
+                                                        <img class="imgs" src="" alt="" width="40px" height="40px" th:src="${application.httpURL}+${comments.user.headURL}" >
+                                                        <input class="commentsCid" type="hidden" th:value="${comments.cid}">
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <div class="_3qwe">
+                                                <div class="_1SCg">
+                                                    <div class="_2643">
+                                                        <div class="_11Bg" >
+                                                            <a class="userId" th:id="${comments.cid}" data-toggle="modal" data-target="#myModal" th:value="${comments.user.id}" th:text="${comments.user.userName}">陈则宏©知心</a>
+                                                        </div>
+                                                        <div class="_3U-j">
+                                                            <div class="_3fuh">
+                                                                <span th:text="${comments.createTime}">9-22</span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="_1cq7" th:text="${comments.content}">迷弟首评</div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--
+                        模态框
+                    -->
+                    <div class="row">
+                        <div class="col-md-12 grid-margin">
+                            <div class="card">
+                                <div>
+                                    <!-- 模态框（Modal） -->
+                                    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                                        &times;
+                                                    </button>
+
+                                                </div>
+                                                <div class="modal-body">
+                                                    <form class="form-sample">
+                                                        <input type="hidden" name="id" />
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-4 col-form-label">账户</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input id="userId" type="text" class="form-control" placeholder="1" readonly="readonly" th:value="${user.id}"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-4 col-form-label">发布人</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input id="userName" type="text" class="form-control" placeholder="小范" readonly="readonly" th:value="${user.userName}"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-4 col-form-label">性别</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input id="userSex" type="text" class="form-control" placeholder="男" readonly="readonly" th:value="${user.sex}" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-4 col-form-label">声望</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input id="userPrestige" type="text" class="form-control" placeholder="190" readonly="readonly" th:value="${user.prestige}" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-4 col-form-label">国家</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input id="userState" type="text" class="form-control" placeholder="中国" readonly="readonly" th:value="${user.state.sName}" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-4 col-form-label">登录次数</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input id="userLogins" class="form-control" placeholder="190" readonly="readonly" th:value="${user.logins}" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-6">
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-4 col-form-label">注册时间</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input id="userCreateTime" class="form-control" placeholder="2019/11/11" readonly="readonly" th:value="${#dates.format(user.createTime, 'yyyy-MM-dd')}" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-6">
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-4 col-form-label">修改时间</label>
+                                                                    <div class="col-sm-8">
+                                                                        <input id="userUpdateTime" class="form-control" placeholder="yyyy/MM/dd" readonly="readonly" th:value="${#dates.format(user.updateTime, 'yyyy-MM-dd')}" />
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-4 col-form-label">页面推荐</label>
+                                                                    <div class="col-sm-4">
+                                                                        <div id="xyz" class="form-radio">
+                                                                            <label class="form-check-label" for="userIfrecommend1">
+                                                                                <!--<input type="radio" class="form-check-input" id="userIfrecommend1" disabled="disabled" th:checked="${user.ifrecommend}==1?'checked'"> 是-->
+                                                                                <!--<input type="radio" class="form-check-input" disabled="disabled" value="" th:value="${user!=null?user.ifrecommend:1}" th:checked="${user != null ? user.ifrecommend : -1}==1?'checked'"> 是-->
+                                                                                <input type='radio' class='form-check-input' disabled="disabled" id='userIfrecommend1'/>是
+                                                                            </label>
+
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-4">
+                                                                        <div class="form-radio">
+                                                                            <label class="form-check-label" for="userIfrecommend2">
+                                                                                <!--<input type="radio" class="form-check-input" id="userIfrecommend2" disabled="disabled" th:checked="${user.ifrecommend}==0?'checked'" > 否-->
+                                                                                <input type="radio" class="form-check-input" disabled="disabled" id="userIfrecommend2"/> 否
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="form-group row">
+                                                                    <label class="col-sm-4 col-form-label">作品达人</label>
+                                                                    <div class="col-sm-4">
+                                                                        <div class="form-radio">
+                                                                            <label class="form-check-label" for="userIfexpert1">
+                                                                                <!--<input type="radio" class="form-check-input" id="userIfexpert1" disabled="disabled" th:checked="${user.ifexpert}==1?'checked'"> 是-->
+                                                                                <input type="radio" class="form-check-input" disabled="disabled" id="userIfexpert1"> 是
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-sm-4">
+                                                                        <div class="form-radio">
+                                                                            <label class="form-check-label" for="userIfexpert2" >
+                                                                                <!--<input type="radio" class="form-check-input" id="userIfexpert2" disabled="disabled" th:checked="${user.ifexpert}==0?'checked'"> 否-->
+                                                                                <!--<input type="radio" class="form-check-input" disabled="disabled" value="" th:value="${user!=null?user.ifexpert:0}" th:checked="${user != null ? user.ifexpert : 0}==0?'checked'"> 否-->
+                                                                                <input type="radio" class="form-check-input" disabled="disabled" id="userIfexpert2"> 否
+                                                                            </label>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                    </form>
+
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                    <input id="cid" type="hidden" value=""><!-- 评论ID -->
+                                                    <a id="delComment" class="btn btn-reddit">举报通过</a>
+                                                    <a id="updReportIsnot" class="btn btn-success">举报不通过</a>
+
+                                                </div>
+                                            </div><!-- /.modal-content -->
+                                        </div><!-- /.modal -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                <!-- partial:partials/_footer.html
+                    引入底部栏
+                -->
+                <div th:replace="~{partials/_footer :: _footer}"></div>
+                <!-- partial -->
+            </div>
+        </div>
+    </div>
+        </div>
+
+        <!-- container-scroller -->
+        <!-- plugins:js -->
+        <script src="../../vendors/js/vendor.bundle.base.js" th:src="@{/../../vendors/js/vendor.bundle.base.js}"></script>
+        <script src="../../vendors/js/vendor.bundle.addons.js" th:src="@{/../../vendors/js/vendor.bundle.addons.js}"></script>
+        <!-- endinject -->
+        <!-- Plugin js for this page-->
+        <!-- End plugin js for this page-->
+        <!-- inject:js -->
+        <script src="../../js/off-canvas.js" th:src="@{/../../js/off-canvas.js}"></script>
+        <script src="../../js/misc.js" th:src="@{/../../js/misc.js}"></script>
+        <!-- endinject -->
+        <!-- Custom js for this page-->
+        <!-- End custom js for this page-->
+
+        <script th:src="@{/webjars/layui/dist/layui.js}" src="webjars/layui/dist/layui.js"></script>
+        <script type="text/javascript">
+            <!--轮播图-->
+            $(function(){
+                var index = 0;
+                var imgWidth = 520;//图片的宽度
+                setInterval(function(){
+                    index++;
+                    if(index>=$(".box ul li").length){//最后一个的情况
+                        index=0;
+                    }
+                    var toRight = index*(imgWidth+15);//这个3 是因为一些边距什么的 手机框
+                    $(".box ul").css("transform","translateX(-"+toRight+"px)");
+                },2000);
+            });
+
+            $(".userId").click(function () {
+                var userId = $(this).attr("value");
+                //alert(userId);
+                $.ajax({
+                    "url" : "/ReportController/selUserId",
+                    "type" : "get",
+                    "data" : {"userId" : userId},
+                    "dataType" : "json",
+                    "success" : function (data) {
+                        $(data).each(function (m,n) {
+                            //alert(n.id);
+                        })
+                        //alert(data.id);
+                        $("#userId").attr("value",data.id);
+                        $("#userName").attr("value",data.userName);
+                        $("#userSex").attr("value",data.sex);
+                        $("#userPrestige").attr("value",data.prestige);
+                        $("#userState").attr("value",data.state.sName);
+                        $("#userLogins").attr("value",data.logins);
+                        /*$("#userCreateTime").attr("value",data.createTime);*/
+                        $("#userCreateTime").html("<input id='userCreateTime' class='form-control' placeholder='yyyy/MM/dd' readonly='readonly' th:value='${#dates.format(+'data.createTime'+, 'yyyy-MM-dd')}'>");
+                        $("#userUpdateTime").html("<input id='userUpdateTime' class='form-control' placeholder='yyyy/MM/dd' readonly='readonly' th:value='${#dates.format(+'data.updateTime'+, 'yyyy-MM-dd')}'>");
+
+                        //判断单选按钮
+                        var checked = data.ifrecommend == 1 ? true : false;
+                        $("#userIfrecommend1").prop("checked",checked);
+                        $("#userIfrecommend2").prop("checked",!checked);
+                        var checked = data.ifexpert == 1 ? true : false;
+                        $("#userIfexpert1").prop("checked",checked);
+                        $("#userIfexpert2").prop("checked",!checked);
+                    }
+                })
+                //点击用户评论名称时，将评论 commentCid 放入弹框中
+                $("#cid").attr("value",$(this).attr("id"));
+                //alert($("#cid").val());
+            });
+            //一般直接写在一个js文件中
+            layui.use(['layer', 'form'], function(){
+                var layer = layui.layer
+                    ,form = layui.form;
+            });
+            //作品审核不通过
+            $("#delProduction").click(function () {
+                if(confirm("您确定要封杀该作品？")){
+                    var id = $(this).attr("value");
+                    var rid = $("#rid").val();
+                    var uid = $("#uid").val();
+                    var byuid = $("#byuid").val();
+
+                    $.ajax({
+                        "url":"/production/delProduction",
+                        "type":"get",
+                        "data":{"id":id,"rid":rid},
+                        "dataType":"json",
+                        "success":function (data) {
+                            alert("成功处理"+data+"条数据");
+
+                            //发送消息
+                            var layer = layui.layer;
+                            //var userid =$(this).attr("userid");
+                            var  selUser = $(".selUser").val();
+                            layer.open({
+                                type: 2,
+                                skin: 'layui-layer-demo', //样式类名
+                                id:'layerDemo'+1,
+                                title: '通知被举报人用户',
+                                closeBtn: 1, //不显示关闭按钮
+                                anim: 0,
+                                maxmin:true,
+                                btn: ['确认'],
+                                success: function(layero, index){
+                                    var body = layer.getChildFrame('body');
+                                    body.find(".selUser").val(byuid);
+                                },
+                                yes: function(index){//layer.msg('yes');    //点击确定回调
+                                    layer.msg("点击确定");
+                                    layer.close(index);
+
+                                    //作品举报成功后，需要分别给举报人和被举报人发送消息
+                                    layer.open({
+                                        type: 2,
+                                        skin: 'layui-layer-demo', //样式类名
+                                        id:'layerDemo'+2,
+                                        title: '通知举报人用户',
+                                        closeBtn: 1, //不显示关闭按钮
+                                        anim: 0,
+                                        maxmin:true,
+                                        btn: ['确认'],
+                                        success: function(layero, index){
+                                            var body = layer.getChildFrame('body');
+                                            body.find(".selUser").val(uid);
+                                        },
+                                        yes: function(index){//layer.msg('yes');    //点击确定回调
+                                            layer.msg(selUser);
+                                            window.location.href="/TablesController/toReport-table";
+                                            layer.closeAll();
+                                        },
+                                        area: ['993px', '600px'],
+                                        shadeClose: true, //开启遮罩关闭
+                                        content: '/message/famsg'
+                                    });
+                                },
+                                area: ['993px', '600px'],
+                                shadeClose: true, //开启遮罩关闭
+                                content: '/message/famsg'
+                            });
+                        }
+                    })
+                }
+            });
+            //作品审核通过
+            $("#updProduction").click(function () {
+                if(confirm("您确定要作品审核通过？")){
+                    var id = $(this).attr("value");
+                    var rid = $("#rid").val();
+                    var uid = $("#uid").val();
+                    $.ajax({
+                        "url":"/production/updProduction",
+                        "type":"get",
+                        "data":{"id":id,"rid":rid},
+                        "dataType":"json",
+                        "success":function (data) {
+                            alert("成功处理"+data+"条数据");
+
+                            //发送消息
+                            var layer = layui.layer;
+                            var userid =$(this).attr("userid");
+                            var  selUser = $(".selUser").val();
+                            layer.open({
+                                type: 2,
+                                skin: 'layui-layer-demo', //样式类名
+                                id:'layerDemo'+1,
+                                title: '选择通知的用户',
+                                closeBtn: 1, //不显示关闭按钮
+                                anim: 0,
+                                maxmin:true,
+                                btn: ['确认'],
+                                success: function(layero, index){
+                                    var body = layer.getChildFrame('body');
+                                    body.find(".selUser").val(uid);
+                                },
+                                yes: function(index){//layer.msg('yes');    //点击确定回调
+                                    layer.msg(selUser);
+                                    window.location.href="/TablesController/toReport-table";
+                                    layer.closeAll();
+                                },
+                                area: ['993px', '600px'],
+                                shadeClose: true, //开启遮罩关闭
+                                content: '/message/famsg'
+                            });
+                        }
+                    })
+                }
+            });
+
+
+            //评论审核不通过
+            $("#delComment").click(function () {
+                if(confirm("您确定要封杀该评论？")){
+                    var cid = $("#cid").attr("value");//评论ID
+                    var rid = $("#rid").val();//该条举报数据ID
+                    var uid = $("#uid").val();//举报人ID
+                    var byuid = $("#byuid").val();//被举报人ID
+
+                    $.ajax({
+                        "url":"/CommentController/delCommentCid",
+                        "type":"get",
+                        "data":{"cid":cid,"rid":rid},
+                        "dataType":"json",
+                        "success":function (data) {
+                            alert("成功处理"+data+"条数据");
+
+                            //发送消息
+                            var layer = layui.layer;
+                            //var userid =$(this).attr("userid");
+                            var  selUser = $(".selUser").val();
+                            layer.open({
+                                type: 2,
+                                skin: 'layui-layer-demo', //样式类名
+                                id:'layerDemo'+1,
+                                title: '通知被举报人用户',
+                                closeBtn: 1, //不显示关闭按钮
+                                anim: 0,
+                                maxmin:true,
+                                btn: ['确认'],
+                                success: function(layero, index){
+                                    var body = layer.getChildFrame('body');
+                                    body.find(".selUser").val(byuid);
+                                },
+                                yes: function(index){//layer.msg('yes');    //点击确定回调
+                                    layer.msg("点击确定");
+                                    layer.close(index);
+
+                                    //作品举报成功后，需要分别给举报人和被举报人发送消息
+                                    layer.open({
+                                        type: 2,
+                                        skin: 'layui-layer-demo', //样式类名
+                                        id:'layerDemo'+2,
+                                        title: '通知举报人用户',
+                                        closeBtn: 1, //不显示关闭按钮
+                                        anim: 0,
+                                        maxmin:true,
+                                        btn: ['确认'],
+                                        success: function(layero, index){
+                                            var body = layer.getChildFrame('body');
+                                            body.find(".selUser").val(uid);
+                                        },
+                                        yes: function(index){//layer.msg('yes');    //点击确定回调
+                                            layer.msg(selUser);
+                                            window.location.href="/TablesController/toReport-table";
+                                            layer.closeAll();
+                                        },
+                                        area: ['993px', '600px'],
+                                        shadeClose: true, //开启遮罩关闭
+                                        content: '/message/famsg'
+                                    });
+                                },
+                                area: ['993px', '600px'],
+                                shadeClose: true, //开启遮罩关闭
+                                content: '/message/famsg'
+                            });
+                        }
+                    })
+                }
+            });
+            //评论审核通过
+            $("#updReportIsnot").click(function () {
+                if(confirm("您确定要作品审核通过？")){
+                    var rid = $("#rid").val();//该条举报数据ID
+                    var uid = $("#uid").val();//举报人ID
+                    $.ajax({
+                        "url":"/CommentController/updReportIsnot",
+                        "type":"get",
+                        "data":{"rid":rid},
+                        "dataType":"json",
+                        "success":function (data) {
+                            alert("成功处理"+data+"条数据");
+
+                            //发送消息
+                            var layer = layui.layer;
+                            var userid =$(this).attr("userid");
+                            var  selUser = $(".selUser").val();
+                            layer.open({
+                                type: 2,
+                                skin: 'layui-layer-demo', //样式类名
+                                id:'layerDemo'+1,
+                                title: '选择通知的用户',
+                                closeBtn: 1, //不显示关闭按钮
+                                anim: 0,
+                                maxmin:true,
+                                btn: ['确认'],
+                                success: function(layero, index){
+                                    var body = layer.getChildFrame('body');
+                                    body.find(".selUser").val(uid);
+                                },
+                                yes: function(index){//layer.msg('yes');    //点击确定回调
+                                    layer.msg(selUser);
+                                    window.location.href="/TablesController/toReport-table";
+                                    layer.closeAll();
+                                },
+                                area: ['993px', '600px'],
+                                shadeClose: true, //开启遮罩关闭
+                                content: '/message/famsg'
+                            });
+                        }
+                    })
+                }
+            })
+        </script>
+    </body>
+</html>
