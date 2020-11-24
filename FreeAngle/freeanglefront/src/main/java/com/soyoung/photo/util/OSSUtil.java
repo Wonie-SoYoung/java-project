@@ -30,8 +30,8 @@ public class OSSUtil {
         //使用你的对应的endpoint地址
         String endpoint = "https://oss-cn-beijing.aliyuncs.com";
         // 阿里云主账号AccessKey拥有所有API的访问权限，风险很高。强烈建议您创建并使用RAM账号进行API访问或日常运维，请登录https://ram.console.aliyun.com 创建RAM账号。
-        String accessKeyId = "LTAI4FmgyxMr1RkaTKxhsx4H";
-        String accessKeySecret = "Ueio97AZC03XLLY1vQMKATeC0jAY5T";
+        String accessKeyId = "";
+        String accessKeySecret = "";
         OSSClient ossClient = new OSSClient(endpoint, accessKeyId, accessKeySecret);
         return ossClient;
     }
